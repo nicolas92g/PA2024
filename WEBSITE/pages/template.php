@@ -27,6 +27,7 @@ function makeHead($title = 'Au Temps Donné'){
     
             <link rel='stylesheet' href='$path/style/custom-bootstrap.css'>
             <link rel='stylesheet' href='$path/style/style.css'>
+            
         </head>
     ";
 }
@@ -59,11 +60,11 @@ function makeHeader(){
             <div class='container-fluid bg-primary'>
 
                 <nav class='navbar navbar-expand-lg container'>
-                    <img src='$path/assets/home_app.svg' height='50' class='atd-hover-button-sm navbar-brand mx-5'>
+                    <img src='$path/assets/home_app.svg' height='50' class='atd-hover-button-sm navbar-brand mx-5' onclick='location.href=\"/\"'>
                     <div class='collapse navbar-collapse'>
                         <ul class='navbar-nav'>
                             <li class='nav-item p-3'>
-                                <a class='nav-link text-light' href='#'>AU TEMPS DONNE</a>
+                                <a class='nav-link text-light' href='$path/pages/presentation.php'>AU TEMPS DONNE</a>
                             </li>
                             <li class='nav-item p-3'>
                                 <a class='nav-link text-light' href='#'>ACTIONS</a>

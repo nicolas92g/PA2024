@@ -19,3 +19,4 @@ API/yarn-error.log
 API/.fleet
 API/.idea
 API/.vscode
+*.DS_Store
