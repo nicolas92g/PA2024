@@ -27,6 +27,7 @@ function makeHead($title = 'Au Temps Donné'){
     
             <link rel='stylesheet' href='$path/style/custom-bootstrap.css'>
             <link rel='stylesheet' href='$path/style/style.css'>
+            
         </head>
     ";
 }
@@ -37,13 +38,10 @@ function makeHeader(){
         <header class='container-fluid p-0'>
             <div class='container-fluid bg-secondary'>
                 <div class='container d-flex flex-row flex justify-content-end p-2'>
-                    <div class='me-4 d-flex atd-hover-button' onclick='location.href=\"$path/pages/intranet.php\"'>
-                        <img src='$path/assets/home_basic.svg' width='40' alt='home'>
-                        <span class='d-block mt-2'>Mon espace bénévole</span>
-                    </div>
+                    
                     <div class='d-flex atd-hover-button' onclick='location.href=\"$path/pages/personalAccess.php\"'>
                         <img src='$path/assets/home_basic.svg' width='40'>
-                        <span class='d-block mt-2'>Mon espace bénéficiaire</span>
+                        <span class='d-block mt-2'>Mon espace</span>
                     </div>
                 </div>
             </div>
@@ -59,11 +57,11 @@ function makeHeader(){
             <div class='container-fluid bg-primary'>
 
                 <nav class='navbar navbar-expand-lg container'>
-                    <img src='$path/assets/home_app.svg' height='50' class='atd-hover-button-sm navbar-brand mx-5'>
+                    <img src='$path/assets/home_app.svg' height='50' class='atd-hover-button-sm navbar-brand mx-5' onclick='location.href=\"/\"'>
                     <div class='collapse navbar-collapse'>
                         <ul class='navbar-nav'>
                             <li class='nav-item p-3'>
-                                <a class='nav-link text-light' href='#'>AU TEMPS DONNE</a>
+                                <a class='nav-link text-light' href='$path/pages/presentation.php'>AU TEMPS DONNE</a>
                             </li>
                             <li class='nav-item p-3'>
                                 <a class='nav-link text-light' href='#'>ACTIONS</a>

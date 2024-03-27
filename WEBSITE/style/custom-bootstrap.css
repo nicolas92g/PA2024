@@ -9880,4 +9880,32 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important; } }
 
+
+    .custom-carousel {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+  }
+  
+  .custom-carousel .carousel-control-prev-icon,
+  .custom-carousel .carousel-control-next-icon {
+      background-color: #000;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+  }
+  
+  .custom-carousel .carousel-control-prev,
+  .custom-carousel .carousel-control-next {
+      width: 10%;
+  }
+  
+  .custom-carousel .carousel-control-prev {
+      left: -50px;
+  }
+  
+  .custom-carousel .carousel-control-next {
+      right: -50px;
+  }
 /*# sourceMappingURL=custom-bootstrap.css.map */
