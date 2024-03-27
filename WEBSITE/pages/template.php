@@ -38,13 +38,10 @@ function makeHeader(){
         <header class='container-fluid p-0'>
             <div class='container-fluid bg-secondary'>
                 <div class='container d-flex flex-row flex justify-content-end p-2'>
-                    <div class='me-4 d-flex atd-hover-button' onclick='location.href=\"$path/pages/intranet.php\"'>
-                        <img src='$path/assets/home_basic.svg' width='40' alt='home'>
-                        <span class='d-block mt-2'>Mon espace bénévole</span>
-                    </div>
+                    
                     <div class='d-flex atd-hover-button' onclick='location.href=\"$path/pages/personalAccess.php\"'>
                         <img src='$path/assets/home_basic.svg' width='40'>
-                        <span class='d-block mt-2'>Mon espace bénéficiaire</span>
+                        <span class='d-block mt-2'>Mon espace</span>
                     </div>
                 </div>
             </div>

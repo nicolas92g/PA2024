@@ -48,10 +48,7 @@
 
                 <div class="d-flex flex-row text-center justify-content-between mt-4">
                     <a href="#" class="text-primary">Mot de passe oublié ?</a>
-                    <a href="#" class="text-primary">Réinitialiser mon mot de passe</a>
-                </div>
-                <div class="d-flex flex-row text-center mt-4" style="margin: 0 auto;">
-                    <a href="#" class="text-muted">Vous n'avez pas encore créé votre espace personnel ?</a>
+                    <a href="register.php" class="text-muted">Vous n'avez pas encore créé votre espace personnel ?</a>
 
                 </div>
 
