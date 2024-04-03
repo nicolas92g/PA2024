@@ -1,4 +1,4 @@
-<?php include_once("template.php"); ?>
+<?php include_once("../template.php"); ?>
 <!DOCTYPE html>
 <html class="h-100">
 <?=makeHead('Au Temps Donné - Intranet')?>
@@ -43,10 +43,10 @@
         <div id="carouselExampleControls" class="carousel slide custom-carousel" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="../assets/actuality.jpeg" class="d-block img-fluid h-100" alt="Image 1">
+                    <img src="../../assets/actuality.jpeg" class="d-block img-fluid h-100" alt="Image 1">
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/actuality.jpeg" class="d-block img-fluid h-100" alt="Image 2">
+                    <img src="../../assets/actuality.jpeg" class="d-block img-fluid h-100" alt="Image 2">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -61,7 +61,7 @@
     </div>
 </div>
 
-<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+<script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
 
 </body>
