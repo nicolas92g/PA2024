@@ -11,8 +11,9 @@
         <div></div>
     </div>
 </header>
-<main class="container h-100 d-flex flex-column align-items-center justify-content-center pb-5">
-    <h3>Vous n'avez pas encore de compte ?</h3>
+<main>
+<div class="container h-100 d-flex flex-column align-items-center justify-content-center pb-5">
+    <h3 class="mb-4">Vous n'avez pas encore de compte ?</h3>
     <p class="mb-4">Pour vous inscrire, saisissez vos informations personnelles.</p>
 
     <div class="container">
@@ -64,8 +65,8 @@
             </div>
         </div>
     </div>
+</div>
 </main>
-<?=makeFooter()?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>

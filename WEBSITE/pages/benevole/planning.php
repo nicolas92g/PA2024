@@ -1,4 +1,4 @@
-<?php include_once("template.php"); ?>
+<?php include_once("../template.php"); ?>
 <!DOCTYPE html>
 <html class="h-100">
 <?=makeHead('Au Temps Donné - Intranet')?>
