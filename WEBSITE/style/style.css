@@ -19,3 +19,7 @@ body{
 a{
     text-decoration: none;
 }
+
+.error-msg{
+    color: red;
+}
