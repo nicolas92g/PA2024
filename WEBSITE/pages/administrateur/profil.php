@@ -15,13 +15,13 @@
         <a href="home.php" class="btn btn-secondary mb-5">
             <i class="fas fa-home"></i> Gestion des bénévoles
         </a>
-        <a href="gestion_benef.php" class="btn btn-primary mb-5">
+        <a href="beneficiare/gestion_benef.php" class="btn btn-primary mb-5">
             <i class="fas fa-calendar-alt"></i>  Gestion des bénéficiaires
         </a>
-        <a href="gestion_demande.php" class="btn btn-primary mb-5">
+        <a href="demande/gestion_demande.php" class="btn btn-primary mb-5">
             <i class="fas fa-calendar-day"></i> Gestions des demandes
         </a>
-        <a href="creation_activite.php" class="btn btn-primary mb-5">
+        <a href="activité/creation_activite.php" class="btn btn-primary mb-5">
             <i class="fas fa-graduation-cap"></i> Créations des activités
         </a>
         <a href="profil.php" class="btn btn-primary">
