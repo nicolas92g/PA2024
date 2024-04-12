@@ -24,6 +24,10 @@
         <a href="../activité/creation_activite.php" class="btn btn-primary mb-5">
             <i class="fas fa-graduation-cap"></i> Créations des activités
         </a>
+
+        <a href="vehicules/add_vehicule.php" class="btn btn-primary mb-5">
+            <i class="fas fa-graduation-cap"></i> Véhicules
+        </a>
         <a href="../profil.php" class="btn btn-primary">
             <i class="fas fa-user-alt"></i> Profil
         </a>
