@@ -2,20 +2,11 @@
 <!DOCTYPE html>
 <html class="h-100">
 <?=makeHead()?>
-    <body class="h-100">
-        <script>
-            function showPasswordCallback(){
-                const checkBox = document.getElementById('showPwdInput');
-                const pwdInput = document.getElementById('pwdInput');
 
-                if (checkBox.checked){
-                    pwdInput.type = "text";
-                }
-                else{
-                    pwdInput.type = "password";
-                }
-            }
-        </script>
+    <script src="../script/api.js"></script>
+    <script src="../script/login.js"></script>
+
+    <body class="h-100">
         <header class="d-flex h-25 flex-column justify-content-center">
             <div class="h-auto bg-primary d-flex justify-content-around">
 
@@ -28,10 +19,11 @@
         <main class="container h-100 d-flex flex-column align-items-center justify-content-center pb-5">
             <h3>Avez vous déjà créé votre espace personnel ?</h3>
             <p>Pour vous connecter, saisissez votre addresse mail et votre mot de passe.</p>
+            <h4 id="response-msg"></h4>
 
-            <form class="w-75 mx-auto d-flex flex-column" action="/" method="get">
+            <div class="w-75 mx-auto d-flex flex-column">
 
-                <input type="text" name="username" class="form-control my-3" placeholder="Email" required>
+                <input type="text" name="username"  id="mailInput" class="form-control my-3" placeholder="Email" required>
                 <input type="password" name="password" id="pwdInput" class="form-control my-3" placeholder="Mot de passe" required>
 
                 <div class="d-flex align-items-center ms-1 my-4">
@@ -44,7 +36,7 @@
                     <label for="rememberMe">Se souvenir de moi</label>
                 </div>
 
-                <input type="submit" class="btn btn-primary align-self-center my-4" value="Se connecter">
+                <button type="submit" class="btn btn-primary align-self-center my-4" onclick="loginCallback()">Se connecter</button>
 
                 <div class="d-flex flex-row text-center justify-content-between mt-4">
                     <a href="#" class="text-primary">Mot de passe oublié ?</a>
@@ -53,9 +45,8 @@
                 </div>
 
 
-            </form>
+            </div>
         </main>
-
     </body>
 </html>
 

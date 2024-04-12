@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="h-100">
 <?=makeHead('Au Temps Donné - Intranet')?>
-<body class="cointainer-fluid d-flex h-100">
+<body class="container-fluid d-flex h-100">
 
 <div class="bg-primary h-100 col-md-2 text-light d-flex flex-column align-items-center">
     <div class="text-center mb-5">
