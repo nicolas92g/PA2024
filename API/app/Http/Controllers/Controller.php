@@ -23,7 +23,7 @@ class Controller extends BaseController
 
     protected static function jsonError($errMsg, $status = 400) : jsonResponse
     {
-        return response()->json(['error' => $errMsg], $status);
+        return response()->json(['msg' => $errMsg], $status);
     }
 
     protected static function jsonOk($msg = 'your request was executed successfully') : jsonResponse

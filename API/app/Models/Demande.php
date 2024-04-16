@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Demande
- * 
+ *
  * @property int $id
  * @property string $description
  * @property int $utilisateur
  * @property int $nature
- * 
- * @property NatureDemande $nature_demande
+ *
+ * @property TypeActivite $type
  *
  * @package App\Models
  */
@@ -27,19 +27,14 @@ class Demande extends Model
 
 	protected $casts = [
 		'utilisateur' => 'int',
-		'nature' => 'int'
+		'type' => 'int'
 	];
 
 	protected $fillable = [
 		'description',
 		'utilisateur',
-		'nature'
+		'type'
 	];
-
-	public function nature_demande()
-	{
-		return $this->belongsTo(NatureDemande::class, 'nature');
-	}
 
 	public function utilisateur()
 	{

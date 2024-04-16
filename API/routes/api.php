@@ -33,10 +33,6 @@ Route::get('/ability/list', [\App\Http\Controllers\CompetenceController::class, 
 Route::post('/ability/create', [\App\Http\Controllers\CompetenceController::class, "create"])->middleware(['auth:sanctum', 'ability:admin,benevole']);
 Route::post('/ability/delete', [\App\Http\Controllers\CompetenceController::class, "delete"])->middleware(['auth:sanctum', 'ability:admin']);
 
-Route::get('/requestType/list', [\App\Http\Controllers\NatureDemandeController::class, "list"])->middleware(['auth:sanctum']);
-Route::post('/requestType/create', [\App\Http\Controllers\NatureDemandeController::class, "create"])->middleware(['auth:sanctum']);
-Route::post('/requestType/delete', [\App\Http\Controllers\NatureDemandeController::class, "delete"])->middleware(['auth:sanctum']);
-
 Route::get('/request/list', [\App\Http\Controllers\DemandeController::class, "list"])->middleware(['auth:sanctum']);
 Route::post('/request/create', [\App\Http\Controllers\DemandeController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/request/delete', [\App\Http\Controllers\DemandeController::class, "delete"])->middleware(['auth:sanctum']);

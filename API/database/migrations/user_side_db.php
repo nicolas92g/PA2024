@@ -54,22 +54,17 @@ return new class extends Migration
             $t->primary(["utilisateur", "competence"]);
         });
 
-        Schema::create("nature_demande", function (Blueprint $t){
+        Schema::create("type_activite", function (Blueprint $t){
             $t->id();
             $t->string("nom");
+            $t->text("description");
         });
 
         Schema::create("demande", function (Blueprint $t){
             $t->id();
             $t->text("description");
             $t->foreignId("utilisateur")->references("id")->on("utilisateur");
-            $t->foreignId("nature")->references("id")->on("nature_demande");
-        });
-
-        Schema::create("type_activite", function (Blueprint $t){
-            $t->id();
-            $t->string("nom");
-            $t->text("description");
+            $t->foreignId("type")->references("id")->on("type_activite");
         });
 
         Schema::create("activite", function (Blueprint $t){
@@ -110,9 +105,8 @@ return new class extends Migration
         Schema::dropIfExists('beneficie');
         Schema::dropIfExists('session');
         Schema::dropIfExists('activite');
-        Schema::dropIfExists('type_activite');
         Schema::dropIfExists('demande');
-        Schema::dropIfExists('nature_demande');
+        Schema::dropIfExists('type_activite');
         Schema::dropIfExists('a_une_competence');
         Schema::dropIfExists('competence');
         Schema::dropIfExists('est_un');
