@@ -2,7 +2,7 @@
 
 function getRelativePathToRoot(){
     //get the relative path of the current page
-    $relativePath = substr(__DIR__,strpos(__DIR__, 'WEBSITE') + 7);
+    $relativePath = substr(getcwd(),strpos(getcwd(), 'WEBSITE') + 7);
 
     //create the relative path to the root folder (/WEBSITE)
     $subFolderCount = substr_count($relativePath, '/');
