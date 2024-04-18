@@ -10,7 +10,6 @@
     <div class="text-center mb-5">
         <p>Nom : Votre Nom</p>
         <p>Prénom : Votre Prénom</p>
-        <img src="chemin/vers/votre/photo.jpg" alt="Votre Photo">
     </div>
     
     <div class="text-light d-flex flex-column align-items-center "style="margin-top: 50px;">
@@ -26,7 +25,7 @@
     <a href="formation.php" class="btn btn-primary mb-5">
         <i class="fas fa-graduation-cap"></i> Formations
     </a>
-    <a href="profil.php" class="btn btn-primary">
+    <a href="profilBenevole.php" class="btn btn-primary">
         <i class="fas fa-user-alt"></i> Profil
         </a>
     </div>

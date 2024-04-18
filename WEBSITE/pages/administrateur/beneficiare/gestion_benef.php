@@ -8,7 +8,6 @@
     <div class="text-center mb-5">
         <p>Nom : Votre Nom</p>
         <p>Prénom : Votre Prénom</p>
-        <img src="chemin/vers/votre/photo.jpg" alt="Votre Photo">
     </div>
 
     <div class="text-light d-flex flex-column align-items-center "style="margin-top: 50px;">
@@ -23,6 +22,9 @@
         </a>
         <a href="creation_activite" class="btn btn-primary mb-5">
             <i class="fas fa-graduation-cap"></i> Créations des activités
+        </a>
+        <a href="../gestionStock/addStock.php" class="btn btn-primary mb-5">
+            <i class="fas fa-graduation-cap"></i> Stock
         </a>
 
         <a href="vehicules/add_vehicule.php" class="btn btn-primary mb-5">

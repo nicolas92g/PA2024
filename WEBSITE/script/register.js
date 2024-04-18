@@ -5,25 +5,22 @@ function handleRegistration() {
     const addressLine = document.getElementById('adresse').value;
     const addressCode = document.getElementById('code_postal').value;
     const addressCity = document.getElementById('ville').value;
-
     const password = document.getElementById('motdepasse').value;
 
-    if (!email || !firstName || !lastName || !addressLine || !addressCode || !addressCity ||  !password) {
+    if (!email || !firstName || !lastName || !addressLine || !addressCode || !addressCity || !password) {
         displayError("Veuillez remplir tous les champs.");
         return;
     }
 
     // Créer un objet avec les données du formulaire
-    const formData = {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        addressLine: addressLine,
-        addressCode: addressCode,
-        addressCity: addressCity,
-
-        password: password
-    };
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('addressLine', addressLine);
+    formData.append('addressCode', addressCode);
+    formData.append('addressCity', addressCity);
+    formData.append('password', password);
 
     // Appeler la fonction postToApi pour soumettre les données à l'API
     postToApi('/register', formData)
@@ -35,15 +32,13 @@ function handleRegistration() {
         })
         .then(data => {
             console.log(data);
-            alert('Inscription réussie !');
+            window.location.href = `../pages/personalAccess.php?message=Inscription réussie !`;
         })
         .catch(error => {
-            // Afficher l'erreur dans la page register.php
             displayError(error.message);
         });
 }
 
-// Fonction pour afficher les erreurs dans la page register.php
 function displayError(message) {
     const errorMessage = document.getElementById('response-msg');
     errorMessage.textContent = message;

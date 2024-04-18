@@ -8,7 +8,6 @@
     <div class="text-center mb-5">
         <p>Nom : Votre Nom</p>
         <p>Prénom : Votre Prénom</p>
-        <img src="chemin/vers/votre/photo.jpg" alt="Votre Photo">
     </div>
 
     <div class="text-light d-flex flex-column align-items-center "style="margin-top: 50px;">
@@ -33,7 +32,6 @@
     </div>
 </div>
 
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 text-center">
@@ -50,10 +48,64 @@
                 </thead>
 
                 <tbody id="parc-automobile">
-                <!-- Les lignes de données seront insérées ici dynamiquement -->
+                <?php
+                // Exemple de données de véhicules (normalement récupérées depuis une base de données)
+                $vehicles = [
+                    ['id' => 1, 'marque' => 'Toyota', 'modele' => 'Corolla', 'annee' => 2020, 'immatriculation' => 'XYZ 123'],
+                    ['id' => 2, 'marque' => 'Ford', 'modele' => 'Fiesta', 'annee' => 2019, 'immatriculation' => 'ABC 456']
+                ];
+
+                foreach ($vehicles as $vehicle) {
+                    echo "<tr>";
+                    echo "<td>{$vehicle['marque']}</td>";
+                    echo "<td>{$vehicle['modele']}</td>";
+                    echo "<td>{$vehicle['annee']}</td>";
+                    echo "<td>{$vehicle['immatriculation']}</td>";
+                    echo "<td>
+                                <button class='btn btn-danger btn-sm' onclick='deleteVehicle(\"{$vehicle['id']}\")'>Supprimer</button>
+                                <button class='btn btn-success btn-sm' onclick='assignVehicle(\"{$vehicle['id']}\", \"{$vehicle['immatriculation']}\")'>Attribuer à une mission</button>
+                              </td>";
+                    echo "</tr>";
+                }
+                ?>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
+<script>
+    
+    function deleteVehicle(vehicleId) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer ce véhicule ?")) {
+            fetch(`delete_vehicle.php?id=${vehicleId}`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Véhicule supprimé avec succès.');
+                        location.reload();
+                    } else {
+                        alert('Erreur lors de la suppression du véhicule.');
+                    }
+                });
+        }
+    }
+
+    function assignVehicle(vehicleId, immatriculation) {
+        const missionId = prompt("Entrez l'ID de la mission à laquelle attribuer ce véhicule :", "");
+        if (missionId) {
+            fetch(`assign_vehicle.php?vehicleId=${vehicleId}&missionId=${missionId}`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`Véhicule ${immatriculation} attribué avec succès à la mission ${missionId}.`);
+                        location.reload();
+                    } else {
+                        alert('Erreur lors de l\'attribution du véhicule à une mission.');
+                    }
+                });
+        }
+    }
+</script>
+</body>
+</html>
