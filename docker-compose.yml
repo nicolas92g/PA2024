@@ -1,0 +1,22 @@
+services:
+  api:
+    ports:
+      - "8000:8000"
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+
+  db:
+    image: mysql:latest
+
+    environment:
+      MYSQL_DATABASE: pa2024
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - laravel-db:/var/lib/mysql
+    networks:
+      - laravel_network
+
+
+
