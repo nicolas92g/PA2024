@@ -4,6 +4,8 @@
 <?=makeHead('Au Temps Donné - Intranet')?>
 <body class="cointainer-fluid d-flex h-100">
 
+
+
 <div class="bg-primary h-100 col-md-2 text-light d-flex flex-column align-items-center">
     <div class="text-center mb-5">
         <p>Nom : Votre Nom</p>
@@ -11,32 +13,24 @@
     </div>
 
     <div class="text-light d-flex flex-column align-items-center "style="margin-top: 50px;">
-        <a href="home.php" class="btn btn-primary mb-5">
-            <i class="fas fa-home"></i> Gestion des bénévoles
+        <a href="text.php" class="btn btn-primary mb-5">
+            <i class="fas fa-home"></i> Accueil
         </a>
-        <a href="beneficiare/gestion_benef.php" class="btn btn-primary mb-5">
-            <i class="fas fa-calendar-alt"></i>  Gestion des bénéficiaires
+        <a href="disponibility.php" class="btn btn-primary mb-5">
+            <i class="fas fa-calendar-alt"></i> Disponibilité
         </a>
-        <a href="demande/gestion_demande.php" class="btn btn-primary mb-5">
-            <i class="fas fa-calendar-day"></i> Gestions des demandes
+        <a href="planning.php" class="btn btn-primary mb-5">
+            <i class="fas fa-calendar-day"></i> Planning
         </a>
-
-        <a href="activité/creation_activite.php" class="btn btn-primary mb-5">
-            <i class="fas fa-graduation-cap"></i> Créations des activités
+        <a href="formation.php" class="btn btn-primary mb-5">
+            <i class="fas fa-graduation-cap"></i> Formations
         </a>
-
-        <a href="gestionStock/addStock.php" class="btn btn-primary mb-5">
-            <i class="fas fa-graduation-cap"></i> Stock
-        </a>
-
-        <a href="vehicules/add_vehicule.php" class="btn btn-primary mb-5">
-            <i class="fas fa-graduation-cap"></i> Véhicules
-        </a>
-        <a href="profil.php" class="btn btn-secondary">
+        <a href="profilBenevole.php" class="btn btn-secondary">
             <i class="fas fa-user-alt"></i> Profil
         </a>
     </div>
 </div>
+
 <div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-around py-5">
     <div class="card overflow-hidden">
         <div class="row no-gutters row-bordered row-border-light">

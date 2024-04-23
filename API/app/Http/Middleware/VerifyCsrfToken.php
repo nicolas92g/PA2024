@@ -14,4 +14,10 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
     ];
+
+    public function handle($request, \Closure $next)
+    {
+        // Disable CSRF protection globally
+        return $next($request);
+    }
 }

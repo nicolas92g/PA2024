@@ -2,22 +2,21 @@
 <!DOCTYPE html>
 <html class="h-100">
 <?=makeHead('Au Temps Donné - Intranet')?>
-<body class="cointainer-fluid d-flex h-100">
-
-
+<body class="container-fluid d-flex h-100">
 
 <div class="bg-primary h-100 col-md-2 text-light d-flex flex-column align-items-center">
     <div class="text-center mb-5">
-        <p>Nom : </p>
-        <p>Prénom :</p>
+        <p>Nom : Votre Nom</p>
+        <p>Prénom : Votre Prénom</p>
+        <img src="chemin/vers/votre/photo.jpg" alt="Votre Photo">
     </div>
 
     <div class="text-light d-flex flex-column align-items-center "style="margin-top: 50px;">
-        <a href="text.php" class="btn btn-secondary mb-5">
+        <a href="home.php" class="btn btn-secondary mb-5">
             <i class="fas fa-home"></i> Accueil
         </a>
-        <a href="disponibility.php" class="btn btn-primary mb-5">
-            <i class="fas fa-calendar-alt"></i> Disponibilité
+        <a href="doDemand.php" class="btn btn-primary mb-5">
+            <i class="fas fa-calendar-alt"></i> Faire un demande
         </a>
         <a href="planning.php" class="btn btn-primary mb-5">
             <i class="fas fa-calendar-day"></i> Planning
@@ -25,11 +24,12 @@
         <a href="formation.php" class="btn btn-primary mb-5">
             <i class="fas fa-graduation-cap"></i> Formations
         </a>
-        <a href="profilBenevole.php" class="btn btn-primary">
+        <a href="profil.php" class="btn btn-primary">
             <i class="fas fa-user-alt"></i> Profil
         </a>
     </div>
 </div>
+
 <div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-around py-5">
     <div class="text-center mb-0 align-items-center">
         <p style="margin-bottom: 10px;">Bienvenue dans votre espace personnel</p>
