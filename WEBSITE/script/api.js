@@ -42,8 +42,9 @@ function getToApi(uri, form_data, token){
             'Authorization': `Bearer ${token}`,
         },
     };
+    const params = new URLSearchParams(form_data).toString();
 
-    return fetch(API_URL + uri + '?' + new URLSearchParams(form_data).toString());
+    return fetch(API_URL + uri + '?' + params, options);
 }
 
 function setCookie(name, value, days) {
@@ -76,3 +77,30 @@ function getCookie(name) {
     return null;
 }
 
+async function getRole(){
+    const res = await getToApi("/user/roles", null, getCookie("ATD-TOKEN"));
+    if (res.status !== 200) return null;
+
+    const json = await res.json();
+
+    if (!json.length){
+        return 'bénéficiaire';
+    }
+    else return json[0].nom;
+}
+
+async function isLogin(){
+    return (await getToApi("/myself", null, getCookie("ATD-TOKEN"))).status === 200;
+}
+
+async function myself(){
+    return await (await getToApi("/myself", null, getCookie("ATD-TOKEN"))).json();
+}
+
+async function logout(){
+    return (await postToApi("/logout", null, getCookie("ATD-TOKEN"))).status === 200;
+}
+
+async function test(){
+    console.log((await logout()));
+}

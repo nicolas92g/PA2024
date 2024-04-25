@@ -28,8 +28,8 @@ class RoleController extends Controller
                 if ($user->isAdmin()) return self::jsonError('User is already admin');
                 $rel->role = 1;
                 break;
-            case "benevole":
-                if ($user->isBenevole()) return self::jsonError('User is already benevole');
+            case "content":
+                if ($user->isBenevole()) return self::jsonError('User is already content');
                 $rel->role = 2;
                 break;
             default:
@@ -56,8 +56,8 @@ class RoleController extends Controller
                 if (!$user->isAdmin()) return self::jsonError('User is not an admin');
                 EstUn::query()->where('utilisateur', $request->user)->where('role', 1)->delete();
                 break;
-            case "benevole":
-                if (!$user->isBenevole()) return self::jsonError('User is not a benevole');
+            case "content":
+                if (!$user->isBenevole()) return self::jsonError('User is not a content');
                 EstUn::query()->where('utilisateur', $request->user)->where('role', 2)->delete();
                 break;
             default:

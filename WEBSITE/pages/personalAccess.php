@@ -2,9 +2,6 @@
 <!DOCTYPE html>
 <html class="h-100">
 <?=makeHead()?>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="../script/api.js"></script>
     <script src="../script/login.js"></script>
 
@@ -18,7 +15,7 @@
                 <div></div>
             </div>
         </header>
-        <main class="container h-100 d-flex flex-column align-items-center justify-content-center pb-5">
+        <main class="container h-75 d-flex flex-column align-items-center justify-content-center pb-5">
             <h3>Avez vous déjà créé votre espace personnel ?</h3>
             <p>Pour vous connecter, saisissez votre addresse mail et votre mot de passe.</p>
             <h4 id="response-msg"></h4>
@@ -40,9 +37,10 @@
 
                 <button type="submit" class="btn btn-primary align-self-center my-4" onclick="loginCallback()">Se connecter</button>
 
-                <div class="d-flex flex-row text-center justify-content-between mt-4">
-                    <a href="#" class="text-primary">Mot de passe oublié ?</a>
+                <div class="d-flex flex-column   text-center justify-content-between mt-4">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#optionsModal" class="text-muted">Vous n'avez pas encore créé votre espace personnel ?</a>
+                    <p></p>
+                    <a href="#" class="text-primary">Mot de passe oublié ?</a>
 
                     <!-- Modal pour les choix de redirection -->
                     <div class="modal fade" id="optionsModal" tabindex="-1" aria-labelledby="optionsModalLabel" aria-hidden="true">
@@ -56,8 +54,8 @@
                                     Sélectionnez le type de compte que vous souhaitez créer :
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="registerBenevole.php" class="btn btn-secondary">Bénévole</a>
-                                    <a href="registerBeneficiaire.php" class="btn btn-secondary">Bénéficiaire</a>
+                                    <a href="registerBenevole.php" class="btn btn-outline-primary">Bénévole</a>
+                                    <a href="registerBeneficiaire.php" class="btn btn-outline-primary">Bénéficiaire</a>
                                 </div>
                             </div>
                         </div>

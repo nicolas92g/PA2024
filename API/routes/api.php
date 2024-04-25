@@ -15,11 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/register', [\App\Http\Controllers\AuthController::class, "register"]);
+Route::post('/registerVolunteer', [\App\Http\Controllers\AuthController::class, "registerVolunteer"]);
 Route::post( '/login', [\App\Http\Controllers\AuthController::class, "login"]);
 Route::get(null, [\App\Http\Controllers\AuthController::class, "unauthenticated"])->name('unauthenticated');
+Route::post('/logout', [\App\Http\Controllers\AuthController::class, "logout"])->middleware(['auth:sanctum']);
 
 Route::get('/myself', [\App\Http\Controllers\UtilisateurController::class, "myself"])->middleware(['auth:sanctum']);
-Route::get('/users', [\App\Http\Controllers\UtilisateurController::class, "list"])->middleware(['auth:sanctum', 'ability:admin,benevole']);
+
+Route::get('/users', [\App\Http\Controllers\UtilisateurController::class, "list"])->middleware(['auth:sanctum', 'ability:admin,content']);
 
 Route::get('/user/roles', [\App\Http\Controllers\UtilisateurController::class, "roles"])->middleware(['auth:sanctum']);
 Route::post('/user/roles/add', [\App\Http\Controllers\RoleController::class, "add"])->middleware(['auth:sanctum']);
@@ -30,7 +33,7 @@ Route::post('/user/abilities/add', [\App\Http\Controllers\AUneCompetenceControll
 Route::post('/user/abilities/remove', [\App\Http\Controllers\AUneCompetenceController::class, "remove"])->middleware(['auth:sanctum']);
 
 Route::get('/ability/list', [\App\Http\Controllers\CompetenceController::class, "list"])->middleware(['auth:sanctum']);
-Route::post('/ability/create', [\App\Http\Controllers\CompetenceController::class, "create"])->middleware(['auth:sanctum', 'ability:admin,benevole']);
+Route::post('/ability/create', [\App\Http\Controllers\CompetenceController::class, "create"])->middleware(['auth:sanctum', 'ability:admin,content']);
 Route::post('/ability/delete', [\App\Http\Controllers\CompetenceController::class, "delete"])->middleware(['auth:sanctum', 'ability:admin']);
 
 Route::get('/request/list', [\App\Http\Controllers\DemandeController::class, "list"])->middleware(['auth:sanctum']);
