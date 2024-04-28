@@ -1,0 +1,43 @@
+services:
+  pa_website:
+    container_name: pa_website
+    build:
+      context: ./WEBSITE
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - pa_api
+    networks:
+      - pa_network
+
+  pa_api:
+    container_name: pa_api
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - pa_db
+    networks:
+      - pa_network
+
+  pa_db:
+    container_name: pa_db
+    image: mysql:latest
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: pa2024
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./pa_storage:/var/lib/mysql
+    networks:
+      - pa_network
+
+networks:
+  pa_network:
+    driver: bridge
+
