@@ -29,6 +29,7 @@ function makeHead($title = 'Au Temps Donné'){
             <link rel='stylesheet' href='$path/style/style.css'>
             
             <script src='$path/node_modules/bootstrap/dist/js/bootstrap.bundle.js'></script>
+            <script src='$path/script/api-path.js'></script>
             <script src='$path/script/api.js'></script>
         </head>
     ";
