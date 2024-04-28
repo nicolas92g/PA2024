@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('role')->insert([
             'id' => 2,
-            'nom' => 'benevole'
+            'nom' => 'content'
         ]);
 
         //SUPER ADMIN (FIRST USER)
@@ -47,6 +47,11 @@ class DatabaseSeeder extends Seeder
         DB::table('est_un')->insert([
             'utilisateur' => 1,
             'role' => 1
+        ]);
+
+        DB::table('type_activite')->insert([
+            'id' => 1,
+            'nom' => ''
         ]);
     }
 }
