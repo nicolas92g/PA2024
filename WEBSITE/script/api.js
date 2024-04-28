@@ -1,7 +1,3 @@
-API_PROTOCOL = 'http'
-API_ADDRESS = '127.0.0.1'
-API_PORT = '8000';
-
 API_URL = API_PROTOCOL + '://' + API_ADDRESS + ':' + API_PORT + '/api'
 
 function displayResponseMsg(jsonResponse, status){
