@@ -3,6 +3,8 @@
 <html class="h-100">
 <?=makeHead()?>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="../script/api.js"></script>
     <script src="../script/login.js"></script>
 
@@ -40,10 +42,26 @@
 
                 <div class="d-flex flex-row text-center justify-content-between mt-4">
                     <a href="#" class="text-primary">Mot de passe oublié ?</a>
-                    <a href="register.php" class="text-muted">Vous n'avez pas encore créé votre espace personnel ?</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#optionsModal" class="text-muted">Vous n'avez pas encore créé votre espace personnel ?</a>
 
-                </div>
-            </div>
+                    <!-- Modal pour les choix de redirection -->
+                    <div class="modal fade" id="optionsModal" tabindex="-1" aria-labelledby="optionsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="optionsModalLabel">Choix du type d'espace personnel</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Sélectionnez le type de compte que vous souhaitez créer :
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="registerBenevole.php" class="btn btn-secondary">Bénévole</a>
+                                    <a href="registerBeneficiaire.php" class="btn btn-secondary">Bénéficiaire</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
         </main>
     </body>
 </html>
