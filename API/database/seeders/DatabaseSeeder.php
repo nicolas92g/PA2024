@@ -77,27 +77,32 @@ class DatabaseSeeder extends Seeder
 
         DB::table('type_activite')->insert([
             'id' => 1,
-            'nom' => 'Aide alimentaire'
+            'nom' => 'Aide alimentaire',
+            'description' => 'Aide alimentaire'
         ]);
 
         DB::table('type_activite')->insert([
             'id' => 2,
-            'nom' => 'Aide administratif'
+            'nom' => 'Aide administratif',
+            'description' => 'Aide administratif'
         ]);
 
         DB::table('type_activite')->insert([
             'id' => 3,
-            'nom' => 'Aide au transport'
+            'nom' => 'Aide au transport',
+            'description' => 'Aide au transport'
         ]);
 
         DB::table('type_activite')->insert([
             'id' => 4,
-            'nom' => 'Formations'
+            'nom' => 'Formations',
+            'description' => 'Formations'
         ]);
 
         DB::table('type_activite')->insert([
             'id' => 5,
-            'nom' => 'Autre'
+            'nom' => 'Autre',
+            'description' => 'Autre'
         ]);
     }
 }
