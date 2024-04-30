@@ -53,7 +53,7 @@ function makeHeader(){
                     <img src='$path/assets/logo.png' width='100'>
                     <a href='' class='align-self-center'>Devenir bénévole</a>
                     <a href='' class='align-self-center'>Je trouve une activité</a>
-                    <button class='btn btn-primary align-self-center p-3 atd-hover-button'>Je fais un don</button>
+                    <button class='btn btn-primary align-self-center p-3 atd-hover-button' onclick='location.href=\"https://buy.stripe.com/test_00geYja1R2v78ZWbII\"'>Je fais un don</button>
                 </div>
 
             </div>
