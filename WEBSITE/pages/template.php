@@ -66,8 +66,8 @@ function makeHeader(){
                                         AGIR AVEC NOUS
                                     </a>
                                     <ul class='dropdown-menu' aria-labelledby='navbarDropdown'>
-                                        <li><a class='dropdown-item' href='#'>Faire un Don</a></li>
-                                        <li><a class='dropdown-item' href='$path/pages//registerBenevole.php'>Devenir Bénévole</a></li>
+                                        <li><a class='dropdown-item' href='https://buy.stripe.com/test_00geYja1R2v78ZWbII'>Faire un Don</a></li>
+                                        <li><a class='dropdown-item' href='$path/pages/registerBenevole.php'>Devenir Bénévole</a></li>
                                     </ul>
                                 </li>
 

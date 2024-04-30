@@ -64,18 +64,7 @@
                         Je souhaite recevoir des informations de la part AUX TEMPS DONNEE
                     </label>
                 </div>
-                <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="accept_data_processing" name="accept_data_processing" required>
-                    <label class="form-check-label" for="accept_data_processing">
-                        J’accepte le traitement informatisé des données nominatives qui me concernent comme indiqué dans la politique de données personnelles. <span class="text-danger">*</span>
-                    </label>
-                </div>
-                <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="accept_data_compliance" name="accept_data_compliance" required>
-                    <label class="form-check-label" for="accept_data_compliance">
-                        J’accepte le traitement informatisé des données nominatives qui me concernent en conformité avec le Règlement (UE) 2016/679, la directive (UE) 2016/80 du 27 avril 2016 et les dispositions de la loi n°2004-801 du 6 août 2004 relative à la protection des personnes et modifiant la loi n° 78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés. Comme indiqué dans la politique de protection des données personnelles, j’ai noté que je pourrai exercer mon droit d’accès et de rectification garanti par les articles 39 et 40 de cette loi en m’adressant auprès du webmaster des Restos du Cœur contact@restosducoeur.org. <span class="text-danger">*</span>
-                    </label>
-                </div>
+                
                 <div class="form-group mt-3 mb-4">
                     <button type="submit" class="btn btn-primary btn-block">Envoyer</button>
                 </div>
