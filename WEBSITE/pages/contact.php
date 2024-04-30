@@ -64,7 +64,7 @@
                         Je souhaite recevoir des informations de la part AUX TEMPS DONNEE
                     </label>
                 </div>
-                
+
                 <div class="form-group mt-3 mb-4">
                     <button type="submit" class="btn btn-primary btn-block">Envoyer</button>
                 </div>
