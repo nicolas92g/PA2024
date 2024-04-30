@@ -22,10 +22,9 @@ class DatabaseSeeder extends Seeder
 
         DB::table('role')->insert([
             'id' => 2,
-            'nom' => 'content'
+            'nom' => 'benevole'
         ]);
 
-        //SUPER ADMIN (FIRST USER)
         DB::table('addresse')->insert([
             'id' => 1,
             'premiere_ligne' => "1 rue du chene",
@@ -35,9 +34,9 @@ class DatabaseSeeder extends Seeder
 
         DB::table('utilisateur')->insert([
             'id' => 1,
-            'prenom' => 'Super',
+            'prenom' => 'Admin',
             'nom' => 'Admin',
-            'mail' => 'nicolas.guillot.esgi@gmail.com',
+            'mail' => 'admin@gmail.com',
             'mot_de_passe_hash' => 'aebb25da59d0a4aa3a7a807af30b63556d50f7c89703eb5ad7064be5b5150a8a',
             'sel' => 'CKbcDWszB6',
             'mail_verifie' => true,
