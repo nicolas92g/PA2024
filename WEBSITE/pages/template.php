@@ -51,8 +51,6 @@ function makeHeader(){
             <div class='container-fluid bg-light'>
                 <div class='container d-flex justify-content-between p-0'>
                     <img src='$path/assets/logo.png' width='100'>
-                    <a href='' class='align-self-center'>Devenir bénévole</a>
-                    <a href='' class='align-self-center'>Je trouve une activité</a>
                     <button class='btn btn-primary align-self-center p-3 atd-hover-button'>Je fais un don</button>
                 </div>
 
@@ -63,20 +61,18 @@ function makeHeader(){
                     <img src='$path/assets/home_app.svg' height='50' class='atd-hover-button-sm navbar-brand mx-5' onclick='location.href=\"/\"'>
                     <div class='collapse navbar-collapse'>
                         <ul class='navbar-nav'>
+                            <li class='nav-item p-3 dropdown'>
+                                    <a class='nav-link text-light dropdown-toggle' href='#' id='navbarDropdown' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                                        AGIR AVEC NOUS
+                                    </a>
+                                    <ul class='dropdown-menu' aria-labelledby='navbarDropdown'>
+                                        <li><a class='dropdown-item' href='#'>Faire un Don</a></li>
+                                        <li><a class='dropdown-item' href='$path/pages//registerBenevole.php'>Devenir Bénévole</a></li>
+                                    </ul>
+                                </li>
+
                             <li class='nav-item p-3'>
-                                <a class='nav-link text-light' href='$path/pages/presentation.php'>AU TEMPS DONNE</a>
-                            </li>
-                            <li class='nav-item p-3'>
-                                <a class='nav-link text-light' href='#'>ACTIONS</a>
-                            </li>
-                            <li class='nav-item p-3'>
-                                <a class='nav-link text-light' href='#'>NOUS SOUTENIR</a>
-                            </li>
-                            <li class='nav-item p-3'>
-                                <a class='nav-link text-light' href='#'>AGIR AVEC NOUS</a>
-                            </li>
-                            <li class='nav-item p-3'>
-                                <a class='nav-link text-light' href='#'>CONTACT</a>
+                                <a class='nav-link text-light' href='$path/pages/contact.php'>CONTACT</a>
                             </li>
                         </ul>
                     </div>
