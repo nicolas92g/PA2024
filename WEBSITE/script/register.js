@@ -1,4 +1,4 @@
-function handleRegistration() {
+function handleRegistration(asVolunteer = false) {
     const email = document.getElementById('email').value;
     const firstName = document.getElementById('prenom').value;
     const lastName = document.getElementById('nom').value;
@@ -22,8 +22,10 @@ function handleRegistration() {
     formData.append('addressCity', addressCity);
     formData.append('password', password);
 
+    const uri = asVolunteer ? '/registerVolunteer' : '/register';
+
     // Appeler la fonction postToApi pour soumettre les données à l'API
-    postToApi('/register', formData)
+    postToApi(uri, formData)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erreur lors de l\'inscription');
