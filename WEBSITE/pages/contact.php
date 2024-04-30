@@ -10,7 +10,7 @@
     <h1 class="text-center mb-4">Nous Contacter</h1>
     <p class="text-center mb-4"> Si vous voulez proposer votre bénévolat, rendez-vous sur la page dédiée.</p>
     <div class="text-center mb-4">
-        <button class="btn btn-primary atd-hover-button" onclick="window.location.href='register.php'">Proposer votre bénévolat</button>
+        <button class="btn btn-primary atd-hover-button" onclick="window.location.href='registerBenevole.php'">Proposer votre bénévolat</button>
     </div>
 
     <div class="row justify-content-center">
