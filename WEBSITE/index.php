@@ -3,6 +3,8 @@
 <html>
     <?=makeHead()?>
     <body>
+        <script src="script/api.js"></script>
+        <script src="script/checks/checkNotLoggedIn.js"></script>
         <?=makeHeader()?>
         <main class="container-fluid py-3">
             <div class="container p-4">
@@ -12,7 +14,7 @@
                 <script src="script/api.js"></script>
                 <script src="script/login.js"></script>
 
-                <button onclick="checkLogin()">TEST</button>
+                <button onclick="test()">TEST</button>
             </div>
         </main>
         <?=makeFooter()?>

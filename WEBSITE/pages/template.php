@@ -2,7 +2,7 @@
 
 function getRelativePathToRoot(){
     //get the relative path of the current page
-    $relativePath = substr(__DIR__,strpos(__DIR__, 'WEBSITE') + 7);
+    $relativePath = substr(getcwd(),strpos(getcwd(), 'WEBSITE') + 7);
 
     //create the relative path to the root folder (/WEBSITE)
     $subFolderCount = substr_count($relativePath, '/');
@@ -28,6 +28,9 @@ function makeHead($title = 'Au Temps Donné'){
             <link rel='stylesheet' href='$path/style/custom-bootstrap.css'>
             <link rel='stylesheet' href='$path/style/style.css'>
             
+            <script src='$path/node_modules/bootstrap/dist/js/bootstrap.bundle.js'></script>
+            <script src='$path/script/api-path.js'></script>
+            <script src='$path/script/api.js'></script>
         </head>
     ";
 }

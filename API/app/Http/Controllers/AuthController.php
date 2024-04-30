@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Addresse;
+use App\Models\AUneCompetence;
+use App\Models\EstUn;
 use App\Models\Utilisateur;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
@@ -63,6 +65,33 @@ class AuthController extends Controller
         return self::jsonOk();
     }
 
+    public function registerVolunteer(Request $request) : JsonResponse
+    {
+
+        $registerResult = $this->register($request);
+        if ($registerResult->status() !== 200) return $registerResult;
+
+        $user = Utilisateur::query()->where('mail', $request->email)->first()->id;
+
+        if (isset($request->abilities)){
+            $abilities = json_decode($request->abilities);
+
+            foreach ($abilities as $ability){
+                $r = new AUneCompetence();
+                $r->utilisateur = $user;
+                $r->competence = $ability;
+                $r->save();
+            }
+        }
+
+        $rel = new EstUn();
+        $rel->utilisateur = $user;
+        $rel->role = 2;
+        $rel->save();
+
+        return self::jsonOk();
+    }
+
     public function login(Request $request) : JsonResponse
     {
         $user = Utilisateur::query()->where("mail", $request->email)->get();
@@ -96,6 +125,12 @@ class AuthController extends Controller
             return response()->json(["token" => $token->plainTextToken]);
         }
         return self::jsonError($errorMsg, 401);
+    }
+
+    public function logout() : JsonResponse
+    {
+        self::getUser()->tokens()->delete();
+        return self::jsonOk();
     }
 
     public function unauthenticated() : JsonResponse
