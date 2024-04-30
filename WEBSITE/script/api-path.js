@@ -1,3 +1,3 @@
-API_PROTOCOL = 'http';
-API_ADDRESS = '127.0.0.1';
-API_PORT = '8000';
+API_PROTOCOL = 'https';
+API_ADDRESS = 'api.au-temps-donne.nicolas-guillot.fr';
+API_PORT = '443';

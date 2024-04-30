@@ -4,7 +4,9 @@ function navbar($pageIndex){
     return "
         <div class='bg-primary h-100 col-md-2 text-light d-flex flex-column align-items-center justify-content-around'>
             <div class='text-center mb-5'>
+            <p>ESPACE BENEFICIARE</p>
                 <div id='userInfos'></div>
+                
             </div>
         
             <div class='text-light d-flex flex-column align-items-center'>
