@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html class="h-100">
     <?=makeHead('Au Temps Donné - Intranet')?>
+    <script src="../../script/checks/checkIsBenevole.js"></script>
     <body class="d-flex h-100">
         <?=navbar(4)?>
 

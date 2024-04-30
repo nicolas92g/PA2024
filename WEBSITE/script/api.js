@@ -100,3 +100,23 @@ async function logout(){
 async function test(){
     console.log((await logout()));
 }
+
+function redirectToHomePage(){
+    getRole().then(
+        function (role) {
+            switch (role){
+                case 'bénéficiaire':
+                    location.href='/pages/beneficiare/home.php';
+                    break;
+                case 'benevole':
+                    location.href='/pages/benevole/home.php';
+                    break;
+                case 'admin':
+                    location.href='/pages/administrateur/home.php';
+                    break;
+                default:
+                    location.href='/';
+            }
+        }
+    );
+}

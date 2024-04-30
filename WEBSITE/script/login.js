@@ -10,7 +10,7 @@ function loginCallback(){
         response.json().then((data) => {
             if (displayResponseMsg(data, response.status)){
                 setCookie("ATD-TOKEN", data.token, 1);
-                location.href='/pages/content/home.php';
+                redirectToHomePage();
             }
         })
     })

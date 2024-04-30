@@ -51,7 +51,7 @@ function makeHeader(){
             <div class='container-fluid bg-light'>
                 <div class='container d-flex justify-content-between p-0'>
                     <img src='$path/assets/logo.png' width='100'>
-                    <button class='btn btn-primary align-self-center p-3 atd-hover-button'>Je fais un don</button>
+                    <button class='btn btn-primary align-self-center p-3 atd-hover-button' onclick='location.href=\"https://buy.stripe.com/test_00geYja1R2v78ZWbII\"'>Je fais un don</button>
                 </div>
 
             </div>
