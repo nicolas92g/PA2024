@@ -94,7 +94,8 @@ async function myself(){
 }
 
 async function logout(){
-    return (await postToApi("/logout", null, getCookie("ATD-TOKEN"))).status === 200;
+    await postToApi("/logout", null, getCookie("ATD-TOKEN"));
+    location.href = '/';
 }
 
 async function test(){
