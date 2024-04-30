@@ -1,5 +1,4 @@
 <?php
-
 function navbar($pageIndex){
     return "
         <div class='bg-primary h-100 col-md-2 text-light d-flex flex-column align-items-center justify-content-around'>
