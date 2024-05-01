@@ -22,7 +22,9 @@ Route::post('/logout', [\App\Http\Controllers\AuthController::class, "logout"])-
 
 Route::get('/myself', [\App\Http\Controllers\UtilisateurController::class, "myself"])->middleware(['auth:sanctum']);
 
-Route::get('/users', [\App\Http\Controllers\UtilisateurController::class, "list"])->middleware(['auth:sanctum', 'ability:admin,content']);
+Route::get('/users', [\App\Http\Controllers\UtilisateurController::class, "list"])->middleware(['auth:sanctum', 'ability:admin,benevole']);
+Route::get('/volunteers', [\App\Http\Controllers\UtilisateurController::class, "listVolunteers"])->middleware(['auth:sanctum', 'ability:admin,benevole']);
+Route::get('/beneficiaries', [\App\Http\Controllers\UtilisateurController::class, "listBeneficiaries"])->middleware(['auth:sanctum', 'ability:admin,benevole']);
 
 Route::get('/user/roles', [\App\Http\Controllers\UtilisateurController::class, "roles"])->middleware(['auth:sanctum']);
 Route::post('/user/roles/add', [\App\Http\Controllers\RoleController::class, "add"])->middleware(['auth:sanctum']);
@@ -33,7 +35,7 @@ Route::post('/user/abilities/add', [\App\Http\Controllers\AUneCompetenceControll
 Route::post('/user/abilities/remove', [\App\Http\Controllers\AUneCompetenceController::class, "remove"])->middleware(['auth:sanctum']);
 
 Route::get('/ability/list', [\App\Http\Controllers\CompetenceController::class, "list"])->middleware(['auth:sanctum']);
-Route::post('/ability/create', [\App\Http\Controllers\CompetenceController::class, "create"])->middleware(['auth:sanctum', 'ability:admin,content']);
+Route::post('/ability/create', [\App\Http\Controllers\CompetenceController::class, "create"])->middleware(['auth:sanctum', 'ability:admin,benevole']);
 Route::post('/ability/delete', [\App\Http\Controllers\CompetenceController::class, "delete"])->middleware(['auth:sanctum', 'ability:admin']);
 
 Route::get('/request/list', [\App\Http\Controllers\DemandeController::class, "list"])->middleware(['auth:sanctum']);
