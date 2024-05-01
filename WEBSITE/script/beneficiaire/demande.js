@@ -18,3 +18,16 @@ async function createDemande(){
 
     console.log((await (await postToApi('/request/create', args, getCookie('ATD-TOKEN'))).json()).msg)
 }
+
+async function getList(){
+    return await (await getToApi('/request/list', null, getCookie('ATD-TOKEN'))).json();
+}
+getList().then(function(list) {
+    const ulElement = document.getElementById('listeDemandes');
+    ulElement.innerHTML = ''; //
+    for (const item of list) {
+        const li = document.createElement('li');
+        li.textContent = `Type: ${item.type}, Description: ${item.description}`;
+        ulElement.appendChild(li);
+    }
+});
