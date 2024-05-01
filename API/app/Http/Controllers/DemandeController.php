@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Demande;
 use App\Models\NatureDemande;
+use App\Models\TypeActivite;
 use Illuminate\Http\Request;
 
 class DemandeController extends Controller
@@ -18,14 +19,14 @@ class DemandeController extends Controller
             return self::jsonError('missing values');
         }
 
-        if (!NatureDemande::query()->where('id', $r->type)->exists()){
+        if (!TypeActivite::query()->where('id', $r->type)->exists()){
             return self::jsonError('bad request type');
         }
 
         $d = new Demande();
         $d->utilisateur = self::getUser()->id;
         $d->description = $r->description;
-        $d->nature = $r->type;
+        $d->type = $r->type;
         $d->save();
         return self::jsonOk();
     }
