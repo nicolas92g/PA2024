@@ -27,21 +27,23 @@
                     <button type="button" class="btn btn-primary btn-block" onclick="createDemande()">Envoyer la demande</button>
                 </div>
 
-                <div class="col-md-10 mt-5">
-                    <h4>Liste des Demandes</h4>
-                    <table id="tableDemandes" class="table">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- Les données seront ajoutées ici dynamiquement -->
-                        </tbody>
-                    </table>
-                </div>
+                                <div class="col-md-10 mt-5">
+                                    <h4>Mes Demandes</h4>
+                                    <div class="table-responsive">
+                                        <table id="tableDemandes" class="table table-striped table-hover table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
             </div>
         </div>
 
