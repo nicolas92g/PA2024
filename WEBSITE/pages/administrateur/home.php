@@ -70,5 +70,38 @@
             }
         })
     })
+    function searchUser() {
+        const searchText = document.getElementById('search').value.toLowerCase();
+        const filters = {
+            nom: document.getElementById('flexCheck1').checked,
+            prenom: document.getElementById('flexCheck2').checked,
+            ville: document.getElementById('flexCheck3').checked
+        };
+
+        getToApi('/volunteers', null, getCookie('ATD-TOKEN')).then((response) => {
+            response.json().then(function (volunteers) {
+                const filteredVolunteers = volunteers.filter(volunteer => {
+                    return (!filters.nom || volunteer.nom.toLowerCase().includes(searchText)) &&
+                        (!filters.prenom || volunteer.prenom.toLowerCase().includes(searchText)) &&
+                        (!filters.ville || volunteer.ville.toLowerCase().includes(searchText));
+                });
+
+                const table = document.getElementById('userRow');
+                table.innerHTML = ""; // Clear existing rows
+                filteredVolunteers.forEach(volunteer => {
+                    table.innerHTML +=
+                        `<tr>
+                        <td>${volunteer.id}</td>
+                        <td>${volunteer.nom}</td>
+                        <td>${volunteer.prenom}</td>
+                        <td>${volunteer.premiere_ligne}</td>
+                        <td>${volunteer.ville}</td>
+                        <td>${volunteer.mail}</td>
+                    </tr>`;
+                });
+            });
+        });
+    }
+
 </script>
 </html>
