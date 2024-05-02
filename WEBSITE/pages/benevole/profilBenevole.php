@@ -22,24 +22,22 @@
                             <div class="tab-pane fade active show" id="account-general">
                                 <div class="card-body media align-items-center">
 
-                                    <div class="media-body ml-4">
 
-                                        <div class="text-light small mt-1">JPG, GIF ou PNG autorisés. Taille maximale de 800 Ko</div>
-                                    </div>
                                 </div>
                                 <hr class="border-light m-0">
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">Nom</label>
-                                        <input type="text" class="form-control mb-1" value="">
+                                        <input type="text" class="form-control mb-1" id="nom" value="">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Prénom</label>
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" id="prenom" value="">
                                     </div>
+
                                     <div class="form-group">
                                         <label class="form-label">E-mail</label>
-                                        <input type="text" class="form-control mb-1" value="">
+                                        <input type="text" class="form-control mb-1" id="mail" value="">
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +74,7 @@
                                                 <input class="form-check-input" type="checkbox" name="competences[]" id="javascript" value="JavaScript">
                                                 <label class="form-check-label" for="javascript">JavaScript</label>
                                             </div>
-                                            <!-- Ajoutez d'autres cases à cocher selon vos besoins -->
+
                                         </div>
                                         <button type="submit" class="btn btn-primary">Poster</button>
                                     </form>
@@ -104,5 +102,6 @@
             });
         </script>
         <script src="../../script/content/nameDisplay.js"></script>
+        <script src="../../script/profil/profil.js"></script>
     </body>
 </html>
