@@ -4,8 +4,8 @@
 <html class="h-100">
 <?=makeHead('Au Temps Donné - Intranet')?>
 
-<script src="../../script/api.js"></script>
-<script src="../../script/gestion_demande.js"></script>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/administrateur/gestion_demande.js"></script>
 
 <body class="cointainer-fluid d-flex h-100">
 
@@ -14,9 +14,26 @@
 <div class="bg-secondary h-100 col-10 d-flex flex-column">
     <div class="container py-5 text-center">
         <p class="mb-4">Voici les différentes demandes à traiter :</p>
-    </div>
-    <!-- Les demandes seront affichées ici dynamiquement par JavaScript -->
-</div>
+        <div class="col-md-10 mt-5">
+            <h4>Les demandes</h4>
+            <div class="table-responsive">
+                <table id="tableDemandes" class="table table-striped table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Auteur</th>
+                        <th>Action</th>
+                        <th>Statut</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
 
 </body>
+<script src="../../../script/checks/checkIsAdmin.js"></script>
 </html>
