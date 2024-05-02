@@ -49,3 +49,11 @@ Route::post('/activityType/delete', [\App\Http\Controllers\TypeActiviteControlle
 Route::get('/activity/list', [\App\Http\Controllers\ActiviteController::class, "list"])->middleware(['auth:sanctum']);
 Route::post('/activity/create', [\App\Http\Controllers\ActiviteController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/activity/delete', [\App\Http\Controllers\ActiviteController::class, "delete"])->middleware(['auth:sanctum']);
+
+Route::get('/truck/list', [\App\Http\Controllers\CamionController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/truck/create', [\App\Http\Controllers\CamionController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/truck/delete', [\App\Http\Controllers\CamionController::class, "delete"])->middleware(['auth:sanctum']);
+
+Route::get('/annexe/list', [\App\Http\Controllers\AnnexeController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/annexe/create', [\App\Http\Controllers\AnnexeController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/annexe/delete', [\App\Http\Controllers\AnnexeController::class, "delete"])->middleware(['auth:sanctum']);
