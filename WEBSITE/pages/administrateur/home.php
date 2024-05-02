@@ -39,18 +39,36 @@
 
             <table class='table table-striped table-hover'>
                 <thead>
-                <tr>
-                    <th scope='col'>#</th>
-                    <th scope='col'>nom</th>
-                    <th scope='col'>prénom</th>
-                    <th scope='col'>adresse</th>
-                    <th scope='col'>ville</th>
-                    <th scope='col'></th>
-                </tr>
+                    <tr>
+                        <th scope='col'>#</th>
+                        <th scope='col'>nom</th>
+                        <th scope='col'>prénom</th>
+                        <th scope='col'>adresse</th>
+                        <th scope='col'>ville</th>
+                        <th scope='col'>mail</th>
+                    </tr>
                 </thead>
-                <tbody id='userRow' class='table-group-divider'>
+                <tbody id='userRow' class=''>
                 </tbody>
             </table>
         </div>
     </body>
+    <script>
+        getToApi('/volunteers', null, getCookie('ATD-TOKEN')).then((response) => {
+            response.json().then(function (volunteers){
+                const table = document.getElementById('userRow');
+                for (const volunteer of volunteers) {
+                    table.innerHTML +=
+                        "<tr>" +
+                            "<td>" + volunteer.id + "</td>" +
+                            "<td>" + volunteer.nom + "</td>" +
+                            "<td>" + volunteer.prenom + "</td>" +
+                            "<td>" + volunteer.premiere_ligne + "</td>" +
+                            "<td>" + volunteer.ville + "</td>" +
+                            "<td>" + volunteer.mail + "</td>"
+                        +"</tr>"
+                }
+            })
+        })
+    </script>
 </html>

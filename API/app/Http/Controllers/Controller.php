@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Addresse;
 use App\Models\TypeActivite;
 use App\Models\Utilisateur;
 use Illuminate\Http\Request;
@@ -31,11 +32,22 @@ class Controller extends BaseController
         return response()->json(['msg' => $msg]);
     }
 
-    protected function createFunctionTemplate(Request $r, $class, $inputs){
+    protected function createFunctionTemplate(Request $r, $class, $inputs, $address = false){
         foreach ($inputs as $key => $value){
             if (!isset($r->$key)){
                 return self::jsonError('there is a missing input : ' . $key);
             }
+        }
+
+        $a = new Addresse();
+        if ($address){
+            if (!isset($r->addressLine) || !isset($r->addressCode) || !isset($r->addressCity)){
+                return self::jsonError('missing address line or address code');
+            }
+            $a->premiere_ligne = $r->addressLine;
+            $a->code_postal = $r->addressCode;
+            $a->ville = $r->addressCity;
+            $a->save();
         }
 
         $c = new ReflectionClass($class);
@@ -48,6 +60,10 @@ class Controller extends BaseController
 
         foreach ($inputs as $key => $value){
             $obj->$value = $r->$key;
+        }
+
+        if ($address){
+            $obj->addresse = $a->id;
         }
 
         $obj->save();
