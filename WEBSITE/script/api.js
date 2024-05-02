@@ -109,7 +109,7 @@ function redirectToHomePage(){
                 case 'bénéficiaire':
                     location.href='/pages/beneficiare/home.php';
                     break;
-                case 'benevole':
+                case 'profil':
                     location.href='/pages/benevole/home.php';
                     break;
                 case 'admin':

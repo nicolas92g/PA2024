@@ -17,4 +17,71 @@ async function createDemande(){
     args.append('description', document.getElementById("description").value);
 
     console.log((await (await postToApi('/request/create', args, getCookie('ATD-TOKEN'))).json()).msg)
+    document.getElementById("description").value = '';
+
+    displayList();
 }
+
+async function getList(){
+    return await (await getToApi('/request/list', null, getCookie('ATD-TOKEN'))).json();
+}
+function displayList() {
+    getList().then(function(list) {
+        const tableBody = document.getElementById('tableDemandes').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = '';
+        if (list.length === 0) {
+            const row = tableBody.insertRow();
+            const cell = row.insertCell();
+            cell.textContent = "Aucune demande pour le moment";
+            cell.colSpan = 3;
+            cell.style.textAlign = 'center';
+        } else {
+            list.forEach(function(item) {
+                const row = tableBody.insertRow();
+                row.insertCell().textContent = item.type;
+                row.insertCell().textContent = item.description;
+
+                const actionCell = row.insertCell();
+                actionCell.appendChild(createActionButton('Supprimer', item.id, deleteRequest));
+            });
+        }
+    }).catch(error => {
+        console.error('Error while displaying the list:', error);
+        const tableBody = document.getElementById('tableDemandes').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = '';
+        const row = tableBody.insertRow();
+        const cell = row.insertCell();
+        cell.textContent = "Failed to load requests";
+        cell.colSpan = 3;
+        cell.style.textAlign = 'center';
+    });
+}
+
+function createActionButton(text, id, onClickFunction) {
+    const button = document.createElement('button');
+    button.textContent = text;
+    button.onclick = function() { onClickFunction(id); };
+    return button;
+}
+
+async function deleteRequest(id) {
+    console.log('Delete request:', id);
+    const args = new FormData();
+    args.append('id', id);
+
+    try {
+        const response = await postToApi('/request/delete', args, getCookie('ATD-TOKEN'));  // Envoyer la requête POST
+        const result = await response.json();
+        if (response.ok) {
+            console.log('Delete successful:', result);
+            displayList();
+        } else {
+            console.error('Delete failed:', result);
+        }
+    } catch (error) {
+        console.error('Error in deleteRequest:', error);
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', displayList);

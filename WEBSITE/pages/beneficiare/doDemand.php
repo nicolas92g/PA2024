@@ -11,7 +11,6 @@
         <?=navbar(1)?>
         <div class="container">
             <div class="row">
-                <!-- Colonne pour les éléments de formulaire -->
                 <div class="col-md-4">
                     <p>Vous pouvez faire votre demande en remplissant les champs</p>
 
@@ -28,13 +27,26 @@
                     <button type="button" class="btn btn-primary btn-block" onclick="createDemande()">Envoyer la demande</button>
                 </div>
 
-                <!-- Section pour afficher la liste des demandes -->
-                <div class="col-md-10 mt-5">
-                    <h4>Liste des Demandes</h4>
-                    <ul id="listeDemandes" class="list-group"></ul>
-                </div>
+                                <div class="col-md-10 mt-5">
+                                    <h4>Mes Demandes</h4>
+                                    <div class="table-responsive">
+                                        <table id="tableDemandes" class="table table-striped table-hover table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
             </div>
         </div>
+
     </body>
     <script src="../../script/checks/checkIsBeneficiaire.js"></script>
 </html>

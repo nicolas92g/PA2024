@@ -1,3 +1,3 @@
 getRole().then(role => {
-    if (role !== 'benevole') redirectToHomePage();
+    if (role !== 'profil') redirectToHomePage();
 });
