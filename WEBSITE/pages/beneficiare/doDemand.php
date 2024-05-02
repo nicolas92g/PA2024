@@ -29,7 +29,18 @@
 
                 <div class="col-md-10 mt-5">
                     <h4>Liste des Demandes</h4>
-                    <ul id="listeDemandes" class="list-group"></ul>
+                    <table id="tableDemandes" class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Les données seront ajoutées ici dynamiquement -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

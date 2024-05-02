@@ -22,12 +22,36 @@ async function createDemande(){
 async function getList(){
     return await (await getToApi('/request/list', null, getCookie('ATD-TOKEN'))).json();
 }
-getList().then(function(list) {
-    const ulElement = document.getElementById('listeDemandes');
-    ulElement.innerHTML = ''; //
-    for (const item of list) {
-        const li = document.createElement('li');
-        li.textContent = `Type: ${item.type}, Description: ${item.description}`;
-        ulElement.appendChild(li);
-    }
-});
+function displayList() {
+    getList().then(function(list) {
+        const tableBody = document.getElementById('tableDemandes').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = ''; // Efface toutes les lignes existantes
+
+        if (list.length === 0) {
+            const row = tableBody.insertRow();
+            const cell = row.insertCell();
+            cell.textContent = "Aucune demande pour le moment";
+            cell.colSpan = 3; // Assurez-vous que cela couvre toutes les colonnes
+            cell.style.textAlign = 'center';
+        } else {
+            list.forEach(function(item) {
+                const row = tableBody.insertRow();
+                row.insertCell().textContent = item.id;
+                row.insertCell().textContent = item.type;
+                row.insertCell().textContent = item.description;
+            });
+        }
+    }).catch(error => {
+        console.error('Error while displaying the list:', error);
+        const tableBody = document.getElementById('tableDemandes').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = ''; // Clear any rows that might have been added
+        const row = tableBody.insertRow();
+        const cell = row.insertCell();
+        cell.textContent = "Failed to load requests";
+        cell.colSpan = 3;
+        cell.style.textAlign = 'center';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', displayList);
+
