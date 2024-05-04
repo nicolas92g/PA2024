@@ -57,3 +57,23 @@ Route::post('/truck/delete', [\App\Http\Controllers\CamionController::class, "de
 Route::get('/annexe/list', [\App\Http\Controllers\AnnexeController::class, "list"])->middleware(['auth:sanctum']);
 Route::post('/annexe/create', [\App\Http\Controllers\AnnexeController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/annexe/delete', [\App\Http\Controllers\AnnexeController::class, "delete"])->middleware(['auth:sanctum']);
+
+Route::get('/entrepot/list', [\App\Http\Controllers\AnnexeController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/entrepot/create', [\App\Http\Controllers\AnnexeController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/entrepot/delete', [\App\Http\Controllers\AnnexeController::class, "delete"])->middleware(['auth:sanctum']);
+
+Route::get('/fournisseur/list', [\App\Http\Controllers\FournisseurController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/fournisseur/create', [\App\Http\Controllers\FournisseurController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/fournisseur/delete', [\App\Http\Controllers\FournisseurController::class, "delete"])->middleware(['auth:sanctum']);
+
+Route::get('/product/list', [\App\Http\Controllers\ProduitController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/product/create', [\App\Http\Controllers\ProduitController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/product/delete', [\App\Http\Controllers\ProduitController::class, "delete"])->middleware(['auth:sanctum']);
+
+
+Route::get('/ticket/list', [\App\Http\Controllers\TicketController::class, "listTickets"])->middleware(['auth:sanctum']);
+Route::post('/ticket/create', [\App\Http\Controllers\TicketController::class, "createTicket"])->middleware(['auth:sanctum']);
+Route::post('/ticket/updateState', [\App\Http\Controllers\TicketController::class, "updateState"])->middleware(['auth:sanctum']);
+
+Route::get('/ticketResponse/list', [\App\Http\Controllers\TicketController::class, "listResponses"])->middleware(['auth:sanctum']);
+Route::post('/ticketResponse/create', [\App\Http\Controllers\TicketController::class, "createResponse"])->middleware(['auth:sanctum']);
