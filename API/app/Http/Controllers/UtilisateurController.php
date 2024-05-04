@@ -54,6 +54,4 @@ class UtilisateurController extends Controller
         }
         return self::jsonError('there is no user with that id');
     }
-
-
 }

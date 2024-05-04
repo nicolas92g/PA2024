@@ -104,5 +104,57 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Autre',
             'description' => 'Autre'
         ]);
+
+        DB::table('addresse')->insert([
+            'id' => 10,
+            'premiere_ligne' => "1 Avenue du Général Sarrail",
+            'code_postal' => 75016,
+            'ville' => 'Paris',
+        ]);
+
+        DB::table('fournisseur')->insert([
+            'id' => 1,
+            'nom' => 'Carrefour',
+            'addresse' => 10
+        ]);
+
+        DB::table('addresse')->insert([
+            'id' => 11,
+            'premiere_ligne' => "148 Av. de Versailles",
+            'code_postal' => 75016,
+            'ville' => 'Paris',
+        ]);
+
+        DB::table('fournisseur')->insert([
+            'id' => 2,
+            'nom' => 'Monop\' exelmans',
+            'addresse' => 11
+        ]);
+
+        DB::table('addresse')->insert([
+            'id' => 12,
+            'premiere_ligne' => "151 Rue de la Convention",
+            'code_postal' => 75015,
+            'ville' => 'Paris',
+        ]);
+
+        DB::table('fournisseur')->insert([
+            'id' => 3,
+            'nom' => 'Carrefour Express',
+            'addresse' => 12
+        ]);
+
+        DB::table('addresse')->insert([
+            'id' => 13,
+            'premiere_ligne' => "365 Rue de Vaugirard",
+            'code_postal' => 75015,
+            'ville' => 'Paris',
+        ]);
+
+        DB::table('fournisseur')->insert([
+            'id' => 4,
+            'nom' => 'Carrefour City',
+            'addresse' => 13
+        ]);
     }
 }
