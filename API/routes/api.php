@@ -50,6 +50,18 @@ Route::get('/activity/list', [\App\Http\Controllers\ActiviteController::class, "
 Route::post('/activity/create', [\App\Http\Controllers\ActiviteController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/activity/delete', [\App\Http\Controllers\ActiviteController::class, "delete"])->middleware(['auth:sanctum']);
 
+Route::get('/session/list', [\App\Http\Controllers\SessionController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/session/create', [\App\Http\Controllers\SessionController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/session/delete', [\App\Http\Controllers\SessionController::class, "delete"])->middleware(['auth:sanctum']);
+
+Route::get('/benefit/list', [\App\Http\Controllers\BeneficieController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/benefit/create', [\App\Http\Controllers\BeneficieController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/benefit/delete', [\App\Http\Controllers\BeneficieController::class, "delete"])->middleware(['auth:sanctum']);
+
+Route::get('/intervenes/list', [\App\Http\Controllers\IntervientController ::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/intervenes/create', [\App\Http\Controllers\IntervientController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/intervenes/delete', [\App\Http\Controllers\IntervientController::class, "delete"])->middleware(['auth:sanctum']);
+
 Route::get('/truck/list', [\App\Http\Controllers\CamionController::class, "list"])->middleware(['auth:sanctum']);
 Route::post('/truck/create', [\App\Http\Controllers\CamionController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/truck/delete', [\App\Http\Controllers\CamionController::class, "delete"])->middleware(['auth:sanctum']);
