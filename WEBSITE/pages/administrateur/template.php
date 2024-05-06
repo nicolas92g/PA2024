@@ -18,7 +18,7 @@ function navbar($pageIndex, $path = "."){
                 <a href='$path/demande/gestion_demande.php' class='btn " . ($pageIndex == 2 ? "btn-secondary" : "btn-primary") . " mb-5'>
                     <i class='fas fa-calendar-day'></i> Gestions des demandes
                 </a>
-                <a href='$path/activité/creation_activite.php' class='btn " . ($pageIndex == 3 ? "btn-secondary" : "btn-primary") . " mb-5'>
+                <a href='$path/activité/creation_session_activite.php' class='btn " . ($pageIndex == 3 ? "btn-secondary" : "btn-primary") . " mb-5'>
                     <i class='fas fa-graduation-cap'></i> Créations des activités
                 </a>
 
