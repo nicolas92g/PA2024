@@ -263,21 +263,21 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('activite')->insert([
-            'id' => 5,
+            'id' => 6,
             'nom' => 'organisation d’événements de récolte de fonds',
             'description' => '',
             'type' => 6
         ]);
 
         DB::table('activite')->insert([
-            'id' => 6,
+            'id' => 7,
             'nom' => 'visite et activités avec personnes âgées',
             'description' => '',
             'type' => 4
         ]);
 
         DB::table('activite')->insert([
-            'id' => 7,
+            'id' => 8,
             'nom' => 'ramassage alimentaire',
             'description' => '',
             'type' => 1
