@@ -20,7 +20,7 @@
         <a href="../demande/gestion_demande.php" class="btn btn-primary mb-5">
             <i class="fas fa-calendar-day"></i> Gestions des demandes
         </a>
-        <a href="creation_activite.php" class="btn btn-secondary mb-5">
+        <a href="creation_session_activite.php" class="btn btn-secondary mb-5">
             <i class="fas fa-graduation-cap"></i> Créations des activités
         </a>
         <a href="../gestionStock/addStock.php" class="btn btn-primary mb-5">

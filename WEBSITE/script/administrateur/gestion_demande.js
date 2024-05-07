@@ -24,7 +24,8 @@ async function displayRequests() {
                 const row = tableBody.insertRow();
                 row.insertCell().textContent = type.type;
                 row.insertCell().textContent = type.description;
-                row.insertCell().textContent = type.user;
+                row.insertCell().textContent = type.utilisateur;
+                console.log(type);
                 const actionCell = row.insertCell();
                 const acceptButton = document.createElement('button');
                 acceptButton.textContent = 'Accepter';
