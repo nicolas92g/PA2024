@@ -39,11 +39,11 @@ return new class extends Migration
         Schema::create("produit", function (Blueprint $t){
             $t->id();
             $t->string("quantite");
-            $t->date("date_limite");
+            $t->date("date_limite")->nullable();
             $t->string("nom");
             $t->text("description");
-            $t->foreignId("fournisseur")->references("id")->on("fournisseur");
-            $t->foreignId("entrepot")->references("id")->on("entrepot");
+            $t->foreignId("fournisseur")->nullable()->references("id")->on("fournisseur");
+            $t->foreignId("entrepot")->nullable()->references("id")->on("entrepot");
         });
 
         Schema::create("ramassage", function (Blueprint $t){
@@ -56,7 +56,7 @@ return new class extends Migration
         Schema::create("ramasse", function (Blueprint $t){
             $t->foreignId("produit")->references("id")->on("produit");
             $t->foreignId("ramassage")->references("id")->on("ramassage");
-            $t->integer("ordre");
+            $t->integer("ordre")->nullable();
             $t->primary(["produit", "ramassage"]);
         });
     }
