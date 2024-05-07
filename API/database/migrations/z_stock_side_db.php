@@ -59,6 +59,31 @@ return new class extends Migration
             $t->integer("ordre")->nullable();
             $t->primary(["produit", "ramassage"]);
         });
+
+        Schema::create("session", function (Blueprint $t){
+            $t->id();
+            $t->string("nom");
+            $t->text("emplacement");
+            $t->text("emplacement_arrive")->nullable();
+            $t->dateTime("horaire");
+            $t->dateTime("horaire_fin")->nullable();
+            $t->text("description");
+            $t->foreignId("produit")->nullable()->references("id")->on("produit");
+            $t->foreignId("entrepot")->nullable()->references("id")->on("entrepot");
+            $t->foreignId("activite")->references("id")->on("activite");
+        });
+
+        Schema::create("beneficie", function (Blueprint $t){
+            $t->foreignId("beneficiaire")->references("id")->on("utilisateur");
+            $t->foreignId("session")->references("id")->on("session");
+            $t->primary(["beneficiaire", "session"]);
+        });
+
+        Schema::create("intervient", function (Blueprint $t){
+            $t->foreignId("intervenant")->references("id")->on("utilisateur");
+            $t->foreignId("session")->references("id")->on("session");
+            $t->primary(["intervenant", "session"]);
+        });
     }
 
     /**
@@ -66,6 +91,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('intervient');
+        Schema::dropIfExists('beneficie');
+        Schema::dropIfExists('session');
         Schema::dropIfExists('ramasse');
         Schema::dropIfExists('ramassage');
         Schema::dropIfExists('produit');
