@@ -68,6 +68,8 @@ return new class extends Migration
             $t->dateTime("horaire");
             $t->dateTime("horaire_fin")->nullable();
             $t->text("description");
+            $t->integer("max_participants")->nullable();
+            $t->integer("quantite")->nullable();
             $t->foreignId("produit")->nullable()->references("id")->on("produit");
             $t->foreignId("entrepot")->nullable()->references("id")->on("entrepot");
             $t->foreignId("activite")->references("id")->on("activite");

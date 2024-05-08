@@ -68,7 +68,8 @@ class Controller extends BaseController
         }
 
         foreach ($options as $key => $value){
-            $obj->$key = $value;
+            if (isset($r->$key))
+                $obj->$value = $r->$key;
         }
 
         if ($address){
