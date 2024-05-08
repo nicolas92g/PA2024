@@ -47,11 +47,29 @@ function displayError(message) {
     errorMessage.style.display = 'block';
 }
 
-getToApi('/abili/list', null, getCookie('ATD-TOKEN')).then((response) => {
-    const fournisseurSelect = document.getElementById('fournisseur');
-    response.json().then((fournisseurs) => {
-        for (const fournisseur of fournisseurs) {
-            fournisseurSelect.innerHTML += "<option value='" + fournisseur.id + "'>" + fournisseur.nom + "</option>"
-        }
-    })
-})
+// Function to fetch data from the API asynchronously
+async function populateCompetences() {
+    try {
+        const response = await getToApi('/ability/list', null, getCookie('ATD-TOKEN'));
+
+        const abilities = await response.json();
+        const selectIds = ['competence1', 'competence2', 'competence3', 'competence4'];
+        selectIds.forEach(id => {
+            const selectElement = document.getElementById(id);
+            if (selectElement) {
+                selectElement.innerHTML = '<option value="">Choisissez une compétence</option>';
+                abilities.forEach(ability => {
+                    const option = document.createElement('option');
+                    option.value = ability.id;
+                    option.textContent = ability.nom;
+                    selectElement.appendChild(option);
+                });
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching abilities:', error);
+    }
+}
+
+// Ensure DOM is fully loaded before running the function
+document.addEventListener('DOMContentLoaded', populateCompetences);

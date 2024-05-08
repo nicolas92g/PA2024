@@ -33,33 +33,44 @@
                         <input type="password" class="form-control mb-4" id="motdepasse" name="password" placeholder="Entrez votre mot de passe" required>
 
                         <h5>Sélectionnez vos compétences :</h5>
-                        <select class="form-control mb-4" id="competence1" name="competence1">
-                            <option value="">Choisissez une compétence</option>
-                            <option value="Permis">Permis</option>
-                            <option value="CSS">CSS</option>
-                            <option value="JavaScript">JavaScript</option>
-                        </select>
+                        <div class="form-group">
+                            <label for="competence1">Competence 1:</label>
+                            <select class="form-control mb-4" id="competence1" name="competence1">
+                                <option value="">Choisissez une compétence</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="competence2">Competence 2:</label>
+                            <select class="form-control mb-4" id="competence2" name="competence2">
+                                <option value="">Choisissez une compétence</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="competence3">Competence 3:</label>
+                            <select class="form-control mb-4" id="competence3" name="competence3">
+                                <option value="">Choisissez une compétence</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="competence4">Competence 4:</label>
+                            <select class="form-control mb-4" id="competence4" name="competence4">
+                                <option value="">Choisissez une compétence</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="competence4">Competence 4:</label>
+                            <select class="form-control mb-4" id="competence5" name="competence5">
+                                <option value="">Choisissez une compétence</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="competence4">Competence 4:</label>
+                            <select class="form-control mb-4" id="competence6" name="competence6">
+                                <option value="">Choisissez une compétence</option>
+                            </select>
+                        </div>
+                        </form>
 
-                        <select class="form-control mb-4" id="competence2" name="competence2">
-                            <option value="">Choisissez une compétence</option>
-                            <option value="Permis">Permis</option>
-                            <option value="CSS">CSS</option>
-                            <option value="JavaScript">JavaScript</option>
-                        </select>
-
-                        <select class="form-control mb-4" id="competence3" name="competence3">
-                            <option value="">--Choisissez une compétence--</option>
-                            <option value="Permis">Permis</option>
-                            <option value="CSS">CSS</option>
-                            <option value="JavaScript">JavaScript</option>
-                        </select>
-
-                        <select class="form-control mb-4" id="competence4" name="competence4">
-                            <option value="">Choisissez une compétence</option>
-                            <option value="Permis">Permis</option>
-                            <option value="CSS">CSS</option>
-                            <option value="JavaScript">JavaScript</option>
-                        </select>
 
                         <button type="button" class="btn btn-primary btn-block" onclick="handleRegistration(true)">S'inscrire</button>
                     </div>
