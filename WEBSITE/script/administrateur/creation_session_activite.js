@@ -108,12 +108,12 @@ document.getElementById('nameActivite').addEventListener('change', function() {
             fieldsContainer.innerHTML = `
                 <div class="mb-3">
                     <label for="intituleCours" class="form-label">Intitulé du cours :</label>
-                    <input type="text" class="form-control" id="intituleCours" name="intituleCours">
+                    <input type="text" class="form-control" id="intitule" name="intituleCours">
                 </div>
             
                 <div class="mb-3">
                     <label for="dateFinCours" class="form-label">Date de fin :</label>
-                    <input type="datetime-local" class="form-control" id="dateFinCours" name="dateFin">
+                    <input type="datetime-local" class="form-control" id="dateFin" name="dateFin">
                 </div>
                 
                 <div class="mb-3">
@@ -127,49 +127,98 @@ document.getElementById('nameActivite').addEventListener('change', function() {
             fieldsContainer.innerHTML = `
                 <div class="mb-3">
                     <label for="intituleSoutien" class="form-label">Intitulé du cours :</label>
-                    <input type="text" class="form-control" id="intituleSoutien" name="intitule">
+                    <input type="text" class="form-control" id="intitule" name="intitule">
                 </div>
                 
                 <div class="mb-3">
                     <label for="dateFinSoutien" class="form-label">Date de fin :</label>
-                    <input type="datetime-local" class="form-control" id="dateFinSoutien" name="dateFin">
+                    <input type="datetime-local" class="form-control" id="dateFin" name="dateFin">
                 </div>
                
             `;
             break;
     }});
 
-function gatherFormData() {
-    const data = {
-        name: document.getElementById('nameActivite').value,
-        activity: document.getElementById('type').value,
-        description: document.getElementById('description').value,
-        time: document.getElementById('dateDebut').value,
-        place: document.getElementById('lieu').value
-    };
+// Function to gather form data
+function addSession(){
+    const args = new FormData();
 
-    const entrepot = document.getElementById('entrepot');
-    if (entrepot && entrepot.value) {
-        data.entrepot = entrepot.value;
+    args.append ("name",document.getElementById('nameActivite').value);
+    args.append("activity", document.getElementById('type').value);
+    args.append("time",document.getElementById('dateDebut').value);
+    args.append("description", document.getElementById('description').value);
+    args.append("place",document.getElementById('lieu').value);
+
+
+
+console.log(args)
+
+    const arrive = document.getElementById('lieuArrivee');
+    if ( arrive&& arrive.value) {
+        args.append("arrival", arrive.value);
+    }
+    const participant = document.getElementById('participantsCours');
+    if ( participant&& participant.value) {
+        args.append("max", participant.value);
     }
 
-    const additionalField = document.getElementById('additionalFieldId');
-    if (additionalField && additionalField.value) {
-        data.additionalField = additionalField.value;
+    const titre = document.getElementById('intitule');
+    if ( titre&& titre.value) {
+        args.append("intitule", titre.value);
     }
 
-    return data;
+    const dateFin = document.getElementById('dateFin');
+    if ( dateFin&& dateFin.value) {
+        args.append("end", dateFin.value);
+    }
+
+
+
+
+    postToApi('/session/create', args, getCookie('ATD-TOKEN')).then((response) => {
+        response.json().then((res) => {
+            console.log(res);
+        })
+    })
 }
 
-function addSession() {
+function ajouterAliment() {
+    // Find the container where we want to add the new elements
+    const container = document.getElementById('alimentsContainer');
 
-    const formData = gatherFormData();
+    // Create a new div for the food item that will contain the input fields and the remove button
+    const foodItem = document.createElement('div');
+    foodItem.className = 'food-item'; // Adding a class for potential styling
 
-    console.log("Data being sent:", formData);
+    // Create the input for the food product name
+    const productInput = document.createElement('input');
+    productInput.type = 'text';
+    productInput.className = 'form-control mb-2';
+    productInput.placeholder = 'Nom du produit';
+    productInput.name = 'productName[]'; // Using an array name to handle multiple products
 
-    postToApi('/session/create', formData, getCookie('ATD-TOKEN')).then(response => {
-        console.log('Response from POST API:', response);
-    }).catch(err => {
-        console.error("Failed to send data:", err);
-    });
+    // Create the input for the quantity
+    const quantityInput = document.createElement('input');
+    quantityInput.type = 'number';
+    quantityInput.className = 'form-control mb-2';
+    quantityInput.placeholder = 'Quantité';
+    quantityInput.name = 'quantity[]'; // Using an array name to handle multiple quantities
+
+    // Create the remove button
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.className = 'btn btn-danger mb-2';
+    removeButton.textContent = 'Supprimer';
+    removeButton.onclick = function() {
+        // Remove the food item from the DOM when clicked
+        container.removeChild(foodItem);
+    };
+
+    // Append the inputs and the remove button to the foodItem div
+    foodItem.appendChild(productInput);
+    foodItem.appendChild(quantityInput);
+    foodItem.appendChild(removeButton);
+
+    // Append the foodItem div to the container
+    container.appendChild(foodItem);
 }

@@ -1,39 +1,17 @@
 <?php include_once("../../template.php"); ?>
+<?php include_once("../template.php"); ?>
 <!DOCTYPE html>
 <html class="h-100">
 <?=makeHead('Au Temps Donné - Intranet')?>
 <body class="cointainer-fluid d-flex h-100">
 
-<div class="bg-primary h-100 col-md-2 text-light d-flex flex-column align-items-center">
-    <div class="text-center mb-5">
-        <p>Nom : Votre Nom</p>
-        <p>Prénom : Votre Prénom</p>
+<?=navbar(3, "..")?>
+<div class="bg-secondary h-100 col-10 d-flex flex-column">
+    <div class="text-center mb-4">
+        <p class="mb-4">Créer une session d'activité :</p>
     </div>
-
-    <div class="text-light d-flex flex-column align-items-center "style="margin-top: 50px;">
-        <a href="../home.php" class="btn btn-primary mb-5">
-            <i class="fas fa-home"></i> Gestion des bénévoles
-        </a>
-        <a href="../beneficiare/gestion_benef.php" class="btn btn-primary mb-5">
-            <i class="fas fa-calendar-alt"></i>  Gestion des bénéficiaires
-        </a>
-        <a href="../demande/gestion_demande.php" class="btn btn-primary mb-5">
-            <i class="fas fa-calendar-day"></i> Gestions des demandes
-        </a>
-        <a href="creation_session_activite.php" class="btn btn-secondary mb-5">
-            <i class="fas fa-graduation-cap"></i> Créations des activités
-        </a>
-        <a href="../gestionStock/addStock.php" class="btn btn-primary mb-5">
-            <i class="fas fa-graduation-cap"></i> Stock
-        </a>
-        <a href="../profil.php" class="btn btn-primary">
-            <i class="fas fa-user-alt"></i> Profil
-        </a>
-    </div>
-</div>
-
 <div class="col-md-10">
-    <div class="text-center mt-3">
+
         <h3>Voici les différentes activités</h3>
     </div>
     <div class="d-flex justify-content-center align-items-center">
@@ -54,12 +32,7 @@
                 Type d'activité
             </label>
         </div>
-        <div class="form-check m-2">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheck3" onclick="validate()">
-            <label class="form-check-label" for="flexCheckChecked">
-                Ville
-            </label>
-        </div>
+
     </div>
 
     <p class="describe" id="description"></p>
@@ -71,7 +44,7 @@
             <th scope='col'>Nom de l'activité</th>
             <th scope='col'>Type de l'activité</th>
             <th scope='col'>Date de l'activité</th>
-            <th scope='col'>Ville</th>
+            <th scope='col'>Description</th>
             <th scope='col'>Action</th>
         </tr>
         </thead>
@@ -79,7 +52,71 @@
         </tbody>
     </table>
 </div>
+<script>function populateTable() {
+        getToApi('/session/list', null, getCookie('ATD-TOKEN'))
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById('userRow');
+                tbody.innerHTML = '';
 
+                data.forEach((session, index) => {
+                    const tr = document.createElement('tr');
+
+
+                    const th = document.createElement('th');
+                    th.scope = 'row';
+                    th.textContent = index + 1;
+                    tr.appendChild(th);
+
+                    const tdName = document.createElement('td');
+                    tdName.textContent = session.nom;
+                    tr.appendChild(tdName);
+
+                    const tdType = document.createElement('td');
+                    tdType.textContent = session.activite;
+                    tr.appendChild(tdType);
+
+                    // Create and append the 'Date de l'activité' cell
+                    const tdDate = document.createElement('td');
+                    tdDate.textContent = new Date(session.horaire).toLocaleDateString(); // Format the date
+                    tr.appendChild(tdDate);
+
+                    const tdDescription = document.createElement('td');
+                    tdDescription.textContent = session.description;
+                    tr.appendChild(tdDescription);
+
+                    const tdAction = document.createElement('td');
+                    const editButton = document.createElement('button');
+                    editButton.className = 'btn btn-primary';
+                    editButton.textContent = 'Edit';
+
+                    editButton.onclick = function() {
+                        editSession(session.id); n
+                    };
+                    tdAction.appendChild(editButton);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'btn btn-danger';
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.onclick = function() {
+                        deleteSession(session.id);
+                    };
+                    tdAction.appendChild(deleteButton);
+
+                    tr.appendChild(tdAction);
+
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching session list:', error);
+                alert('Failed to load data.');
+            });
+    }
+
+
+    document.addEventListener('DOMContentLoaded', populateTable);
+</script>
 
 </body>
 </html>
