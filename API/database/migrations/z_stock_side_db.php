@@ -31,8 +31,10 @@ return new class extends Migration
 
         Schema::create("camion", function (Blueprint $t){
             $t->id();
+            $t->string("marque");
             $t->string("modele");
-            $t->float("limite_poids");
+            $t->integer("annee");
+            $t->string("immatriculation");
             $t->foreignId("annexe")->references("id")->on("annexe");
         });
 
