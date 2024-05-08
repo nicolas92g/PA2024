@@ -46,66 +46,66 @@
                     <th>Action</th>
                 </tr>
                 </thead>
+                <tbody id="truckList">
 
-                <tbody id="parc-automobile">
-                <?php
-                // Exemple de données de véhicules (normalement récupérées depuis une base de données)
-                $vehicles = [
-                    ['id' => 1, 'marque' => 'Toyota', 'modele' => 'Corolla', 'annee' => 2020, 'immatriculation' => 'XYZ 123'],
-                    ['id' => 2, 'marque' => 'Ford', 'modele' => 'Fiesta', 'annee' => 2019, 'immatriculation' => 'ABC 456']
-                ];
-
-                foreach ($vehicles as $vehicle) {
-                    echo "<tr>";
-                    echo "<td>{$vehicle['marque']}</td>";
-                    echo "<td>{$vehicle['modele']}</td>";
-                    echo "<td>{$vehicle['annee']}</td>";
-                    echo "<td>{$vehicle['immatriculation']}</td>";
-                    echo "<td>
-                                <button class='btn btn-danger btn-sm' onclick='deleteVehicle(\"{$vehicle['id']}\")'>Supprimer</button>
-                                <button class='btn btn-success btn-sm' onclick='assignVehicle(\"{$vehicle['id']}\", \"{$vehicle['immatriculation']}\")'>Attribuer à une mission</button>
-                              </td>";
-                    echo "</tr>";
-                }
-                ?>
                 </tbody>
+
             </table>
         </div>
     </div>
 </div>
 
 <script>
-    
-    function deleteVehicle(vehicleId) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer ce véhicule ?")) {
-            fetch(`delete_vehicle.php?id=${vehicleId}`, { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Véhicule supprimé avec succès.');
-                        location.reload();
-                    } else {
-                        alert('Erreur lors de la suppression du véhicule.');
-                    }
+
+    function loadTruckData() {
+        getToApi('/truck/list', null, getCookie('ATD-TOKEN'))
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch truck data');
+                }
+                return response.json();
+            })
+            .then(trucks => {
+                const tbody = document.getElementById('truckList');
+                tbody.innerHTML = ''; 
+                trucks.forEach((truck, index) => {
+                    const row = tbody.insertRow();
+
+
+                    let cell = row.insertCell();
+                    cell.textContent = truck.marque;
+
+                    cell = row.insertCell();
+                    cell.textContent = truck.modele;
+
+                    cell = row.insertCell();
+                    cell.textContent = truck.annee;
+
+                    cell = row.insertCell();
+                    cell.textContent = truck.immatriculation;
+
+                    cell = row.insertCell();
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Edit';
+                    editButton.className = 'btn btn-primary btn-sm';
+                    editButton.onclick = function() { editTruck(truck.id); };
+                    cell.appendChild(editButton);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.className = 'btn btn-danger btn-sm';
+                    deleteButton.onclick = function() { deleteTruck(truck.id); };
+                    cell.appendChild(deleteButton);
                 });
-        }
+            })
+            .catch(error => {
+                console.error('Error loading trucks:', error);
+                alert('Failed to load trucks: ' + error.message);
+            });
     }
 
-    function assignVehicle(vehicleId, immatriculation) {
-        const missionId = prompt("Entrez l'ID de la mission à laquelle attribuer ce véhicule :", "");
-        if (missionId) {
-            fetch(`assign_vehicle.php?vehicleId=${vehicleId}&missionId=${missionId}`, { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert(`Véhicule ${immatriculation} attribué avec succès à la mission ${missionId}.`);
-                        location.reload();
-                    } else {
-                        alert('Erreur lors de l\'attribution du véhicule à une mission.');
-                    }
-                });
-        }
-    }
+    document.addEventListener('DOMContentLoaded', loadTruckData);
+
 </script>
 </body>
 </html>

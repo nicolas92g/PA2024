@@ -27,14 +27,52 @@
             <input type="text" class="form-control" id="immatriculationInput" required>
         </div>
         <div class="mb-3">
-            <label for="garageInput" class="form-label">Garage</label>
-            <input type="text" class="form-control" id="garageInput" required>
+            <label for="garageSelect" class="form-label">Annexe</label>
+            <select class="form-control" id="garageSelect" required>
+                <option value="">Selectionner une annexe</option>
+
+            </select>
         </div>
-        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <button type="submit" class="btn btn-primary btn-block " onclick="addVehicule()">Ajouter</button>
     </form>
     <a href="vehicule.php" class="btn btn-secondary mt-3">Voir les véhicules</a>
 </div>
+<script>
 
+    getToApi('/entrepot/list', null, getCookie('ATD-TOKEN')).then((response) => {
+        const entrepotSelect = document.getElementById('garageSelect');
+        response.json().then((entrepots) => {
+            for (const entrepot of entrepots) {
+                entrepotSelect.innerHTML += "<option value='" + entrepot.id + "'>" + entrepot.nom + "</option>"
+            }
+        })
+    })
+    function addVehicule() {
+        const args = new FormData();
+        args.append('brand', document.getElementById("marqueInput").value);
+        args.append('model', document.getElementById("modeleInput").value);
+        args.append('year', document.getElementById("anneeInput").value);
+        args.append('registration', document.getElementById("immatriculationInput").value);
+        args.append('annexe', document.getElementById("garageSelect").value);
+
+        postToApi('/truck/create', args, getCookie('ATD-TOKEN'))
+            .then(response => {
+                if (!response.ok) {  // Check if response status is not OK
+                    throw new Error('Failed to create vehicle: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Vehicle created successfully:', data);
+                alert('Vehicle added successfully!');
+            })
+            .catch(error => {
+                console.error('Error adding vehicle:', error);
+                alert('Failed to add vehicle: ' + error.message);
+            });
+    }
+
+</script>
 
 </body>
 </html>
