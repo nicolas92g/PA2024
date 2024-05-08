@@ -12,7 +12,7 @@ class CamionController extends Controller
     }
 
     function create(Request $request){
-        return $this->createFunctionTemplate($request, Camion::class, ["modele" => "modele", "weightLimit" => "limite_poids", "annexe" => "annexe"]);
+        return $this->createFunctionTemplate($request, Camion::class, ["brand" => "marque", "model" => "modele", "year" => "annee", 'registration' => 'immatriculation', "annexe" => "annexe"]);
     }
 
     function delete(Request $request)

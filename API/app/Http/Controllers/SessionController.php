@@ -12,7 +12,10 @@ class SessionController extends Controller
     }
     public function create(Request $request){
         return $this->createFunctionTemplate($request, Session::class,
-            ['name' => 'nom', 'place' => 'emplacement', 'time' => 'horaire', 'description' => 'description', 'activity' => 'activite']
+            ['name' => 'nom', 'place' => 'emplacement', 'time' => 'horaire', 'description' => 'description', 'activity' => 'activite'],
+            false,
+            [],
+            ['arrival' => 'emplacement_arrive', 'end' => 'horaire_fin', 'product' => 'produit', 'entrepot' => 'entrepot', 'max' => 'max_participants', 'quantity' => 'quantite']
         );
     }
 

@@ -74,26 +74,7 @@ return new class extends Migration
             $t->foreignId("type")->references("id")->on("type_activite");
         });
 
-        Schema::create("session", function (Blueprint $t){
-            $t->id();
-            $t->string("nom");
-            $t->text("emplacement");
-            $t->dateTime("horaire");
-            $t->text("description");
-            $t->foreignId("activite")->references("id")->on("activite");
-        });
 
-        Schema::create("beneficie", function (Blueprint $t){
-            $t->foreignId("beneficiaire")->references("id")->on("utilisateur");
-            $t->foreignId("session")->references("id")->on("session");
-            $t->primary(["beneficiaire", "session"]);
-        });
-
-        Schema::create("intervient", function (Blueprint $t){
-            $t->foreignId("intervenant")->references("id")->on("utilisateur");
-            $t->foreignId("session")->references("id")->on("session");
-            $t->primary(["intervenant", "session"]);
-        });
     }
 
     /**
@@ -101,9 +82,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('intervient');
-        Schema::dropIfExists('beneficie');
-        Schema::dropIfExists('session');
+
         Schema::dropIfExists('activite');
         Schema::dropIfExists('demande');
         Schema::dropIfExists('type_activite');

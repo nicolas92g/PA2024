@@ -34,7 +34,7 @@ Route::get('/user/abilities', [\App\Http\Controllers\AUneCompetenceController::c
 Route::post('/user/abilities/add', [\App\Http\Controllers\AUneCompetenceController::class, "add"])->middleware(['auth:sanctum']);
 Route::post('/user/abilities/remove', [\App\Http\Controllers\AUneCompetenceController::class, "remove"])->middleware(['auth:sanctum']);
 
-Route::get('/ability/list', [\App\Http\Controllers\CompetenceController::class, "list"])->middleware(['auth:sanctum']);
+Route::get('/ability/list', [\App\Http\Controllers\CompetenceController::class, "list"]);
 Route::post('/ability/create', [\App\Http\Controllers\CompetenceController::class, "create"])->middleware(['auth:sanctum', 'ability:admin,benevole']);
 Route::post('/ability/delete', [\App\Http\Controllers\CompetenceController::class, "delete"])->middleware(['auth:sanctum', 'ability:admin']);
 
