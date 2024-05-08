@@ -46,3 +46,12 @@ function displayError(message) {
     errorMessage.textContent = message;
     errorMessage.style.display = 'block';
 }
+
+getToApi('/abili/list', null, getCookie('ATD-TOKEN')).then((response) => {
+    const fournisseurSelect = document.getElementById('fournisseur');
+    response.json().then((fournisseurs) => {
+        for (const fournisseur of fournisseurs) {
+            fournisseurSelect.innerHTML += "<option value='" + fournisseur.id + "'>" + fournisseur.nom + "</option>"
+        }
+    })
+})
