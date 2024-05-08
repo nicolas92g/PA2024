@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ActiviteController extends Controller
 {
     function list(){
-        return Activite::All();
+        return Activite::query()->join('type_activite','type_activite.id','=','activite.type')->select('activite.*','type_activite.nom as nom_type')->get();
     }
 
     function create(Request $r){
