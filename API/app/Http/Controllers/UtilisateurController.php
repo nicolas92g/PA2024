@@ -38,7 +38,7 @@ class UtilisateurController extends Controller
             ->join('role', 'est_un.role', '=', 'role.id')
             ->join('addresse', 'utilisateur.addresse', '=', 'addresse.id')
             ->where('role.nom', '=', 'benevole')
-            ->select('utilisateur.*', 'role.nom', 'addresse.premiere_ligne', 'addresse.code_postal', 'addresse.ville')
+            ->select('utilisateur.*', 'addresse.premiere_ligne', 'addresse.code_postal', 'addresse.ville')
             ->get();
     }
 
