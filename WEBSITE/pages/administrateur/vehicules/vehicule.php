@@ -94,7 +94,7 @@
                                 const cell = row.insertCell();
                                 cell.textContent = text;
                             }
-                        
+
                             function addCellWithButtons(row, truck) {
                                 const cell = row.insertCell();
                                 const editButton = createButton('Attribuer', 'btn btn-primary btn-sm', () => editTruck(truck.id));
