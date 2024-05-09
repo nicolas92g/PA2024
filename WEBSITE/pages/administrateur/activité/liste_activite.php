@@ -54,59 +54,87 @@
 </div>
 <script>function populateTable() {
         getToApi('/session/list', null, getCookie('ATD-TOKEN'))
-            .then(response => response.json())
-            .then(data => {
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch session data: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(sessions => {
                 const tbody = document.getElementById('userRow');
                 tbody.innerHTML = '';
 
-                data.forEach((session, index) => {
-                    const tr = document.createElement('tr');
+                return getToApi('/activity/list', null, getCookie('ATD-TOKEN'))
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch activities data: ' + response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .then(activities => {
+                        const activityMap = new Map(activities.map(activity => [activity.id, activity.nom]));
 
 
-                    const th = document.createElement('th');
-                    th.scope = 'row';
-                    th.textContent = index + 1;
-                    tr.appendChild(th);
+                        return getToApi('/activityType/list', null, getCookie('ATD-TOKEN'))
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to fetch activity types data: ' + response.statusText);
+                                }
+                                return response.json();
+                            })
+                            .then(types => {
+                                const typeMap = new Map(types.map(type => [type.id, type.nom]));
 
-                    const tdName = document.createElement('td');
-                    tdName.textContent = session.nom;
-                    tr.appendChild(tdName);
 
-                    const tdType = document.createElement('td');
-                    tdType.textContent = session.activite;
-                    tr.appendChild(tdType);
+                                sessions.forEach((session, index) => {
+                                    const tr = document.createElement('tr');
+                                    const th = document.createElement('th');
+                                    th.scope = 'row';
+                                    th.textContent = index + 1;
+                                    tr.appendChild(th);
+console.log(session)
 
-                    // Create and append the 'Date de l'activité' cell
-                    const tdDate = document.createElement('td');
-                    tdDate.textContent = new Date(session.horaire).toLocaleDateString(); // Format the date
-                    tr.appendChild(tdDate);
+                                    const tdName = document.createElement('td');
+                                    tdName.textContent = session.nom;
+                                    tr.appendChild(tdName);
 
-                    const tdDescription = document.createElement('td');
-                    tdDescription.textContent = session.description;
-                    tr.appendChild(tdDescription);
 
-                    const tdAction = document.createElement('td');
-                    const editButton = document.createElement('button');
-                    editButton.className = 'btn btn-primary';
-                    editButton.textContent = 'Edit';
+                                    const tdActivity = document.createElement('td');
+                                    tdActivity.textContent = activityMap.get(session.activite);
+                                    tr.appendChild(tdActivity);
 
-                    editButton.onclick = function() {
-                        editSession(session.id); n
-                    };
-                    tdAction.appendChild(editButton);
 
-                    const deleteButton = document.createElement('button');
-                    deleteButton.className = 'btn btn-danger';
-                    deleteButton.textContent = 'Delete';
-                    deleteButton.onclick = function() {
-                        deleteSession(session.id);
-                    };
-                    tdAction.appendChild(deleteButton);
+                                    const tdDate = document.createElement('td');
+                                    tdDate.textContent = new Date(session.horaire).toLocaleDateString();
+                                    tr.appendChild(tdDate);
 
-                    tr.appendChild(tdAction);
+                                    const tdDescription = document.createElement('td');
+                                    tdDescription.textContent = session.description;
+                                    tr.appendChild(tdDescription);
 
-                    tbody.appendChild(tr);
-                });
+                                    const tdAction = document.createElement('td');
+                                    const editButton = document.createElement('button');
+                                    editButton.className = 'btn btn-primary';
+                                    editButton.textContent = 'Edit';
+                                    editButton.onclick = function() {
+                                        editSession(session.id);
+                                    };
+                                    tdAction.appendChild(editButton);
+
+                                    const deleteButton = document.createElement('button');
+                                    deleteButton.className = 'btn btn-danger';
+                                    deleteButton.textContent = 'Delete';
+                                    deleteButton.onclick = function() {
+                                        deleteSession(session.id);
+                                    };
+                                    tdAction.appendChild(deleteButton);
+
+                                    tr.appendChild(tdAction);
+
+                                    tbody.appendChild(tr);
+                                });
+                            });
+                    });
             })
             .catch(error => {
                 console.error('Error fetching session list:', error);
@@ -114,8 +142,32 @@
             });
     }
 
-
     document.addEventListener('DOMContentLoaded', populateTable);
+    function deleteSession(sessionId) {
+        if (confirm('Are you sure you want to delete this truck?')) {
+
+            const formData = new FormData();
+            formData.append('id', sessionId);
+
+            postToApi('/session/delete', formData, getCookie('ATD-TOKEN'))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to delete truck');
+                    }
+                    return response.json();
+                })
+                .then(res => {
+                    console.log(res);
+                    populateTable();
+                })
+                .catch(error => {
+                    console.error('Error deleting truck:', error);
+                    alert('Error deleting truck: ' + error.message);
+                });
+        }
+    }
+
+
 </script>
 
 </body>

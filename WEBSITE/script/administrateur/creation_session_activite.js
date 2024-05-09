@@ -143,8 +143,9 @@ document.getElementById('nameActivite').addEventListener('change', function() {
 function addSession(){
     const args = new FormData();
 
-    args.append ("name",document.getElementById('nameActivite').value);
-    args.append("activity", document.getElementById('type').value);
+    args.append("name", document.getElementById('type').value);
+
+    args.append("activity", document.getElementById('nameActivite').value);
     args.append("time",document.getElementById('dateDebut').value);
     args.append("description", document.getElementById('description').value);
     args.append("place",document.getElementById('lieu').value);
@@ -178,6 +179,7 @@ console.log(args)
     postToApi('/session/create', args, getCookie('ATD-TOKEN')).then((response) => {
         response.json().then((res) => {
             console.log(res);
+            resetFields();
         })
     })
 }
@@ -221,4 +223,14 @@ function ajouterAliment() {
 
     // Append the foodItem div to the container
     container.appendChild(foodItem);
+}
+function resetFields() {
+    document.getElementById('nameActivite').value = '';
+    document.getElementById('type').value = '';
+    document.getElementById('dateDebut').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('lieu').value = '';
+
+
+    // Reset additional form fields if needed...
 }

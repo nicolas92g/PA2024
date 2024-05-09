@@ -13,6 +13,7 @@
 
     <div class="container">
 
+
             <div class="form-group">
                 <label for="type" class="form-label">Type d'activité :</label>
                 <select id="type" class="form-select">
@@ -50,7 +51,7 @@
                 <button type="submit" class="btn btn-primary btn-block " onclick="addSession()">Ajouter</button>
                 <a href="liste_activite.php" class="btn btn-primary btn-block">Voir les Activité</a>
             </div>
-        </form>
+
     </div>
 
 
