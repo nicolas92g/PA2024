@@ -62,7 +62,7 @@ class AuthController extends Controller
         $user->mail_verifie = true; //TODO envoyer un mail de confirmation
         $user->save();
 
-        return self::jsonOk();
+        return response()->json(['msg' => 'your request was executed successfully', 'id' => $user->id]);
     }
 
     public function registerVolunteer(Request $request) : JsonResponse
@@ -89,7 +89,7 @@ class AuthController extends Controller
         $rel->role = 2;
         $rel->save();
 
-        return self::jsonOk();
+        return response()->json(['msg' => 'your request was executed successfully', 'id' => $user->id]);
     }
 
     public function login(Request $request) : JsonResponse
