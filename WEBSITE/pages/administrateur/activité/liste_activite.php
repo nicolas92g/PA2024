@@ -7,33 +7,16 @@
 
 <?=navbar(3, "..")?>
 <div class="bg-secondary h-100 col-10 d-flex flex-column">
-    <div class="text-center mb-4">
-        <p class="mb-4">Créer une session d'activité :</p>
+    <div >
+        <a class="btn btn-outline-primary m-3" href="creation_session_activite.php">Retour</a>
+
     </div>
-<div class="col-md-10">
+<div class="text-center mb-4">
 
         <h3>Voici les différentes activités</h3>
     </div>
-    <div class="d-flex justify-content-center align-items-center">
-        <input type="text" id="search" class="form-control" placeholder="Search">
-        <button class="btn btn-success" onclick="searchUser()" id="searchBtn">Search</button>
-        <button class="btn btn-primary" onclick="location.href='liste_activite.php'">Reset</button>
-    </div>
-    <div class="d-flex flex-row m-2 justify-content-center">
-        <div class="form-check m-2">
-            <input class="form-check-input" type="checkbox" value="" name="nom" id="flexCheck1" onclick="validate()">
-            <label class="form-check-label" for="flexCheckChecked">
-                Nom de l'activité
-            </label>
-        </div>
-        <div class="form-check m-2">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheck2" onclick="validate()">
-            <label class="form-check-label" for="flexCheckDefault">
-                Type d'activité
-            </label>
-        </div>
 
-    </div>
+
 
     <p class="describe" id="description"></p>
 

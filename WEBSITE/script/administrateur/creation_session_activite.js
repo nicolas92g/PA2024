@@ -4,10 +4,17 @@ async function loadInitialData() {
     allActivities = await (await getToApi('/activity/list', null, getCookie('ATD-TOKEN'))).json();
     const types = await (await getToApi('/activityType/list', null, getCookie('ATD-TOKEN'))).json();
     const typeSelect = document.getElementById('type');
+
+    // Nettoyer les options existantes
     typeSelect.innerHTML = "<option value=''>-- Sélectionner le type d'activité --</option>";
-    for (const type of types) {
-        typeSelect.innerHTML += `<option value='${type.id}'>${type.nom}</option>`;
-    }
+
+    // Créer et ajouter de nouvelles options
+    types.forEach(type => {
+        let option = document.createElement('option');
+        option.value = type.id;
+        option.textContent = type.nom;
+        typeSelect.appendChild(option);
+    });
 }
 
 loadInitialData();
@@ -142,10 +149,16 @@ document.getElementById('nameActivite').addEventListener('change', function() {
 // Function to gather form data
 function addSession(){
     const args = new FormData();
+    let typeId = parseInt(document.getElementById('type').value, 10);
+    let activityId = parseInt(document.getElementById('nameActivite').value, 10);
 
-    args.append("name", document.getElementById('type').value);
+    if (!isNaN(typeId)) {
+        args.append("name", typeId);
+    }
 
-    args.append("activity", document.getElementById('nameActivite').value);
+    if (!isNaN(activityId)) {
+        args.append("activity", activityId);
+    }
     args.append("time",document.getElementById('dateDebut').value);
     args.append("description", document.getElementById('description').value);
     args.append("place",document.getElementById('lieu').value);

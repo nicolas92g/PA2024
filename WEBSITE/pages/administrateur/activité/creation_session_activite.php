@@ -44,7 +44,6 @@
             </div>
 
             <div id="fieldsContainer" class="form-group">
-                <!-- Les champs spécifiques seront injectés ici -->
             </div>
 
             <div class="form-group">
