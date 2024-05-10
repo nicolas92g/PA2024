@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\AUneCompetence;
 use App\Models\Competence;
+use App\Models\Utilisateur;
 use Illuminate\Http\Request;
 
 class AUneCompetenceController extends Controller
 {
     function list(Request $r){
         $id = $r->id ?? self::getUser()->id;
+        if (!Utilisateur::exists($id)) return self::jsonError('User do not exists');
         return AUneCompetence::query()->where('utilisateur', $id)->get();
     }
 
