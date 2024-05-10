@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 
 class AUneCompetenceController extends Controller
 {
-    function list(){
-        return AUneCompetence::query()->where('utilisateur', self::getUser()->id)->get();
+    function list(Request $r){
+        $id = $r->id ?? self::getUser()->id;
+        return AUneCompetence::query()->where('utilisateur', $id)->get();
     }
 
     function add(Request $r){
