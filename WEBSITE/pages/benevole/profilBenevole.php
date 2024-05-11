@@ -5,7 +5,7 @@
     <?=makeHead('Au Temps Donné - Intranet')?>
     <script src="../../script/checks/checkIsBenevole.js"></script>
     <body class="d-flex h-100">
-        <?=navbar(4)?>
+        <?=navbar(3)?>
 
         <div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-around py-5">
             <div class="card overflow-hidden">
@@ -13,7 +13,6 @@
                     <div class="col-md-3 pt-0">
                         <div class="list-group list-group-flush account-settings-links">
                             <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">Général</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Mot de passe</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Informations</a>
                         </div>
                     </div>
@@ -28,35 +27,20 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">Nom</label>
-                                        <input type="text" class="form-control mb-1" id="nom" value="">
+                                        <input type="text" class="form-control mb-1" id="nom" value="" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Prénom</label>
-                                        <input type="text" class="form-control" id="prenom" value="">
+                                        <input type="text" class="form-control" id="prenom" value="" readonly>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="form-label">E-mail</label>
-                                        <input type="text" class="form-control mb-1" id="mail" value="">
+                                        <input type="text" class="form-control mb-1" id="mail" value="" readonly>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="account-change-password">
-                                <div class="card-body pb-2">
-                                    <div class="form-group">
-                                        <label class="form-label">Mot de passe actuel</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Nouveau mot de passe</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Confirmer le nouveau mot de passe</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="tab-pane fade" id="account-info">
                                 <div class="card-body pb-2">
                                     <form id="competence-form">
@@ -156,7 +140,7 @@
 
             function addCellWithDeleteButton(row, userAbility) {
                 const cell = row.insertCell();
-                const deleteButton = createButton('Supprimer', 'btn btn-danger btn-sm', () => confirmDelete(userAbility.id));
+                const deleteButton = createButton('Supprimer', 'btn btn-danger btn-sm', () => confirmDelete(userAbility.competence));
                 cell.appendChild(deleteButton);
             }
 
@@ -164,32 +148,41 @@
                 const button = document.createElement('button');
                 button.textContent = text;
                 button.className = className;
-                button.onclick = onClick;
+                button.type = 'button';
+                button.onclick = function(event) {
+                    event.preventDefault();
+                    onClick();
+                };
                 return button;
             }
 
-            function confirmDelete(competenceId) {
-                if (confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?')) {
-                    const formData = new FormData();
-                    formData.append('id', competenceId);
 
-                    postToApi('/user/abilities/remove', formData, getCookie('ATD-TOKEN'))
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Failed to delete competence');
-                            }
-                            return response.json();
-                        })
-                        .then(() => {
-                            document.querySelector(`#row-${competenceId}`).remove();
-                            alert('Compétence supprimée avec succès');
-                        })
-                        .catch(error => {
-                            console.error('Error deleting competence:', error);
-                            alert('Error deleting competence: ' + error.message);
-                        });
-                }
+            function confirmDelete(competenceId) {
+                if (!confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?')) return;
+
+                const formData = new FormData();
+                formData.append('id', competenceId);
+
+                postToApi('/user/abilities/remove', formData, getCookie('ATD-TOKEN'))
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to delete competence');
+                        }
+                        return response.json();
+                    })
+                    .then(() => {
+                         // Appel fonction pour mettre à jour la liste des compétences
+                        alert('Compétence supprimée avec succès');
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Error deleting competence:', error);
+                        alert('Error deleting competence: ' + error.message);
+                    });
             }
+
+
+
 
 
         </script>

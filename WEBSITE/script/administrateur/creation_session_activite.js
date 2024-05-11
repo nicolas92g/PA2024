@@ -1,16 +1,37 @@
 let allActivities = [];
+let allProducts = [];
+let allTrucks = [];
 
 async function loadInitialData() {
-    allActivities = await (await getToApi('/activity/list', null, getCookie('ATD-TOKEN'))).json();
-    const types = await (await getToApi('/activityType/list', null, getCookie('ATD-TOKEN'))).json();
-    const typeSelect = document.getElementById('type');
-    typeSelect.innerHTML = "<option value=''>-- Sélectionner le type d'activité --</option>";
-    for (const type of types) {
-        typeSelect.innerHTML += `<option value='${type.id}'>${type.nom}</option>`;
+    try {
+        // Fetch all necessary data in parallel
+        const activityPromise = getToApi('/activity/list', null, getCookie('ATD-TOKEN'));
+        const typePromise = getToApi('/activityType/list', null, getCookie('ATD-TOKEN'));
+        const productPromise = getToApi('/product/list', null, getCookie('ATD-TOKEN'));
+        const truckPromise = getToApi('/truck/list', null, getCookie('ATD-TOKEN'));
+
+        const results = await Promise.all([activityPromise, typePromise, productPromise, truckPromise]);
+
+        // Process results
+        allActivities = await results[0].json();
+        const types = await results[1].json();
+        allProducts = await results[2].json();
+        allTrucks = await results[3].json();
+
+        // Populate activity types dropdown
+        const typeSelect = document.getElementById('type');
+        typeSelect.innerHTML = "<option value=''>-- Sélectionner le type d'activité --</option>";
+        types.forEach(type => {
+            typeSelect.innerHTML += `<option value='${type.id}'>${type.nom}</option>`;
+        });
+    } catch (error) {
+        console.error('Error loading initial data:', error);
+        // Optionally handle the UI or alert the user
     }
 }
 
 loadInitialData();
+
 
 document.getElementById('type').addEventListener('change', function() {
     const typeId = this.value;
@@ -41,6 +62,16 @@ document.getElementById('nameActivite').addEventListener('change', function() {
     if (!selectedActivityId) {
         return;
     }
+    function populateTruckDropdown(truckSelect) {
+        truckSelect.innerHTML = `<option value="">-- Sélectionner le véhicule--</option>`; // Reset and add the default option
+        allTrucks.forEach(truck => {
+            const option = document.createElement('option');
+            option.value = truck.id;
+            option.textContent = `Marque: ${truck.marque}, Immatriculation: ${truck.immatriculation}`;
+            truckSelect.appendChild(option);
+        });
+    }
+
 
     const selectedActivity = allActivities.find(activity => activity.id === parseInt(selectedActivityId));
     if (!selectedActivity) return;
@@ -54,36 +85,38 @@ document.getElementById('nameActivite').addEventListener('change', function() {
                     <input type="text" class="form-control" id="lieuArrivee" name="lieuArrivee">
                 </div>
                 
-                <div class="mb-3">
-                    <label for="produit" class="form-label">Produit :</label>
-                    <input type="text" class="form-control" id="produit" name="produit">
+                 <div class="form-group">
+                <label for="produit" class="form-label">Produit :</label>
+                <select id="produit" class="form-select">
+                    <option value="">-- Sélectionner le produit--</option>
+                </select>
                 </div>
                 
                <div class="mb-3">
                     <label for="quantite" class="form-label">Quantité :</label>
                     <input type="number" class="form-control" id="quantite" name="quantite">
                 </div>
+                
+                  <div class="form-group">
+                <label for="truck" class="form-label">Véhicule :</label>
+                <select id="truck" class="form-select">
+                    <option value="">-- Sélectionner le véhicule--</option>
+                </select>
+                </div>
+                
             `;
+            const productSelect = document.getElementById('produit');
+            allProducts.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = product.nom;
+                productSelect.appendChild(option);
+            });
+
+            populateTruckDropdown(document.getElementById('truck'));
             break;
 
-        case 'ramassage alimentaire':
-            fieldsContainer.innerHTML = `
-                <div class="mb-3">
-                    <label for="fournisseurs" class="form-label">Fournisseurs :</label>
-                    <input type="text" class="form-control" id="fournisseurs" name="fournisseurs">
-                </div>
-                <div class="mb-3">
-                    <label for="entrepotStockage" class="form-label">Entrepôt de stockage :</label>
-                    <input type="text" class="form-control" id="entrepotStockage" name="entrepotStockage">
-                </div>
-                <div class="mb-3">
-                    <label for="dateDebutRamassage" class="form-label">Date et heure de l'activité :</label>
-                    <input type="datetime-local" class="form-control" id="dateDebutRamassage" name="dateDebut">
-                </div>
-                <div id="alimentsContainer"></div>
-                <button type="button" class="btn btn-primary" onclick="ajouterAliment()">Ajouter un aliment</button>
-            `;
-            break;
+
 
         case 'services administratifs':
             fieldsContainer.innerHTML = `
@@ -99,7 +132,15 @@ document.getElementById('nameActivite').addEventListener('change', function() {
                     <input type="text" class="form-control" id="lieuArrivee" name="lieuArrivee">
                 </div>
                 
-            `;
+                <div class="form-group">
+                <label for="truck" class="form-label">Véhicule :</label>
+                <select id="truck" class="form-select">
+                    <option value="">-- Sélectionner le véhicule--</option>
+                </select>
+            </div>
+                `;
+            populateTruckDropdown(document.getElementById('truck'));
+
             break;
 
         case 'visite et activités avec personnes âgées':
@@ -161,6 +202,10 @@ function addSession(){
 
 
 console.log(args)
+    const truck = document.getElementById('truck');
+    if ( truck&& truck.value) {
+        args.append("truck", truck.value);
+    }
 
     const produit = document.getElementById('produit');
     if ( produit&& produit.value) {
@@ -215,7 +260,11 @@ function resetFields() {
         'lieuArrivee',
         'produit',
         'qauntité',
-        'nom'// Potentially optional field
+        'nom',
+        'truck',
+        'dateFin',
+
+
     ];
 
     fields.forEach(fieldId => {
