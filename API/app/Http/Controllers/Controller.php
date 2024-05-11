@@ -32,7 +32,7 @@ class Controller extends BaseController
         return response()->json(['msg' => $msg]);
     }
 
-    protected function createFunctionTemplate(Request $r, $class, $inputs, $address = false, $constants = [], $options = []){
+    protected function createFunctionTemplate(Request $r, $class, $inputs, $address = false, $constants = [], $options = [], $returnId = false){
         foreach ($inputs as $key => $value){
             if (!isset($r->$key)){
                 return self::jsonError('there is a missing input : ' . $key);
@@ -77,6 +77,10 @@ class Controller extends BaseController
         }
 
         $obj->save();
+
+        if ($returnId){
+            return response()->json(['msg' => "your request was executed successfully", 'id' => $obj->id]);
+        }
 
         return self::jsonOk();
     }

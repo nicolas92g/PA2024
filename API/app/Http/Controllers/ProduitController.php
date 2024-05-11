@@ -11,7 +11,9 @@ class ProduitController extends Controller
     function list(){
         return DB::table('produit')
             ->join('fournisseur', 'fournisseur.id', '=', 'produit.fournisseur')
-            ->select('produit.*', 'fournisseur.nom as fournisseur_nom')->get();
+            ->leftJoin('entrepot', 'entrepot.id', '=', 'produit.entrepot')
+            ->leftJoin('ramasse', 'ramasse.produit', '=', 'produit.id')
+            ->select('produit.*', 'fournisseur.nom as fournisseur_nom', 'entrepot.nom as entrepot_nom', 'ramasse.ramassage')->get();
     }
 
     function create(Request $request){

@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 class SessionController extends Controller
 {
     public function list(){
-        return Session::all();
+        return Session::query()
+            ->join('activite', 'session.activite', '=', 'activite.id')
+            ->join('type_activite', 'activite.type', '=', 'type_activite.id')
+            ->select(['session.*', 'type_activite.nom as typeActivite'])->get();
     }
     public function create(Request $request){
         return $this->createFunctionTemplate($request, Session::class,

@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 class AnnexeController extends Controller
 {
     public function list(){
-        return Annexe::all();
+        return Annexe::query()
+            ->join('addresse', 'annexe.addresse', '=', 'addresse.id')
+            ->select('annexe.*', 'addresse.premiere_ligne', 'addresse.code_postal', 'addresse.ville')
+            ->get();
     }
 
     public function create(Request $request){

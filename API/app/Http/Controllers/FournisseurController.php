@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 class FournisseurController extends Controller
 {
     function list(){
-        return Fournisseur::all();
+        return Fournisseur::query()
+            ->join('addresse', 'fournisseur.addresse', '=', 'addresse.id')
+            ->select('fournisseur.*', 'addresse.premiere_ligne', 'addresse.code_postal', 'addresse.ville')
+            ->get();
     }
 
     function create(Request $request){

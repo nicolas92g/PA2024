@@ -113,9 +113,9 @@ class DatabaseSeeder extends Seeder
 
         DB::table('addresse')->insert([
             'id' => 10,
-            'premiere_ligne' => "1 Avenue du Général Sarrail",
-            'code_postal' => 75016,
-            'ville' => 'Paris',
+            'premiere_ligne' => "49 Av. du Général de Gaulle",
+            'code_postal' => 51100,
+            'ville' => 'Reims',
         ]);
 
         DB::table('fournisseur')->insert([
@@ -126,9 +126,9 @@ class DatabaseSeeder extends Seeder
 
         DB::table('addresse')->insert([
             'id' => 11,
-            'premiere_ligne' => "148 Av. de Versailles",
-            'code_postal' => 75016,
-            'ville' => 'Paris',
+            'premiere_ligne' => "Rue du Moulin d'Andeux",
+            'code_postal' => 60400,
+            'ville' => 'Noyon',
         ]);
 
         DB::table('fournisseur')->insert([
@@ -139,9 +139,9 @@ class DatabaseSeeder extends Seeder
 
         DB::table('addresse')->insert([
             'id' => 12,
-            'premiere_ligne' => "151 Rue de la Convention",
-            'code_postal' => 75015,
-            'ville' => 'Paris',
+            'premiere_ligne' => "Bd Victor Hugo",
+            'code_postal' => 60800,
+            'ville' => 'Crépy-en-Valois',
         ]);
 
         DB::table('fournisseur')->insert([
