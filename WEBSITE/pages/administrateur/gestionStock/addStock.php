@@ -97,7 +97,13 @@
 
                 postToApi('/product/create', args, getCookie('ATD-TOKEN')).then((response) => {
                     response.json().then((res) => {
-                        console.log(res);
+                        if (response.ok){
+                            alert('Votre produit a bien été enregistré');
+                            location.reload();
+                        }
+                        else{
+                            alert("une erreur s'est produite : " + res.msg);
+                        }
                     })
                 })
             }

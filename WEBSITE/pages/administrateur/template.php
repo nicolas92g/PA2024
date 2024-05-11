@@ -27,11 +27,14 @@ function navbar($pageIndex, $path = "."){
                 </a>
 
                 <a href='$path/vehicules/add_vehicule.php' class='btn " . ($pageIndex == 5 ? "btn-secondary" : "btn-primary") . " mb-5'>
-                    <i class='fas fa-graduation-cap'></i> Véhicules
+                    <i class='fas fa-graduation-cap'></i>Véhicules
                 </a>
 
-                <a href='$path/profil.php' class='btn " . ($pageIndex == 6 ? "btn-secondary" : "btn-primary") . "'>
-                    <i class='fas fa-user-alt'></i> Profil
+                <a href='$path/profil.php' class='btn " . ($pageIndex == 6 ? "btn-secondary" : "btn-primary") . " mb-5'>
+                    <i class='fas fa-user-alt'></i>Profil
+                </a>
+                <a href='$path/newAdmin.php' class='btn " . ($pageIndex == 7 ? "btn-secondary" : "btn-primary") . "'>
+                    <i class='fas fa-user-alt'></i>Création d'un admin
                 </a>
             </div>
             <div>
