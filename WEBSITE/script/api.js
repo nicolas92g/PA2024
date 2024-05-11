@@ -1,5 +1,10 @@
 API_URL = API_PROTOCOL + '://' + API_ADDRESS + ':' + API_PORT + '/api'
 
+getToApi('/ability/list', null, null).catch(response => {
+    alert('Connection à internet impossible, appuyez sur ok pour recharger la page')
+    location.reload();
+})
+
 function displayResponseMsg(jsonResponse, status){
 
     const output = document.getElementById('response-msg');

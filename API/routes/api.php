@@ -82,10 +82,17 @@ Route::get('/product/list', [\App\Http\Controllers\ProduitController::class, "li
 Route::post('/product/create', [\App\Http\Controllers\ProduitController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/product/delete', [\App\Http\Controllers\ProduitController::class, "delete"])->middleware(['auth:sanctum']);
 
-
 Route::get('/ticket/list', [\App\Http\Controllers\TicketController::class, "listTickets"])->middleware(['auth:sanctum']);
 Route::post('/ticket/create', [\App\Http\Controllers\TicketController::class, "createTicket"])->middleware(['auth:sanctum']);
 Route::post('/ticket/updateState', [\App\Http\Controllers\TicketController::class, "updateState"])->middleware(['auth:sanctum']);
 
 Route::get('/ticketResponse/list', [\App\Http\Controllers\TicketController::class, "listResponses"])->middleware(['auth:sanctum']);
 Route::post('/ticketResponse/create', [\App\Http\Controllers\TicketController::class, "createResponse"])->middleware(['auth:sanctum']);
+
+Route::get('/ramassage/list', [\App\Http\Controllers\RamassageController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/ramassage/create', [\App\Http\Controllers\RamassageController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/ramassage/delete', [\App\Http\Controllers\RamassageController::class, "delete"])->middleware(['auth:sanctum']);
+
+Route::get('/ramasse/list', [\App\Http\Controllers\RamasseController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/ramasse/create', [\App\Http\Controllers\RamasseController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/ramasse/delete', [\App\Http\Controllers\RamasseController::class, "delete"])->middleware(['auth:sanctum']);
