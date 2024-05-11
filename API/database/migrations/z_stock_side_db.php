@@ -73,7 +73,7 @@ return new class extends Migration
             $t->integer("max_participants")->nullable();
             $t->integer("quantite")->nullable();
             $t->foreignId("produit")->nullable()->references("id")->on("produit");
-            $t->foreignId("truck")->nullable()->references("id")->on("camion");
+            $t->foreignId("camion")->nullable()->references("id")->on("camion");
             $t->foreignId("entrepot")->nullable()->references("id")->on("entrepot");
             $t->foreignId("activite")->references("id")->on("activite");
         });
