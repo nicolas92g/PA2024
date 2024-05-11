@@ -13,15 +13,13 @@ function navbar($pageIndex){
                     <i class='fas fa-home'></i> Accueil
                 </a>
                 <a href='disponibility.php' class='btn mb-5 " . ($pageIndex == 1 ? "btn-secondary" : "btn-primary") . "'>
-                    <i class='fas fa-calendar-alt'></i> Disponibilité
+                    <i class='fas fa-calendar-alt'></i> Activité
                 </a>
                 <a href='planning.php' class='btn mb-5 " . ($pageIndex == 2 ? "btn-secondary" : "btn-primary") . "'>
                     <i class='fas fa-calendar-day'></i> Planning
                 </a>
-                <a href='formation.php' class='btn mb-5 " . ($pageIndex == 3 ? "btn-secondary" : "btn-primary") . "'>
-                    <i class='fas fa-graduation-cap'></i> Formations
-                </a>
-                <a href='profilBenevole.php' class='btn " . ($pageIndex == 4 ? "btn-secondary" : "btn-primary") . "'>
+              
+                <a href='profilBenevole.php' class='btn " . ($pageIndex == 3 ? "btn-secondary" : "btn-primary") . "'>
                     <i class='fas fa-user-alt'></i> Profil
                 </a>
             </div>

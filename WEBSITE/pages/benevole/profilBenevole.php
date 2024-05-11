@@ -5,7 +5,7 @@
     <?=makeHead('Au Temps Donné - Intranet')?>
     <script src="../../script/checks/checkIsBenevole.js"></script>
     <body class="d-flex h-100">
-        <?=navbar(4)?>
+        <?=navbar(3)?>
 
         <div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-around py-5">
             <div class="card overflow-hidden">
@@ -13,7 +13,6 @@
                     <div class="col-md-3 pt-0">
                         <div class="list-group list-group-flush account-settings-links">
                             <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">Général</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Mot de passe</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Informations</a>
                         </div>
                     </div>
@@ -28,57 +27,47 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">Nom</label>
-                                        <input type="text" class="form-control mb-1" id="nom" value="">
+                                        <input type="text" class="form-control mb-1" id="nom" value="" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Prénom</label>
-                                        <input type="text" class="form-control" id="prenom" value="">
+                                        <input type="text" class="form-control" id="prenom" value="" readonly>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="form-label">E-mail</label>
-                                        <input type="text" class="form-control mb-1" id="mail" value="">
+                                        <input type="text" class="form-control mb-1" id="mail" value="" readonly>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="account-change-password">
-                                <div class="card-body pb-2">
-                                    <div class="form-group">
-                                        <label class="form-label">Mot de passe actuel</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Nouveau mot de passe</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Confirmer le nouveau mot de passe</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="tab-pane fade" id="account-info">
                                 <div class="card-body pb-2">
                                     <form id="competence-form">
-                                        <div class="form-group">
-                                            <label class="form-label">Compétences</label>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="competences[]" id="html" value="HTML">
-                                                <label class="form-check-label" for="html">HTML</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="competences[]" id="css" value="CSS">
-                                                <label class="form-check-label" for="css">CSS</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="competences[]" id="javascript" value="JavaScript">
-                                                <label class="form-check-label" for="javascript">JavaScript</label>
-                                            </div>
+                                        <label class="form-label">Compétences</label>
+                                        <table class="table table-striped">
+                                            <thead class="text">
+                                            <tr>
+                                                <th scope='col'>#</th>
+                                                <th>Mes compétences</th>
+                                                <th>Supprimer</th>
 
+                                            </tr>
+                                            </thead>
+                                            <tbody id="abilityList">
+                                            </tbody>
+                                            </table>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Poster</button>
-                                    </form>
+                                <button type="button" class="btn btn-primary" onclick="window.location.href='addCompetences.php';">Ajout de compétence</button>
+
+                            </div>
+
+
+
                                 </div>
+
+
+                            </div>
                             </div>
 
                         </div>
@@ -87,7 +76,7 @@
             </div>
         </div>
 
-        <!-- jQuery -->
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
         <script>
@@ -101,7 +90,107 @@
                 });
             });
         </script>
+        <script defer>
+            document.addEventListener('DOMContentLoaded', async function() {
+                try {
+                    const abilitiesResponse = await getToApi('/ability/list', null, getCookie('ATD-TOKEN'));
+                    const abilitiesData = await abilitiesResponse.json();
+                    const abilitiesMap = new Map();
+                    abilitiesData.forEach(ability => {
+                        abilitiesMap.set(ability.id, ability.nom);
+                    });
+
+                    const userAbilitiesResponse = await getToApi('/user/abilities', null, getCookie('ATD-TOKEN'));
+                    const userAbilitiesData = await userAbilitiesResponse.json();
+                    const competencesTableBody = document.querySelector('#abilityList');
+
+                    if (userAbilitiesData && userAbilitiesData.length > 0) {
+                        userAbilitiesData.forEach(function(userAbility, index) {
+                            const row = document.createElement('tr');
+                            row.id = `row-${userAbility.id}`;
+
+                            // Ajoute la cellule pour l'index
+                            addIndexCell(row, index + 1);
+                            addCompetenceCell(row, userAbility, abilitiesMap);
+                            addCellWithDeleteButton(row, userAbility);
+
+                            competencesTableBody.appendChild(row);
+                        });
+                    } else {
+                        competencesTableBody.innerHTML = '<tr><td colspan="3">Cet utilisateur n’a pas de compétences sélectionnées.</td></tr>';
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    competencesTableBody.innerHTML = '<tr><td colspan="3">Erreur lors du chargement des compétences de l\'utilisateur.</td></tr>';
+                }
+            });
+
+            function addIndexCell(row, index) {
+                const indexCell = document.createElement('td');
+                indexCell.textContent = index;
+                row.appendChild(indexCell);
+            }
+
+            function addCompetenceCell(row, userAbility, abilitiesMap) {
+                const nameCell = document.createElement('td');
+                const competenceName = abilitiesMap.get(userAbility.competence);
+                nameCell.textContent = competenceName || "Compétence inconnue";
+                row.appendChild(nameCell);
+            }
+
+            function addCellWithDeleteButton(row, userAbility) {
+                const cell = row.insertCell();
+                const deleteButton = createButton('Supprimer', 'btn btn-danger btn-sm', () => confirmDelete(userAbility.competence));
+                cell.appendChild(deleteButton);
+            }
+
+            function createButton(text, className, onClick) {
+                const button = document.createElement('button');
+                button.textContent = text;
+                button.className = className;
+                button.type = 'button';
+                button.onclick = function(event) {
+                    event.preventDefault();
+                    onClick();
+                };
+                return button;
+            }
+
+
+            function confirmDelete(competenceId) {
+                if (!confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?')) return;
+
+                const formData = new FormData();
+                formData.append('id', competenceId);
+
+                postToApi('/user/abilities/remove', formData, getCookie('ATD-TOKEN'))
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to delete competence');
+                        }
+                        return response.json();
+                    })
+                    .then(() => {
+                         // Appel fonction pour mettre à jour la liste des compétences
+                        alert('Compétence supprimée avec succès');
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Error deleting competence:', error);
+                        alert('Error deleting competence: ' + error.message);
+                    });
+            }
+
+
+
+
+
+        </script>
+
+
+
         <script src="../../script/content/nameDisplay.js"></script>
         <script src="../../script/profil/profil.js"></script>
+
     </body>
 </html>

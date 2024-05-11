@@ -14,9 +14,8 @@
 <div class="bg-secondary h-100 col-10 d-flex flex-column">
     <div class="container py-5 text-center">
         <p class="mb-4">Voici les différentes demandes à traiter :</p>
-        <div class="col-md-10 mt-5">
+
             <h4>Les demandes</h4>
-            <div class="table-responsive">
                 <table id="tableDemandes" class="table table-striped table-hover table-bordered">
                     <thead>
                     <tr>
@@ -30,9 +29,10 @@
                     <tbody>
                     </tbody>
                 </table>
-            </div>
-        </div>
 
+
+</div>
+</div>
 
 </body>
 <script src="../../../script/checks/checkIsAdmin.js"></script>
