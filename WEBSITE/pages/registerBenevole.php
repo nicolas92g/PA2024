@@ -32,44 +32,9 @@
                         <input type="tel" class="form-control mb-4"  id="numero" name="number" placeholder="Entrez votre numéro de téléphone" required>
                         <input type="password" class="form-control mb-4" id="motdepasse" name="password" placeholder="Entrez votre mot de passe" required>
 
-                        <h5>Sélectionnez vos compétences :</h5>
-                        <div class="form-group">
-                            <label for="competence1">Competence 1:</label>
-                            <select class="form-control mb-4" id="competence1" name="competence1">
-                                <option value="">Choisissez une compétence</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="competence2">Competence 2:</label>
-                            <select class="form-control mb-4" id="competence2" name="competence2">
-                                <option value="">Choisissez une compétence</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="competence3">Competence 3:</label>
-                            <select class="form-control mb-4" id="competence3" name="competence3">
-                                <option value="">Choisissez une compétence</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="competence4">Competence 4:</label>
-                            <select class="form-control mb-4" id="competence4" name="competence4">
-                                <option value="">Choisissez une compétence</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="competence4">Competence 4:</label>
-                            <select class="form-control mb-4" id="competence5" name="competence5">
-                                <option value="">Choisissez une compétence</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="competence4">Competence 4:</label>
-                            <select class="form-control mb-4" id="competence6" name="competence6">
-                                <option value="">Choisissez une compétence</option>
-                            </select>
-                        </div>
-                        </form>
+
+
+
 
 
                         <button type="button" class="btn btn-primary btn-block" onclick="handleRegistration(true)">S'inscrire</button>
@@ -77,34 +42,7 @@
                 </div>
             </div>
         </main>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const selects = document.querySelectorAll('select');
-                selects.forEach(select => {
-                    select.addEventListener('change', function () {
-                        updateOptions();
-                    });
-                });
 
-                function updateOptions() {
-                    const allValues = Array.from(selects).reduce((acc, select) => {
-                        acc.push(select.value);
-                        return acc;
-                    }, []);
-
-                    selects.forEach(select => {
-                        const current = select.value;
-                        Array.from(select.options).forEach(option => {
-                            if (option.value !== '' && allValues.includes(option.value) && current !== option.value) {
-                                option.disabled = true;
-                            } else {
-                                option.disabled = false;
-                            }
-                        });
-                    });
-                }
-            });
-        </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     </body>

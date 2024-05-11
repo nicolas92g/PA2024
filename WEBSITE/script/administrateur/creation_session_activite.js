@@ -4,17 +4,10 @@ async function loadInitialData() {
     allActivities = await (await getToApi('/activity/list', null, getCookie('ATD-TOKEN'))).json();
     const types = await (await getToApi('/activityType/list', null, getCookie('ATD-TOKEN'))).json();
     const typeSelect = document.getElementById('type');
-
-    // Nettoyer les options existantes
     typeSelect.innerHTML = "<option value=''>-- Sélectionner le type d'activité --</option>";
-
-    // Créer et ajouter de nouvelles options
-    types.forEach(type => {
-        let option = document.createElement('option');
-        option.value = type.id;
-        option.textContent = type.nom;
-        typeSelect.appendChild(option);
-    });
+    for (const type of types) {
+        typeSelect.innerHTML += `<option value='${type.id}'>${type.nom}</option>`;
+    }
 }
 
 loadInitialData();
@@ -55,13 +48,21 @@ document.getElementById('nameActivite').addEventListener('change', function() {
     switch (selectedActivity.nom) {
         case 'distribution alimentaire, avec maraude':
             fieldsContainer.innerHTML = `
+               
                 <div class="mb-3">
-                    <label for="itineraire" class="form-label">Itinéraire :</label>
-                    <input type="text" class="form-control" id="itineraire" name="itineraire">
+                    <label for="lieuArrivee" class="form-label">Lieu d'arrivée :</label>
+                    <input type="text" class="form-control" id="lieuArrivee" name="lieuArrivee">
                 </div>
                 
-                <div id="alimentsContainer"></div>
-                <button type="button" class="btn btn-primary" onclick="ajouterAliment()">Ajouter un aliment</button>
+                <div class="mb-3">
+                    <label for="produit" class="form-label">Produit :</label>
+                    <input type="text" class="form-control" id="produit" name="produit">
+                </div>
+                
+               <div class="mb-3">
+                    <label for="quantite" class="form-label">Quantité :</label>
+                    <input type="number" class="form-control" id="quantite" name="quantite">
+                </div>
             `;
             break;
 
@@ -149,16 +150,10 @@ document.getElementById('nameActivite').addEventListener('change', function() {
 // Function to gather form data
 function addSession(){
     const args = new FormData();
-    let typeId = parseInt(document.getElementById('type').value, 10);
-    let activityId = parseInt(document.getElementById('nameActivite').value, 10);
 
-    if (!isNaN(typeId)) {
-        args.append("name", typeId);
-    }
+    args.append("name", document.getElementById('nom').value);
 
-    if (!isNaN(activityId)) {
-        args.append("activity", activityId);
-    }
+    args.append("activity", document.getElementById('nameActivite').value);
     args.append("time",document.getElementById('dateDebut').value);
     args.append("description", document.getElementById('description').value);
     args.append("place",document.getElementById('lieu').value);
@@ -166,6 +161,17 @@ function addSession(){
 
 
 console.log(args)
+
+    const produit = document.getElementById('produit');
+    if ( produit&& produit.value) {
+        args.append("product", produit.value);
+    }
+
+    const quantite = document.getElementById('quantite');
+    if ( quantite&& quantite.value) {
+        args.append("quantity", quantite.value);
+    }
+
 
     const arrive = document.getElementById('lieuArrivee');
     if ( arrive&& arrive.value) {
@@ -197,52 +203,29 @@ console.log(args)
     })
 }
 
-function ajouterAliment() {
-    // Find the container where we want to add the new elements
-    const container = document.getElementById('alimentsContainer');
 
-    // Create a new div for the food item that will contain the input fields and the remove button
-    const foodItem = document.createElement('div');
-    foodItem.className = 'food-item'; // Adding a class for potential styling
-
-    // Create the input for the food product name
-    const productInput = document.createElement('input');
-    productInput.type = 'text';
-    productInput.className = 'form-control mb-2';
-    productInput.placeholder = 'Nom du produit';
-    productInput.name = 'productName[]'; // Using an array name to handle multiple products
-
-    // Create the input for the quantity
-    const quantityInput = document.createElement('input');
-    quantityInput.type = 'number';
-    quantityInput.className = 'form-control mb-2';
-    quantityInput.placeholder = 'Quantité';
-    quantityInput.name = 'quantity[]'; // Using an array name to handle multiple quantities
-
-    // Create the remove button
-    const removeButton = document.createElement('button');
-    removeButton.type = 'button';
-    removeButton.className = 'btn btn-danger mb-2';
-    removeButton.textContent = 'Supprimer';
-    removeButton.onclick = function() {
-        // Remove the food item from the DOM when clicked
-        container.removeChild(foodItem);
-    };
-
-    // Append the inputs and the remove button to the foodItem div
-    foodItem.appendChild(productInput);
-    foodItem.appendChild(quantityInput);
-    foodItem.appendChild(removeButton);
-
-    // Append the foodItem div to the container
-    container.appendChild(foodItem);
-}
 function resetFields() {
-    document.getElementById('nameActivite').value = '';
-    document.getElementById('type').value = '';
-    document.getElementById('dateDebut').value = '';
-    document.getElementById('description').value = '';
-    document.getElementById('lieu').value = '';
+    // Safe reset function that checks if elements exist before attempting to reset them
+    const fields = [
+        'nameActivite',
+        'type',
+        'dateDebut',
+        'description',
+        'lieu',
+        'lieuArrivee',
+        'produit',
+        'qauntité',
+        'nom'// Potentially optional field
+    ];
+
+    fields.forEach(fieldId => {
+        const elem = document.getElementById(fieldId);
+        if (elem) {
+            elem.value = '';
+        }
+    });
+
+
 
 
     // Reset additional form fields if needed...

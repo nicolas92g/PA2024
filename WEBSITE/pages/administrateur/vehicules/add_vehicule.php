@@ -62,20 +62,23 @@
 
                                             postToApi('/truck/create', args, getCookie('ATD-TOKEN'))
                                                 .then(response => {
-                                                    if (!response.ok) {
-                                                        throw new Error('Failed to create vehicle: ' + response.statusText);
-                                                    }
-                                                    return response.json();
-                                                })
-                                                .then(data => {
-                                                    console.log('Vehicle created successfully:', data);
-                                                    Alert('Vehicle added successfully!', 'success');
-                                                    form.reset();
+                                                    response.json().then(data => {
+                                                        if (response.ok) {
+                                                            console.log('Vehicle created successfully:', data);
+                                                            alert('Vehicle added successfully!', 'success');
+                                                            form.reset();
+                                                        } else {
+                                                            throw new Error('Failed to create vehicle: ' + data.message);
+                                                        }
+                                                    }).catch(error => {
+                                                        throw new Error('Failed to parse response: ' + error.message);
+                                                    });
                                                 })
                                                 .catch(error => {
                                                     console.error('Error adding vehicle:', error);
                                                     alert('Failed to add vehicle: ' + error.message);
                                                 });
+
                                         }
                                     </script>
 

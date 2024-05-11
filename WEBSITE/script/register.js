@@ -47,29 +47,45 @@ function displayError(message) {
     errorMessage.style.display = 'block';
 }
 
-// Function to fetch data from the API asynchronously
 async function populateCompetences() {
     try {
         const response = await getToApi('/ability/list', null, getCookie('ATD-TOKEN'));
-
         const abilities = await response.json();
-        const selectIds = ['competence1', 'competence2', 'competence3', 'competence4'];
-        selectIds.forEach(id => {
-            const selectElement = document.getElementById(id);
-            if (selectElement) {
-                selectElement.innerHTML = '<option value="">Choisissez une compétence</option>';
-                abilities.forEach(ability => {
-                    const option = document.createElement('option');
-                    option.value = ability.id;
-                    option.textContent = ability.nom;
-                    selectElement.appendChild(option);
-                });
-            }
+
+        const competencesContainer = document.getElementById('competencesContainer');
+        competencesContainer.innerHTML = '';  // Clear existing content
+
+        abilities.forEach((ability, index) => {
+            // Create a new select element for each ability
+            const selectDiv = document.createElement('div');
+            selectDiv.classList.add('form-group');
+
+            const label = document.createElement('label');
+            label.textContent = `Competence ${index + 1}:`;
+            label.htmlFor = `competence${index + 1}`;
+
+            const select = document.createElement('select');
+            select.id = `competence${index + 1}`;
+            select.name = `competence${index + 1}`;
+            select.classList.add('form-control', 'mb-4');
+            select.innerHTML = `<option value="">Choisissez une compétence</option>`;  // Default option
+
+            // Add an option for each ability to the select element
+            abilities.forEach(ability => {
+                const option = document.createElement('option');
+                option.value = ability.id;
+                option.textContent = ability.nom;
+                select.appendChild(option);
+            });
+
+            // Append label and select to the div, then div to the container
+            selectDiv.appendChild(label);
+            selectDiv.appendChild(select);
+            competencesContainer.appendChild(selectDiv);
         });
     } catch (error) {
         console.error('Error fetching abilities:', error);
     }
 }
 
-// Ensure DOM is fully loaded before running the function
 document.addEventListener('DOMContentLoaded', populateCompetences);

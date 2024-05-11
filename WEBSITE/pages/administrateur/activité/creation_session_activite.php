@@ -27,19 +27,23 @@
                     <option value="">-- Sélectionner l'activité --</option>
                 </select>
             </div>
+        <div class="form-group">
+            <label for="nom" class="form-label">Nom de la session :</label>
+            <input type="text" class="form-control" id="nom" name="nom">
+        </div>
 
             <div class="form-group">
-                <label for="description" class="form-label">Description de l'activité :</label>
+                <label for="description" class="form-label">Description de la session :</label>
                 <textarea class="form-control" id="description" name="description" rows="3"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="dateDebut" class="form-label">Date et heure de l'activité :</label>
+                <label for="dateDebut" class="form-label">Date et heure de la session :</label>
                 <input type="datetime-local" class="form-control" id="dateDebut" name="dateDebut">
             </div>
 
             <div class="form-group">
-                <label for="lieu" class="form-label">Lieu de l'activité :</label>
+                <label for="lieu" class="form-label">Lieu de la session :</label>
                 <input type="text" class="form-control" id="lieu" name="lieu">
             </div>
 

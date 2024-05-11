@@ -6,7 +6,7 @@
 <body class="cointainer-fluid d-flex h-100">
 
 <?=navbar(3, "..")?>
-<div class="bg-secondary h-100 col-10 d-flex flex-column">
+<div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-start py-5" style="max-height: 100%; overflow-y: auto;">
     <div >
         <a class="btn btn-outline-primary m-3" href="creation_session_activite.php">Retour</a>
 
@@ -24,9 +24,10 @@
         <thead>
         <tr>
             <th scope='col'>#</th>
-            <th scope='col'>Nom de l'activité</th>
             <th scope='col'>Type de l'activité</th>
-            <th scope='col'>Date de l'activité</th>
+            <th scope='col'>Nom de la session</th>
+            <th scope='col'>L'activité</th>
+            <th scope='col'>Date de la session</th>
             <th scope='col'>Description</th>
             <th scope='col'>Action</th>
         </tr>
@@ -75,7 +76,11 @@
                                     th.scope = 'row';
                                     th.textContent = index + 1;
                                     tr.appendChild(th);
-console.log(session)
+
+
+                                    const tdType = document.createElement('td');
+                                    tdType.textContent = session.typeActivite;
+                                    tr.appendChild(tdType);
 
                                     const tdName = document.createElement('td');
                                     tdName.textContent = session.nom;
