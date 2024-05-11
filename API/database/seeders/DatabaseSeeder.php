@@ -276,13 +276,6 @@ class DatabaseSeeder extends Seeder
             'type' => 4
         ]);
 
-        DB::table('activite')->insert([
-            'id' => 8,
-            'nom' => 'ramassage alimentaire',
-            'description' => '',
-            'type' => 1
-        ]);
-
         DB::table('competence')->insert([
             'id' => 1,
             'nom' => 'permis de conduire',
