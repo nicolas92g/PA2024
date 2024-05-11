@@ -16,11 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [\App\Http\Controllers\AuthController::class, "register"]);
 Route::post('/registerVolunteer', [\App\Http\Controllers\AuthController::class, "registerVolunteer"]);
+
 Route::post( '/login', [\App\Http\Controllers\AuthController::class, "login"]);
 Route::get(null, [\App\Http\Controllers\AuthController::class, "unauthenticated"])->name('unauthenticated');
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, "logout"])->middleware(['auth:sanctum']);
 
 Route::get('/myself', [\App\Http\Controllers\UtilisateurController::class, "myself"])->middleware(['auth:sanctum']);
+Route::post('/addAdmin', [\App\Http\Controllers\AuthController::class, "addAdmin"])->middleware(['auth:sanctum', 'ability:admin']);
 
 Route::get('/users', [\App\Http\Controllers\UtilisateurController::class, "list"])->middleware(['auth:sanctum', 'ability:admin,benevole']);
 Route::get('/volunteers', [\App\Http\Controllers\UtilisateurController::class, "listVolunteers"])->middleware(['auth:sanctum', 'ability:admin,benevole']);

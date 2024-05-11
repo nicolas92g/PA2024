@@ -67,7 +67,6 @@ class AuthController extends Controller
 
     public function registerVolunteer(Request $request) : JsonResponse
     {
-
         $registerResult = $this->register($request);
         if ($registerResult->status() !== 200) return $registerResult;
 
@@ -87,6 +86,21 @@ class AuthController extends Controller
         $rel = new EstUn();
         $rel->utilisateur = $user;
         $rel->role = 2;
+        $rel->save();
+
+        return self::jsonOk();
+    }
+
+    public function addAdmin(Request $request) : JsonResponse
+    {
+        $registerResult = $this->register($request);
+        if ($registerResult->status() !== 200) return $registerResult;
+
+        $user = Utilisateur::query()->where('mail', $request->email)->first()->id;
+
+        $rel = new EstUn();
+        $rel->utilisateur = $user;
+        $rel->role = 1;
         $rel->save();
 
         return self::jsonOk();
