@@ -18,7 +18,7 @@ class SessionController extends Controller
             ['name' => 'nom', 'place' => 'emplacement', 'time' => 'horaire', 'description' => 'description', 'activity' => 'activite'],
             false,
             [],
-            ['arrival' => 'emplacement_arrive', 'end' => 'horaire_fin', 'product' => 'produit', 'entrepot' => 'entrepot', 'max' => 'max_participants', 'quantity' => 'quantite']
+            ['arrival' => 'emplacement_arrive', 'end' => 'horaire_fin', 'product' => 'produit', 'entrepot' => 'entrepot', 'max' => 'max_participants', 'quantity' => 'quantite', 'truck' => 'camion']
         );
     }
 
