@@ -55,7 +55,7 @@ class DemandeController extends Controller
 
     function statusPost(Request $r){
         if (!isset($r->id) || !isset($r->status)){
-            return self::jsonError('missing id value');
+            return self::jsonError('missing id or status value');
         }
         Demande::query()->where('id', $r->id)->update(['statut' => $r->status]);
         return self::jsonOk();
