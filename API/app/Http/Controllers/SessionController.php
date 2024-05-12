@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Beneficie;
 use App\Models\Session;
 use Illuminate\Http\Request;
 
@@ -24,5 +25,13 @@ class SessionController extends Controller
 
     public function delete(Request $request){
         return $this->deleteFunctionTemplate($request, Session::class);
+    }
+
+    public function size(Request $r){
+        if (!isset($r->session_id)){
+            return self::jsonError('session_id is missing');
+        }
+
+        return response()->json(['size' => Beneficie::query()->where('session', $r->session_id)->count()]);
     }
 }
