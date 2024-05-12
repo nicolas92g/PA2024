@@ -38,3 +38,13 @@ services:
       - ./pa_storage:/var/lib/mysql
     networks:
       - pa_network
+
+  notifs:
+    container_name: pa_api
+    build:
+      context: ./NOTIFS-SERVER
+      dockerfile: Dockerfile
+    depends_on:
+      - pa_api
+    networks:
+      - pa_network

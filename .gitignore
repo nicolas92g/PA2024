@@ -23,3 +23,6 @@ API/.vscode
 pa_storage
 WEBSITE/script/api-path.js
 WEBSITE/script/api-path.js
+NOTIFS-SERVER/password.py
+NOTIFS-SERVER/getTickets.py
+NOTIFS-SERVER/vars.py

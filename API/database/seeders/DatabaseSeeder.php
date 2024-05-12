@@ -75,6 +75,22 @@ class DatabaseSeeder extends Seeder
             'addresse' => 1
         ]);
 
+        DB::table('utilisateur')->insert([
+            'id' => 4,
+            'prenom' => 'OneSignal',
+            'nom' => 'OneSignal',
+            'mail' => 'OneSignal@gmail.com',
+            'mot_de_passe_hash' => 'aebb25da59d0a4aa3a7a807af30b63556d50f7c89703eb5ad7064be5b5150a8a',
+            'sel' => 'CKbcDWszB6',
+            'mail_verifie' => true,
+            'addresse' => 1
+        ]);
+
+        DB::table('est_un')->insert([
+            'utilisateur' => 2,
+            'role' => 2
+        ]);
+
         DB::table('type_activite')->insert([
             'id' => 1,
             'nom' => 'Aide alimentaire',
