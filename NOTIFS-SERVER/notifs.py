@@ -60,24 +60,27 @@ while (True):
 
     products = api_request('/product/list', token)
     
-    for product in products:
-        product_date = datetime.strptime(product['date_limite'], "%Y-%m-%d")
-        diff = (product_date.date() - datetime.today().date()).days
+    try:
+        for product in products:
+            product_date = datetime.strptime(product['date_limite'], "%Y-%m-%d")
+            diff = (product_date.date() - datetime.today().date()).days
 
-        name =  '"'+ product['nom'] + '" avec pour id : "' + str(product['id']) + '"'
-        message = ''
+            name =  '"'+ product['nom'] + '" avec pour id : "' + str(product['id']) + '"'
+            message = ''
 
-        if diff < 0:
-            message = 'le produit : ' + name + ' est expiré'
-        elif diff == 0:
-            message = 'le produit : ' + name + ' expire aujourd\'hui' 
-        elif diff <= 4:
-            message = 'le produit : ' + name + ' expire dans ' + str(diff) + ' jours'
-        else:
-            continue
-        
-        send_notification(message)
-        time.sleep(5)
+            if diff < 0:
+                message = 'le produit : ' + name + ' est expiré'
+            elif diff == 0:
+                message = 'le produit : ' + name + ' expire aujourd\'hui' 
+            elif diff <= 4:
+                message = 'le produit : ' + name + ' expire dans ' + str(diff) + ' jours'
+            else:
+                continue
+            
+            send_notification(message)
+            time.sleep(5)
+    except:
+        print('failed to read products')
 
     time.sleep(30)
     

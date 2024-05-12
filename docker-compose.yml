@@ -39,8 +39,8 @@ services:
     networks:
       - pa_network
 
-  notifs:
-    container_name: pa_api
+  pa_notifs:
+    container_name: pa_notifs
     build:
       context: ./NOTIFS-SERVER
       dockerfile: Dockerfile
