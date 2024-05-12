@@ -30,17 +30,7 @@ function makeHead($title = 'Au Temps Donné'){
             
             <script src='$path/node_modules/bootstrap/dist/js/bootstrap.bundle.js'></script>
             <script src='$path/script/api-path.js'></script>
-	    <script src='$path/script/api.js'></script>
-
-	    <script src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js' defer></script>
-            <script>
-              window.OneSignalDeferred = window.OneSignalDeferred || [];
-              OneSignalDeferred.push(function(OneSignal) {
-                OneSignal.init({
-                  appId: '52a22697-8cc7-461f-a80c-86baccdeb48b',
-                });
-              });
-            </script>
+            <script src='$path/script/api.js'></script>
         </head>
     ";
 }
