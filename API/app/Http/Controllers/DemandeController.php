@@ -44,4 +44,20 @@ class DemandeController extends Controller
         Demande::query()->where('id', $r->id)->delete();
         return self::jsonOk();
     }
+
+    function statusGet(Request $r)
+    {
+        if (!isset($r->id)){
+            return self::jsonError('missing id value');
+        }
+        return Demande::query()->where('id', $r->id)->get('statut');
+    }
+
+    function statusPost(Request $r){
+        if (!isset($r->id) || !isset($r->status)){
+            return self::jsonError('missing id value');
+        }
+        Demande::query()->where('id', $r->id)->update(['statut' => $r->status]);
+        return self::jsonOk();
+    }
 }
