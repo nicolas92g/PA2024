@@ -120,8 +120,7 @@ document.getElementById('nameActivite').addEventListener('change', function() {
                 <select id="truck" class="form-select">
                     <option value="">-- Sélectionner le véhicule--</option>
                 </select>
-                </div>
-                
+             
             `;
             const productSelect = document.getElementById('produit');
             allProducts.forEach(product => {
@@ -138,7 +137,7 @@ document.getElementById('nameActivite').addEventListener('change', function() {
 
         case 'services administratifs':
             fieldsContainer.innerHTML = `
-               
+           
             `;
             break;
 
@@ -156,8 +155,11 @@ document.getElementById('nameActivite').addEventListener('change', function() {
                     <option value="">-- Sélectionner le véhicule--</option>
                 </select>
             </div>
+            
+             
                 `;
             populateTruckDropdown(document.getElementById('truck'));
+
 
             break;
 
@@ -168,6 +170,7 @@ document.getElementById('nameActivite').addEventListener('change', function() {
                     <label for="dateFinVisite" class="form-label">Date et heure de fin  :</label>
                     <input type="datetime-local" class="form-control" id="dateFin" name="dateFin">
                 </div>
+               
             `;
             break;
 
@@ -179,10 +182,7 @@ document.getElementById('nameActivite').addEventListener('change', function() {
                     <input type="datetime-local" class="form-control" id="dateFin" name="dateFin">
                 </div>
                 
-                <div class="mb-3">
-                    <label for="participantsCours" class="form-label">Nombre de participants :</label>
-                    <input type="number" class="form-control" id="participantsCours" name="participants">
-                </div>
+             
             `;
             break;
 
@@ -194,10 +194,7 @@ document.getElementById('nameActivite').addEventListener('change', function() {
                     <label for="dateFinSoutien" class="form-label">Date de fin :</label>
                     <input type="datetime-local" class="form-control" id="dateFin" name="dateFin">
                 </div>
-                <div class="mb-3">
-                    <label for="participantsCours" class="form-label">Nombre de participants :</label>
-                    <input type="number" class="form-control" id="participantsCours" name="participants">
-                </div>
+              
                
             `;
             break;
@@ -214,13 +211,14 @@ function addSession() {
     args.append("time", dateDebutValue);
     args.append("description", document.getElementById('description').value);
     args.append("place", document.getElementById('lieu').value);
+    args.append("max",document.getElementById('participantsCours').value);
 
     // Append other fields conditionally
     appendIfPresent(args, "truck", document.getElementById('truck'));
     appendIfPresent(args, "product", document.getElementById('produit'));
     appendIfPresent(args, "quantity", document.getElementById('quantite'));
     appendIfPresent(args, "arrival", document.getElementById('lieuArrivee'));
-    appendIfPresent(args, "max", document.getElementById('participantsCours'));
+
 
     const dateFinElement = document.getElementById('dateFin');
     if (dateFinElement && dateFinElement.value && dateDebutValue) {
@@ -229,7 +227,7 @@ function addSession() {
         const endDate = new Date(dateFinValue);
 
         if (endDate <= startDate) {
-            console.error('La date de fin doit être supérieure à la date de début pour continuer.');
+           alert('La date de fin doit être supérieure à la date de début pour continuer.');
             return;
         }
         args.append("end", dateFinValue);

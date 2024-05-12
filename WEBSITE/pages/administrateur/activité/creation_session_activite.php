@@ -47,6 +47,11 @@
                 <input type="text" class="form-control" id="lieu" name="lieu">
             </div>
 
+        <div class="form-group">
+            <label for="participantsCours" class="form-label">Nombre de participants :</label>
+            <input type="number" class="form-control" id="participantsCours" name="participants">
+        </div>
+
             <div id="fieldsContainer" class="form-group">
             </div>
 

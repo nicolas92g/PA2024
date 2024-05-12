@@ -29,7 +29,6 @@
                         <input type="text" class="form-control mb-4" id="adresse" name="addressLine" placeholder="Entrez votre adresse" required>
                         <input type="number" class="form-control mb-4" id="code_postal" name="addressCode" placeholder="Entrez votre code postal" required>
                         <input type="text" class="form-control mb-4" id="ville" name="addressCity" placeholder="Entrez votre ville" required>
-                        <input type="tel" class="form-control mb-4"  id="numero" name="number" placeholder="Entrez votre numéro de téléphone" required>
                         <input type="password" class="form-control mb-4" id="motdepasse" name="password" placeholder="Entrez votre mot de passe" required>
 
 

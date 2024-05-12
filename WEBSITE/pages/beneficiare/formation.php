@@ -130,64 +130,58 @@
         });
     }
 
-    async function setDisponibilite(sessionId, activiteName) {
+    async function setDisponibilite(sessionId, activiteName,) {
         console.log("Session ID:", sessionId, "Activity Name:", activiteName);
         console.log("User ID:", userId);
 
+
+        const listResponse = await getToApi('/session/list', null, getCookie('ATD-TOKEN'));
+        const sessions = await listResponse.json();
+        console.log("All sessions data:", sessions);
+
+
+        const currentSession = sessions.find(s => s.id === parseInt(sessionId, 10));
+
+        if (!currentSession) {
+            alert("Session introuvable.");
+            return;
+        }
+
+        if (currentSession.max_participants === null ) {
+            alert("Le nombre maximum de participants n'est pas défini ");
+            return;
+        }
+
+        const args = new FormData();
+        args.append('session_id', sessionId);
+
+        // Récupération du nombre actuel d'inscrits
+        const sizeResponse = await getToApi('/session/size', args, getCookie('ATD-TOKEN'));
+        const sizeData = await sizeResponse.json();
+
+
+        if (sizeData.size  >= currentSession.max_participants) {
+            alert("Inscription impossible, le nombre maximum de participants est atteint.");
+            return;
+        }
+
+        const registrationArgs = new FormData();
+        registrationArgs.append('user', userId);
+        registrationArgs.append('session', sessionId);
+
         try {
-            // Récupérer les sessions auxquelles l'utilisateur est déjà inscrit
-            const intervenesResponse = await getToApi('/intervenes/list', null, getCookie('ATD-TOKEN'));
-            const intervenesData = await intervenesResponse.json();
-
-            const userSessionIds = intervenesData.filter(intervene => intervene.intervenant === userId).map(intervene => intervene.session);
-
-            // Récupérer toutes les sessions
-            const sessionResponse = await getToApi('/session/list', null, getCookie('ATD-TOKEN'));
-            const sessions = await sessionResponse.json();
-
-            // Filtrer pour obtenir uniquement les sessions inscrites
-            const userSessions = sessions.filter(session => userSessionIds.includes(session.id));
-
-            // Trouver la session cible en utilisant un ID numérique pour la comparaison
-            const targetSession = sessions.find(session => session.id === parseInt(sessionId, 10));
-            if (!targetSession) {
-                alert("Session cible non trouvée.");
-                return;
-            }
-
-            const targetStartTime = new Date(targetSession.horaire + 'Z'); // Assurer UTC
-            const targetEndTime = new Date(targetSession.horaire_fin + 'Z'); // Assurer UTC
-
-            // Vérifier le chevauchement d'horaires
-            const hasOverlap = userSessions.some(session => {
-                const sessionStartTime = new Date(session.horaire + 'Z'); // Assurer UTC
-                const sessionEndTime = new Date(session.horaire_fin + 'Z'); // Assurer UTC
-                return sessionStartTime < targetEndTime && sessionEndTime > targetStartTime;
-            });
-
-            if (hasOverlap) {
-                alert("Vous ne pouvez pas vous inscrire à cette session car elle se chevauche avec une autre à laquelle vous êtes déjà inscrit.");
-                return;
-            }
-
-            // Si aucun chevauchement, inscrire à la session
-            const args = new FormData();
-            args.append('user', userId);
-            args.append('session', sessionId);
-
-            const registerResponse = await postToApi('/intervenes/create', args, getCookie('ATD-TOKEN'));
-            if (registerResponse.ok) {
+            const postResponse = await postToApi('/intervenes/create', registrationArgs, getCookie('ATD-TOKEN'));
+            if (postResponse.ok) {
                 alert("Inscription réussie!");
                 window.location.reload();
             } else {
                 throw new Error('Failed to register for session');
             }
         } catch (error) {
-            console.error('Error making API call:', error);
-            alert("Erreur lors de l'inscription à l'activité.");
+            console.error('Error during API call:', error);
+            alert("Erreur technique lors de l'inscription. Veuillez réessayer.");
         }
     }
-
 
     document.addEventListener('DOMContentLoaded', function() {
 
