@@ -6,7 +6,7 @@
 <body class="cointainer-fluid d-flex h-100">
 
 <?=navbar(3, "..")?>
-<div class="bg-secondary h-100 col-10 d-flex flex-column">
+<div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-start py-5" style="max-height: 100%; overflow-y: auto;">
     <div class="container  text-center">
         <p class="mb-4">Créer une session d'activité :</p>
     </div>

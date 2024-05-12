@@ -5,7 +5,7 @@
 <?=makeHead('Au Temps Donné - Intranet')?>
 <body class="d-flex h-100">
 <?=navbar(0)?>
-<div class="bg-secondary h-100 col-10 d-flex flex-column">
+<div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-start py-5" style="max-height: 100%; overflow-y: auto;">
     <div class="text-center mb-4">
         <p>Bienvenue dans votre espace administrateur</p>
     </div>

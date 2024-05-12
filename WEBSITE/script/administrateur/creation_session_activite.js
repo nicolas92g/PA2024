@@ -4,7 +4,7 @@ let allTrucks = [];
 
 async function loadInitialData() {
     try {
-        // Fetch all necessary data in parallel
+
         const activityPromise = getToApi('/activity/list', null, getCookie('ATD-TOKEN'));
         const typePromise = getToApi('/activityType/list', null, getCookie('ATD-TOKEN'));
         const productPromise = getToApi('/product/list', null, getCookie('ATD-TOKEN'));
@@ -12,13 +12,13 @@ async function loadInitialData() {
 
         const results = await Promise.all([activityPromise, typePromise, productPromise, truckPromise]);
 
-        // Process results
+
         allActivities = await results[0].json();
         const types = await results[1].json();
         allProducts = await results[2].json();
         allTrucks = await results[3].json();
 
-        // Populate activity types dropdown
+
         const typeSelect = document.getElementById('type');
         typeSelect.innerHTML = "<option value=''>-- Sélectionner le type d'activité --</option>";
         types.forEach(type => {
@@ -26,7 +26,7 @@ async function loadInitialData() {
         });
     } catch (error) {
         console.error('Error loading initial data:', error);
-        // Optionally handle the UI or alert the user
+
     }
 }
 
@@ -62,15 +62,33 @@ document.getElementById('nameActivite').addEventListener('change', function() {
     if (!selectedActivityId) {
         return;
     }
-    function populateTruckDropdown(truckSelect) {
-        truckSelect.innerHTML = `<option value="">-- Sélectionner le véhicule--</option>`; // Reset and add the default option
-        allTrucks.forEach(truck => {
-            const option = document.createElement('option');
-            option.value = truck.id;
-            option.textContent = `Marque: ${truck.marque}, Immatriculation: ${truck.immatriculation}`;
-            truckSelect.appendChild(option);
-        });
+    async function populateTruckDropdown(truckSelect) {
+        try {
+            const sessions = await getToApi('/session/list', null, getCookie('ATD-TOKEN')).then(res => res.json());
+            const trucksResponse = await getToApi('/truck/list', null, getCookie('ATD-TOKEN'));
+            const allTrucks = await trucksResponse.json();
+            const trucksInUse = new Set(sessions.map(session => session.camion));
+            truckSelect.innerHTML = '<option value="">-- Sélectionner le véhicule --</option>';
+            let availableTruckCount = 0;
+            allTrucks.forEach(truck => {
+                if (!trucksInUse.has(truck.id)) {
+                    const option = document.createElement('option');
+                    option.value = truck.id;
+                    option.textContent = `Marque: ${truck.marque}, Immatriculation: ${truck.immatriculation}`;
+                    truckSelect.appendChild(option);
+                    availableTruckCount++;
+                }
+            });
+
+            if (availableTruckCount === 0) {
+                truckSelect.innerHTML = '<option value="">Pas de véhicule disponible pour le moment</option>';
+            }
+        } catch (error) {
+            console.error('Error fetching trucks or sessions:', error);
+            truckSelect.innerHTML = '<option value="">Erreur lors du chargement des données</option>';
+        }
     }
+
 
 
     const selectedActivity = allActivities.find(activity => activity.id === parseInt(selectedActivityId));
@@ -155,11 +173,7 @@ document.getElementById('nameActivite').addEventListener('change', function() {
 
         case 'cours d’alphabétisation pour adultes':
             fieldsContainer.innerHTML = `
-                <div class="mb-3">
-                    <label for="intituleCours" class="form-label">Intitulé du cours :</label>
-                    <input type="text" class="form-control" id="intitule" name="intituleCours">
-                </div>
-            
+             
                 <div class="mb-3">
                     <label for="dateFinCours" class="form-label">Date de fin :</label>
                     <input type="datetime-local" class="form-control" id="dateFin" name="dateFin">
@@ -174,14 +188,15 @@ document.getElementById('nameActivite').addEventListener('change', function() {
 
         case 'soutien scolaire':
             fieldsContainer.innerHTML = `
-                <div class="mb-3">
-                    <label for="intituleSoutien" class="form-label">Intitulé du cours :</label>
-                    <input type="text" class="form-control" id="intitule" name="intitule">
-                </div>
+                
                 
                 <div class="mb-3">
                     <label for="dateFinSoutien" class="form-label">Date de fin :</label>
                     <input type="datetime-local" class="form-control" id="dateFin" name="dateFin">
+                </div>
+                <div class="mb-3">
+                    <label for="participantsCours" class="form-label">Nombre de participants :</label>
+                    <input type="number" class="form-control" id="participantsCours" name="participants">
                 </div>
                
             `;
@@ -189,68 +204,58 @@ document.getElementById('nameActivite').addEventListener('change', function() {
     }});
 
 // Function to gather form data
-function addSession(){
+function addSession() {
     const args = new FormData();
 
+    // Append common fields
     args.append("name", document.getElementById('nom').value);
-
     args.append("activity", document.getElementById('nameActivite').value);
-    args.append("time",document.getElementById('dateDebut').value);
+    const dateDebutValue = document.getElementById('dateDebut').value;
+    args.append("time", dateDebutValue);
     args.append("description", document.getElementById('description').value);
-    args.append("place",document.getElementById('lieu').value);
+    args.append("place", document.getElementById('lieu').value);
 
+    // Append other fields conditionally
+    appendIfPresent(args, "truck", document.getElementById('truck'));
+    appendIfPresent(args, "product", document.getElementById('produit'));
+    appendIfPresent(args, "quantity", document.getElementById('quantite'));
+    appendIfPresent(args, "arrival", document.getElementById('lieuArrivee'));
+    appendIfPresent(args, "max", document.getElementById('participantsCours'));
 
+    const dateFinElement = document.getElementById('dateFin');
+    if (dateFinElement && dateFinElement.value && dateDebutValue) {
+        const dateFinValue = dateFinElement.value;
+        const startDate = new Date(dateDebutValue);
+        const endDate = new Date(dateFinValue);
 
-console.log(args)
-    const truck = document.getElementById('truck');
-    if ( truck&& truck.value) {
-        args.append("truck", truck.value);
+        if (endDate <= startDate) {
+            console.error('La date de fin doit être supérieure à la date de début pour continuer.');
+            return;
+        }
+        args.append("end", dateFinValue);
     }
 
-    const produit = document.getElementById('produit');
-    if ( produit&& produit.value) {
-        args.append("product", produit.value);
-    }
-
-    const quantite = document.getElementById('quantite');
-    if ( quantite&& quantite.value) {
-        args.append("quantity", quantite.value);
-    }
-
-
-    const arrive = document.getElementById('lieuArrivee');
-    if ( arrive&& arrive.value) {
-        args.append("arrival", arrive.value);
-    }
-    const participant = document.getElementById('participantsCours');
-    if ( participant&& participant.value) {
-        args.append("max", participant.value);
-    }
-
-    const titre = document.getElementById('intitule');
-    if ( titre&& titre.value) {
-        args.append("intitule", titre.value);
-    }
-
-    const dateFin = document.getElementById('dateFin');
-    if ( dateFin&& dateFin.value) {
-        args.append("end", dateFin.value);
-    }
-
-
-
-
+    // Proceed with API submission if all conditions are met
     postToApi('/session/create', args, getCookie('ATD-TOKEN')).then((response) => {
         response.json().then((res) => {
             console.log(res);
             resetFields();
-        })
-    })
+        }).catch(error => {
+            console.error('Error processing the response:', error);
+        });
+    }).catch(error => {
+        console.error('Error posting to the API:', error);
+    });
+}
+
+function appendIfPresent(form, key, element) {
+    if (element && element.value) {
+        form.append(key, element.value);
+    }
 }
 
 
 function resetFields() {
-    // Safe reset function that checks if elements exist before attempting to reset them
     const fields = [
         'nameActivite',
         'type',
@@ -261,9 +266,9 @@ function resetFields() {
         'produit',
         'qauntité',
         'nom',
-        'truck',
         'dateFin',
-
+        'truck',
+        'participantsCours',
 
     ];
 
@@ -274,8 +279,4 @@ function resetFields() {
         }
     });
 
-
-
-
-    // Reset additional form fields if needed...
 }

@@ -3,6 +3,16 @@
 <!DOCTYPE html>
 <html class="h-100">
 <?=makeHead('Au Temps Donné - Intranet')?>
+<style>
+    .modal-content {
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        background-color: #fefefe;
+        margin: 10% auto;
+    }
+
+</style>
 <body class="cointainer-fluid d-flex h-100">
 
 <?=navbar(5, "..")?>
@@ -38,8 +48,21 @@
             </table>
         </div>
     </div>
+
+    <div id="viewTruckModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Informations complémentaire sur le véhicule</h2>
+            <div id="truckInfo"></div>
+        </div>
+    </div>
+
+
 </div>
+
+
 </div>
+
 <script>
 
     function loadTruckData() {
@@ -101,7 +124,7 @@
 
                             function addCellWithButtons(row, truck) {
                                 const cell = row.insertCell();
-                                const editButton = createButton('Attribuer', 'btn btn-primary btn-sm', () => editTruck(truck.id));
+                                const editButton = createButton('Détails', 'btn btn-primary btn-sm', () => viewTruck(truck.id));
                                 const deleteButton = createButton('Supprimer', 'btn btn-danger btn-sm', () => confirmDeleteTruck(truck.id));
                                 cell.appendChild(editButton);
                                 cell.appendChild(deleteButton);
@@ -115,7 +138,7 @@
                                 return button;
                             }
                             function confirmDeleteTruck(truckId) {
-                                if (confirm('Are you sure you want to delete this truck?')) {
+                                if (confirm('Êtes-vous sûr de vouloir supprimer ce camion ?')) {
 
                                     const formData = new FormData();
                                     formData.append('id', truckId);
@@ -137,6 +160,54 @@
                                         });
                                 }
                             }
+    async function viewTruck(truckId) {
+        try {
+            const sessions = await getToApi('/session/list', null, getCookie('ATD-TOKEN')).then(res => res.json());
+            const relatedSession = sessions.find(session => session.camion === truckId);
+            const truckInfoElement = document.getElementById('truckInfo');
+
+            if (relatedSession) {
+                // Parse the ISO date string to a Date object
+                const sessionDate = new Date(relatedSession.horaire);
+
+                // Format the date to a more readable format, e.g., "12 November 2024, 22:00"
+                const formattedDate = sessionDate.toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+
+                // Display session details with the formatted date
+                truckInfoElement.innerHTML = `
+                <p>Ce véhicule est lié à la session suivante :</p>
+                <p><strong>Nom de la session :</strong> ${relatedSession.nom}</p>
+                <p><strong>Description :</strong> ${relatedSession.description}</p>
+                <p><strong>Emplacement :</strong> ${relatedSession.emplacement}</p>
+                <p><strong>Emplacement d'arrivée :</strong> ${relatedSession.emplacement_arrive}</p>
+                <p><strong>Date :</strong> ${formattedDate}</p>
+            `;
+            } else {
+                truckInfoElement.textContent = 'Ce véhicule n\'est actuellement lié à aucune session.';
+            }
+
+            var modal = document.getElementById('viewTruckModal');
+            modal.style.display = "block";
+
+            document.getElementsByClassName("close-btn")[0].onclick = () => modal.style.display = "none";
+            window.onclick = (event) => {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            document.getElementById('truckInfo').textContent = 'Impossible de charger les données.';
+        }
+    }
+
 
 
     document.addEventListener('DOMContentLoaded', loadTruckData,)
