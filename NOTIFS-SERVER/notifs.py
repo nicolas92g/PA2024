@@ -31,12 +31,12 @@ def login():
         "password": vars.PASSWORD
     }
     try:
-        return requests.post('https://api.au-temps-donne.nicolas-guillot.fr/api/login', params=params).json()['token']
+        return requests.post('http://pa_api:8000/api/login', params=params).json()['token']
     except Exception as e:
         print("error while login :", e)
 
 def api_request(api_uri, bearer_token, params=None, USE_POST = False):
-    api_url = 'https://api.au-temps-donne.nicolas-guillot.fr/api' + api_uri
+    api_url = 'http://pa_api:8000/api' + api_uri
     headers = {
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {bearer_token}'
