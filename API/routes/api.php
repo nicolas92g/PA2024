@@ -55,7 +55,7 @@ Route::post('/activity/delete', [\App\Http\Controllers\ActiviteController::class
 Route::get('/session/list', [\App\Http\Controllers\SessionController::class, "list"])->middleware(['auth:sanctum']);
 Route::post('/session/create', [\App\Http\Controllers\SessionController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/session/delete', [\App\Http\Controllers\SessionController::class, "delete"])->middleware(['auth:sanctum']);
-Route::post('/session/size', [\App\Http\Controllers\SessionController::class, "size"])->middleware(['auth:sanctum']);
+Route::get('/session/size', [\App\Http\Controllers\SessionController::class, "size"])->middleware(['auth:sanctum']);
 
 Route::get('/benefit/list', [\App\Http\Controllers\BeneficieController::class, "list"])->middleware(['auth:sanctum']);
 Route::post('/benefit/create', [\App\Http\Controllers\BeneficieController::class, "create"])->middleware(['auth:sanctum']);
