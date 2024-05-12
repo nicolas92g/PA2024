@@ -18,7 +18,12 @@ class IntervientController extends Controller
         );
     }
 
-    function delete(Request $request){
-        return $this->deleteFunctionTemplate($request, Intervient::class);
+    function delete(Request $r){
+        if (!isset($r->intervenant) || !isset($r->session_id)){
+            return self::jsonError('intervenant or session_id is missing');
+        }
+
+        Intervient::query()->where('intervenant', $r->intervenant)->where('session', $r->session_id)->delete();
+        return self::jsonOk();
     }
 }

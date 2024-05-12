@@ -18,6 +18,11 @@ class BeneficieController extends Controller
     }
 
     function delete(Request $request){
-        return $this->deleteFunctionTemplate($request, Beneficie::class);
+        if (!isset($r->beneficiaire) || !isset($r->session_id)){
+            return self::jsonError('beneficiaire or session_id is missing');
+        }
+
+        Beneficie::query()->where('beneficiaire', $r->beneficiaire)->where('session', $r->session_id)->delete();
+        return self::jsonOk();
     }
 }
