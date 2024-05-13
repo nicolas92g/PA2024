@@ -36,6 +36,7 @@
                                                 <th>Type</th>
                                                 <th>Description</th>
                                                 <th>Action</th>
+                                                <th>Statut</th>
                                             </tr>
                                             </thead>
                                             <tbody>

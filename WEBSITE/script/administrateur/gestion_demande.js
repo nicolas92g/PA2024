@@ -64,7 +64,7 @@ async function displayRequests() {
 
                 if (statutData.length > 0) {
                     const statut = statutData[0].statut;
-                    const statutText = statut === 1 ? "Accepter" : (statut === 0 ? "Rejeter" : "Statut inconnu");
+                    const statutText = statut === 1 ? "Accepté" : (statut === 0 ? "Rejeté" : "Non traité");
                     statutCell.textContent = statutText;
 
 
