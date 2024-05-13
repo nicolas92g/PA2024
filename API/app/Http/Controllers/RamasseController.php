@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 
 class RamasseController extends Controller
 {
-    function list(){
-        return Ramasse::all();
+    function list(Request $request){
+        if (!isset($request->id)) return Ramasse::all();
+        return Ramasse::query()->where("ramassage", '=',  $request->id)->select('*')->get();
     }
 
     function create(Request $request){
