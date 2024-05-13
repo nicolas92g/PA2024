@@ -19,8 +19,11 @@ function navbar($pageIndex){
                     <i class='fas fa-calendar-day'></i> Planning
                 </a>
               
-                <a href='profilBenevole.php' class='btn " . ($pageIndex == 3 ? "btn-secondary" : "btn-primary") . "'>
+                <a href='profilBenevole.php' class='btn mb-5 " . ($pageIndex == 3 ? "btn-secondary" : "btn-primary") . "'>
                     <i class='fas fa-user-alt'></i> Profil
+                </a>
+                <a href='ramassage.php' class='btn " . ($pageIndex == 4 ? "btn-secondary" : "btn-primary") . "'>
+                    <i class='fas fa-user-alt'></i> Ramassages
                 </a>
             </div>
 

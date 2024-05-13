@@ -63,6 +63,7 @@ return new class extends Migration
         Schema::create("demande", function (Blueprint $t){
             $t->id();
             $t->text("description");
+            $t->boolean("statut")->nullable();
             $t->foreignId("utilisateur")->references("id")->on("utilisateur");
             $t->foreignId("type")->references("id")->on("type_activite");
         });

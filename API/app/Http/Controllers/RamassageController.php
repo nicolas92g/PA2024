@@ -4,11 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Ramassage;
 use App\Models\Ramasse;
+use App\Models\Utilisateur;
 use Illuminate\Http\Request;
 
 class RamassageController extends Controller
 {
-    function list(){
+    function list() {
+        $role = parent::getUser()->roles()->get()[0]['nom'];
+
+        if (isset($role) && $role == 'benevole'){
+            return Ramassage::query()
+                ->join('utilisateur','ramassage.utilisateur','=','utilisateur.id')
+                ->join('camion','ramassage.camion','=','camion.id')
+                ->where('ramassage.utilisateur', '=', self::getUser()->id)
+                ->select('ramassage.*','utilisateur.nom as nomUtilisateur', 'utilisateur.prenom as prenomUtilisateur', 'camion.immatriculation as camionId')
+                ->get();
+        }
         return Ramassage::query()
             ->join('utilisateur','ramassage.utilisateur','=','utilisateur.id')
             ->join('camion','ramassage.camion','=','camion.id')

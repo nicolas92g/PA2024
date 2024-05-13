@@ -3,8 +3,18 @@
 function navbar($pageIndex, $path = "."){
     return "
         <script src='$path/../../script/checks/checkIsAdmin.js'></script>
+
+        <script src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js' defer></script>
+        <script>
+          window.OneSignalDeferred = window.OneSignalDeferred || [];
+          OneSignalDeferred.push(function(OneSignal) {
+            OneSignal.init({
+              appId: '52a22697-8cc7-461f-a80c-86baccdeb48b',
+            });
+          });
+        </script>
         <div class='bg-primary h-100 col-md-2 text-light d-flex flex-column align-items-center justify-content-around' style='overflow-y: auto;'>
-   
+
             <div class='text-center mb-5'>
                 <div id='userInfos'></div>
             </div>
