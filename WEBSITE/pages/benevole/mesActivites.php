@@ -36,18 +36,18 @@
 
     <script>
         function populateTable() {
-            // Clear previous table contents
+
             const tbody = document.getElementById('userRow');
             tbody.innerHTML = '';
 
-            // Fetching user specific sessions
+
             getToApi('/intervenes/list', null, getCookie('ATD-TOKEN'))
                 .then(response => response.json())
                 .then(intervenes => {
-                    // Extract session IDs from the interventions
+
                     let sessionIds = intervenes.map(intervene => intervene.session);
 
-                    // Fetching detailed session info
+
                     getToApi('/session/list', null, getCookie('ATD-TOKEN'))
                         .then(response => response.json())
                         .then(sessions => {
@@ -66,7 +66,7 @@
                                         .then(types => {
                                             let typeMap = new Map(types.map(type => [type.id, type.nom]));
 
-                                            // Populate table rows with session data
+
                                             sessions.forEach((session, index) => {
                                                 const tr = document.createElement('tr');
                                                 const th = document.createElement('th');
@@ -97,13 +97,16 @@
                                                 tr.appendChild(tdDescription);
 
                                                 const tdAction = document.createElement('td');
-                                                const editButton = document.createElement('button');
-                                                editButton.className = 'btn btn-primary';
-                                                editButton.textContent = 'Edit';
-                                                editButton.onclick = function() {
-                                                    editSession(session.id);
-                                                };
-                                                tdAction.appendChild(editButton);
+                                                const deleteButton = document.createElement('button');
+                                                deleteButton.className = 'btn btn-primary';
+                                                deleteButton.textContent = 'Supprimer';
+                                                const intervenient = intervenes.find(i => i.session === session.id);
+                                                if (intervenient) {
+                                                    deleteButton.onclick = function() {
+                                                        unsubscribe(intervenient.intervenant, session.id) // Assurez-vous que ceci est correct pour la désinscription
+                                                    };
+                                                }
+                                                tdAction.appendChild(deleteButton);
                                                 tr.appendChild(tdAction);
 
                                                 tbody.appendChild(tr);
@@ -114,9 +117,36 @@
                 });
         }
 
+        function unsubscribe(intervenantId, sessionId) {
+            if (!confirm('Êtes-vous sûr de vouloir vous désinscrire de cette session ?')) {
+                return;
+            }
 
+            const formData = new FormData();
+            formData.append('intervenant', intervenantId);
+            formData.append('session_id', sessionId);
 
-        // Load the table when the window is loaded
+            postToApi('/intervenes/delete', formData, getCookie('ATD-TOKEN'))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to delete session');
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    console.log('Désinscription réussie:', result);
+                    alert('Vous avez été désinscrit avec succès.');
+                    populateTable();
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la désinscription:', error);
+                    alert('Erreur lors de la désinscription: ' + error.message);
+                });
+        }
+
         window.onload = populateTable;
 
     </script>
+<script src="../../script/content/nameDisplay.js"></script>
+    </body>
+</html>

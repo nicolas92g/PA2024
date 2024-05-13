@@ -3,6 +3,17 @@
 <!DOCTYPE html>
 <html class="h-100">
 <?=makeHead('Au Temps Donné - Intranet')?>
+<style>
+    .modal-content {
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        background-color: #fefefe;
+        margin: 10% auto;
+    }
+
+
+</style>
 <body class="cointainer-fluid d-flex h-100">
 
 <?=navbar(3, "..")?>
@@ -35,8 +46,19 @@
         <tbody id='userRow' class='table-group-divider'>
         </tbody>
     </table>
+
+    <div id="editSessionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Détails de la session:</h2>
+            <div id="sessionInfo"></div>
+        </div>
+    </div>
+
 </div>
-<script>function populateTable() {
+<script>
+
+    function populateTable() {
         getToApi('/session/list', null, getCookie('ATD-TOKEN'))
             .then(response => {
                 if (!response.ok) {
@@ -47,6 +69,13 @@
             .then(sessions => {
                 const tbody = document.getElementById('userRow');
                 tbody.innerHTML = '';
+
+                if (sessions.length === 0) {
+                    const noSessionsMessage = document.createElement('p');
+                    noSessionsMessage.textContent = 'Il n\'y a pas de session disponible.';
+                    tbody.appendChild(noSessionsMessage);
+                    return;
+                }
 
                 return getToApi('/activity/list', null, getCookie('ATD-TOKEN'))
                     .then(response => {
@@ -103,15 +132,29 @@
                                     const tdAction = document.createElement('td');
                                     const editButton = document.createElement('button');
                                     editButton.className = 'btn btn-primary';
-                                    editButton.textContent = 'Edit';
+                                    editButton.textContent = 'Détail';
+
                                     editButton.onclick = function() {
-                                        editSession(session.id);
+                                        if (session.typeActivite === "Aide au transport") {
+                                            editSession(session.id);
+                                        } else if (session.typeActivite === "Aide alimentaire") {
+                                            editSessionForMaraude(session.id);
+                                        }  else if (session.typeActivite === "Aide administratif") {
+                                            editSessionForAdministratif(session.id);
+                                        }
+                                        else if (session.typeActivite === "Aide au personne") {
+                                            editSessionForPersonne(session.id);
+                                        }
+                                        else if (session.typeActivite === "Formations") {
+                                            editSessionForFormation(session.id);
+                                        }
                                     };
+
                                     tdAction.appendChild(editButton);
 
                                     const deleteButton = document.createElement('button');
                                     deleteButton.className = 'btn btn-danger';
-                                    deleteButton.textContent = 'Delete';
+                                    deleteButton.textContent = 'Supprimer';
                                     deleteButton.onclick = function() {
                                         deleteSession(session.id);
                                     };
@@ -132,7 +175,7 @@
 
     document.addEventListener('DOMContentLoaded', populateTable);
     function deleteSession(sessionId) {
-        if (confirm('Are you sure you want to delete this truck?')) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cette session?')) {
 
             const formData = new FormData();
             formData.append('id', sessionId);
@@ -140,7 +183,7 @@
             postToApi('/session/delete', formData, getCookie('ATD-TOKEN'))
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Failed to delete truck');
+                        throw new Error('erreur');
                     }
                     return response.json();
                 })
@@ -149,9 +192,225 @@
                     populateTable();
                 })
                 .catch(error => {
-                    console.error('Error deleting truck:', error);
-                    alert('Error deleting truck: ' + error.message);
+                    console.error('Error deleting session:', error);
+                    alert('Error deleting session: ' + error.message);
                 });
+        }
+    }
+                        async function editSession(sessionId) {
+                            try {
+
+                                const [sessions, trucks] = await Promise.all([
+                                    getToApi('/session/list', null, getCookie('ATD-TOKEN')).then(res => res.json()),
+                                    getToApi('/truck/list', null, getCookie('ATD-TOKEN')).then(res => res.json())
+                                ]);
+
+                                const session = sessions.find(s => s.id === sessionId);
+                                const truck = trucks.find(t => t.id === session.camion);
+
+
+                                const sessionInfo = document.getElementById('sessionInfo');
+                                if (session && truck) {
+                                    sessionInfo.innerHTML = `
+                                    <p>Cette session  ${session.nom} a pour véhicule:</p>
+                                 <p><strong>Marque:</strong> ${truck.marque}</p>
+                                <p><strong>Immatriculation:</strong> ${truck.immatriculation}</p>
+                                <p> <strong>Lieu de départ:</strong> ${session.emplacement}</p>
+                                <p> <strong>Lieu de départ:</strong> ${session.emplacement_arrive}</p>
+
+                                `;
+                                } else {
+                                    sessionInfo.textContent = 'Cette session n\'a pas de véhicule lié';
+                                }
+
+
+                                var modal = document.getElementById('editSessionModal');
+                                modal.style.display = "block";
+
+
+                                document.getElementsByClassName("close-btn")[0].onclick = () => modal.style.display = "none";
+                                window.onclick = (event) => {
+                                    if (event.target == modal) {
+                                        modal.style.display = "none";
+                                    }
+                                };
+                            } catch (error) {
+                                console.error('Error fetching session or truck details:', error);
+                                document.getElementById('sessionInfo').textContent = 'Failed to load details.';
+                            }
+                        }
+                                       async function editSessionForMaraude(sessionId) {
+                                        try {
+                                            const [sessions, trucks] = await Promise.all([
+                                                getToApi('/session/list', null, getCookie('ATD-TOKEN')).then(res => res.json()),
+                                                getToApi('/truck/list', null, getCookie('ATD-TOKEN')).then(res => res.json())
+                                            ]);
+
+                                            const session = sessions.find(s => s.id === sessionId);
+                                            const trucksInUse = new Set(sessions.map(session => session.camion));
+                                            const availableTrucks = trucks.filter(truck => !trucksInUse.has(truck.id));
+                                            const sessionInfo = document.getElementById('sessionInfo');
+
+                                            if (session) {
+                                                let htmlContent = `
+                                                <p><strong>Type de l'activité:</strong> ${session.typeActivite}</p>
+                                                <p><strong>Nom de la session:</strong> ${session.nom}</p>
+                                                <p><strong>Lieu de départ:</strong> ${session.emplacement}</p>
+                                                <p><strong>Lieu d'arrivée:</strong> ${session.emplacement_arrive}</p>
+                                                 <p> <strong>Nombre de participant:</strong> ${session.max_participants}</p>
+                                            `;
+
+                                                if (session.camion && trucks.find(t => t.id === session.camion)) {
+                                                    const truck = trucks.find(t => t.id === session.camion);
+                                                    htmlContent += `
+                                                    <p>Cette session a pour véhicule:</p>
+                                                    <p><strong>Marque:</strong> ${truck.marque}</p>
+                                                    <p><strong>Immatriculation:</strong> ${truck.immatriculation}</p>
+                                                `;
+                                                }
+                                                sessionInfo.innerHTML = htmlContent;
+                                            } else {
+                                                sessionInfo.textContent = 'Cette session n\'existe pas.';
+                                            }
+                                            var modal = document.getElementById('editSessionModal');
+                                            modal.style.display = "block";
+
+                                            document.getElementsByClassName("close-btn")[0].onclick = () => modal.style.display = "none";
+                                            window.onclick = (event) => {
+                                                if (event.target == modal) {
+                                                    modal.style.display = "none";
+                                                }
+                                            };
+                                        } catch (error) {
+                                            console.error('Error fetching session or truck details:', error);
+                                            document.getElementById('sessionInfo').textContent = 'Failed to load details.';
+                                        }
+                                    }
+
+
+
+                                async function editSessionForAdministratif(sessionId) {
+                                    try {
+
+                                        const [sessions,] = await Promise.all([
+                                            getToApi('/session/list', null, getCookie('ATD-TOKEN')).then(res => res.json()),
+                                        ]);
+
+                                        const session = sessions.find(s => s.id === sessionId);
+
+
+
+                                        const sessionInfo = document.getElementById('sessionInfo');
+
+                                            sessionInfo.innerHTML = `
+                                          <p> <strong>Type de la session:</strong> ${session.typeActivite}</p>
+                                            <p>Cette session  ${session.nom} :</p>
+                                        <p> <strong>Description:</strong> ${session.description}</p>
+                                        <p> <strong>Lieu de session:</strong> ${session.emplacement}</p>
+                                        <p> <strong>Nombre de participant:</strong> ${session.max_participants}</p>
+                                        `;
+
+
+
+                                        var modal = document.getElementById('editSessionModal');
+                                        modal.style.display = "block";
+
+
+                                        document.getElementsByClassName("close-btn")[0].onclick = () => modal.style.display = "none";
+                                        window.onclick = (event) => {
+                                            if (event.target == modal) {
+                                                modal.style.display = "none";
+                                            }
+                                        };
+                                    } catch (error) {
+                                        console.error('Error fetching session :', error);
+                                        document.getElementById('sessionInfo').textContent = 'Failed to load details.';
+                                    }
+                                }
+
+
+    async function editSessionForPersonne(sessionId) {
+        try {
+
+            const [sessions,] = await Promise.all([
+                getToApi('/session/list', null, getCookie('ATD-TOKEN')).then(res => res.json()),
+            ]);
+
+            const session = sessions.find(s => s.id === sessionId);
+
+
+
+            const sessionInfo = document.getElementById('sessionInfo');
+
+            sessionInfo.innerHTML = `
+                                          <p> <strong>Type de la session:</strong> ${session.typeActivite}</p>
+                                            <p>Cette session  ${session.nom} </p>
+                                        <p> <strong>Description:</strong> ${session.description}</p>
+                                        <p> <strong>Lieu de session:</strong> ${session.emplacement}</p>
+                                        <p> <strong>Heure de début:</strong> ${session.horaire}</p>
+                                        <p> <strong>Heure de fin:</strong> ${session.horaire_fin}</p>
+                                        <p> <strong>Nombre de participant:</strong> ${session.max_participants}</p>
+                                        `;
+
+
+
+            var modal = document.getElementById('editSessionModal');
+            modal.style.display = "block";
+
+
+            document.getElementsByClassName("close-btn")[0].onclick = () => modal.style.display = "none";
+            window.onclick = (event) => {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+        } catch (error) {
+            console.error('Error fetching session :', error);
+            document.getElementById('sessionInfo').textContent = 'Failed to load details.';
+        }
+    }
+
+
+    async function editSessionForFormation(sessionId) {
+        try {
+
+            const [sessions,] = await Promise.all([
+                getToApi('/session/list', null, getCookie('ATD-TOKEN')).then(res => res.json()),
+            ]);
+
+            const session = sessions.find(s => s.id === sessionId);
+
+
+
+            const sessionInfo = document.getElementById('sessionInfo');
+
+            sessionInfo.innerHTML = `
+                                          <p> <strong>Type de la session:</strong> ${session.typeActivite}</p>
+                                            <p>Cette session  ${session.nom} :</p>
+                                        <p> <strong>Description:</strong> ${session.description}</p>
+                                        <p> <strong>Lieu de session:</strong> ${session.emplacement}</p>
+                                        <p> <strong>Heure de début:</strong> ${session.horaire}</p>
+                                        <p> <strong>Heure de fin:</strong> ${session.horaire_fin}</p>
+                                         <p> <strong>Nombre de participant:</strong> ${session.max_participants}</p>
+
+
+                                        `;
+
+
+
+            var modal = document.getElementById('editSessionModal');
+            modal.style.display = "block";
+
+
+            document.getElementsByClassName("close-btn")[0].onclick = () => modal.style.display = "none";
+            window.onclick = (event) => {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+        } catch (error) {
+            console.error('Error fetching session :', error);
+            document.getElementById('sessionInfo').textContent = 'Failed to load details.';
         }
     }
 

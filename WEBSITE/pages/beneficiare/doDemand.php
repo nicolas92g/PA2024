@@ -9,8 +9,9 @@
 
     <body class="container-fluid d-flex h-100 p-0">
         <?=navbar(1)?>
-        <div class="container">
-            <div class="row">
+        <div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-start py-5" style="max-height: 100%; overflow-y: auto;">
+            <div class="container py-5">
+
                 <div class="col-md-4">
                     <p>Vous pouvez faire votre demande en remplissant les champs</p>
 
@@ -36,6 +37,7 @@
                                                 <th>Type</th>
                                                 <th>Description</th>
                                                 <th>Action</th>
+                                                <th>Statut</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -45,6 +47,7 @@
                                 </div>
 
             </div>
+
         </div>
 
     </body>

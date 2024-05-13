@@ -62,7 +62,7 @@
                     const activities = await activityResponse.json();
                     const activityMap = new Map(activities.map(activity => [activity.id, activity.nom]));
 
-                    // Vérification des sessions déjà intervenues
+
                     const intervenesResponse = await getToApi('/intervenes/list', null, getCookie('ATD-TOKEN'));
                     const intervenesData = await intervenesResponse.json();
                     const intervenedSessionIds = new Set(intervenesData.map(intervene => intervene.session));
@@ -133,7 +133,6 @@
 
             async function setDisponibilite(sessionId, activiteName, userAbilitiesMap) {
                 console.log("Session ID:", sessionId, "Activity Name:", activiteName);
-                console.log("User ID:", userId);
                 console.log("User Abilities:", [...userAbilitiesMap.values()]);
 
                 let hasRequiredAbilities = false;
@@ -162,64 +161,53 @@
                     return;
                 }
 
-                console.log("User has the required abilities, proceeding with API post.");
-                // Arguments for POST
+                const listResponse = await getToApi('/session/list', null, getCookie('ATD-TOKEN'));
+                const sessions = await listResponse.json();
+                console.log("All sessions data:", sessions);
+
+
+                const currentSession = sessions.find(s => s.id === parseInt(sessionId, 10));
+
+                if (!currentSession) {
+                    alert("Session introuvable.");
+                    return;
+                }
+
+                if (currentSession.max_participants === null ) {
+                    alert("Le nombre maximum de participants n'est pas défini ");
+                    return;
+                }
+
                 const args = new FormData();
-                args.append('user', userId); // User ID
-                args.append('session', sessionId);  // Session ID
+                args.append('session_id', sessionId);
+
+                // Récupération du nombre actuel d'inscrits
+                const sizeResponse = await getToApi('/session/size', args, getCookie('ATD-TOKEN'));
+                const sizeData = await sizeResponse.json();
+
+
+                if (sizeData.size  >= currentSession.max_participants) {
+                    alert("Inscription impossible, le nombre maximum de participants est atteint.");
+                    return;
+                }
+
+                const registrationArgs = new FormData();
+                registrationArgs.append('user', userId);
+                registrationArgs.append('session', sessionId);
 
                 try {
-                    const response = await postToApi('/intervenes/create', args, getCookie('ATD-TOKEN'));
-                    if (response.ok) {
+                    const postResponse = await postToApi('/intervenes/create', registrationArgs, getCookie('ATD-TOKEN'));
+                    if (postResponse.ok) {
                         alert("Inscription réussie!");
-                        window.location.reload();  // Rafraîchir la page après l'inscription réussie
+                        window.location.reload();
                     } else {
                         throw new Error('Failed to register for session');
                     }
                 } catch (error) {
-                    console.error('Error making API call:', error);
-                    alert("Erreur lors de l'inscription à l'activité.");
+                    console.error('Error during API call:', error);
+                    alert("Erreur technique lors de l'inscription. Veuillez réessayer.");
                 }
             }
-
-            document.addEventListener('DOMContentLoaded', function() {
-                // Assumer que l'ID de l'utilisateur connecté est récupéré d'un cookie ou une autre source
-                var currentUserId = getCookie('ATD-TOKEN'); // Remplacez 'USER_ID' par le nom réel du cookie utilisé pour stocker l'ID de l'utilisateur
-
-                getToApi('/intervenes/list', null, getCookie('ATD-TOKEN')).then((response) => {
-                    response.json().then((res) => {
-                        console.log("Réponse de l'API:", res); // Afficher la réponse pour débogage
-
-                        var tbody = document.getElementById('missionsChoisies');
-
-                        // Filtrer les sessions pour l'intervenant connecté (ID 15 dans votre cas)
-                        res.filter(session => session.intervenant === parseInt(currentUserId)).forEach(session => {
-                            // Création d'une ligne pour chaque session correspondante
-                            var tr = document.createElement('tr');
-
-                            // Création et ajout de la cellule "Mission"
-                            var tdMission = document.createElement('td');
-                            tdMission.textContent = 'Session #' + session; // Ajouter le texte avec l'ID de la session
-                            tr.appendChild(tdMission);
-
-                            // Création et ajout de la cellule "Action"
-                            var tdAction = document.createElement('td');
-                            tdAction.textContent = 'Détails'; // Texte exemple, peut-être remplacé par un bouton ou lien
-                            tr.appendChild(tdAction);
-
-                            // Ajout de la ligne complète au tbody du tableau
-                            tbody.appendChild(tr);
-                        });
-                    });
-                }).catch(error => {
-                    console.error("Erreur lors de la requête API:", error);
-                });
-            });
-
-
-
-
-
 
         </script>
             <script src="../../script/content/nameDisplay.js"></script>
