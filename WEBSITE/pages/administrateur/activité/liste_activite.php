@@ -257,6 +257,7 @@
                                                 <p><strong>Nom de la session:</strong> ${session.nom}</p>
                                                 <p><strong>Lieu de départ:</strong> ${session.emplacement}</p>
                                                 <p><strong>Lieu d'arrivée:</strong> ${session.emplacement_arrive}</p>
+                                                 <p> <strong>Nombre de participant:</strong> ${session.max_participants}</p>
                                             `;
 
                                                 if (session.camion && trucks.find(t => t.id === session.camion)) {
@@ -306,7 +307,7 @@
                                             <p>Cette session  ${session.nom} :</p>
                                         <p> <strong>Description:</strong> ${session.description}</p>
                                         <p> <strong>Lieu de session:</strong> ${session.emplacement}</p>
-
+                                        <p> <strong>Nombre de participant:</strong> ${session.max_participants}</p>
                                         `;
 
 
@@ -343,12 +344,12 @@
 
             sessionInfo.innerHTML = `
                                           <p> <strong>Type de la session:</strong> ${session.typeActivite}</p>
-                                            <p>Cette session  ${session.nom} :</p>
+                                            <p>Cette session  ${session.nom} </p>
                                         <p> <strong>Description:</strong> ${session.description}</p>
                                         <p> <strong>Lieu de session:</strong> ${session.emplacement}</p>
                                         <p> <strong>Heure de début:</strong> ${session.horaire}</p>
                                         <p> <strong>Heure de fin:</strong> ${session.horaire_fin}</p>
-
+                                        <p> <strong>Nombre de participant:</strong> ${session.max_participants}</p>
                                         `;
 
 

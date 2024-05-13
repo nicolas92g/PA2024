@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html class="h-100">
 <?=makeHead('Au Temps Donné - Intranet')?>
+
 <body class="cointainer-fluid d-flex h-100">
 
 <?=navbar(3, "..")?>

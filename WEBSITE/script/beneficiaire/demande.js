@@ -25,6 +25,20 @@ async function createDemande(){
 async function getList(){
     return await (await getToApi('/request/list', null, getCookie('ATD-TOKEN'))).json();
 }
+let typeNames = {};
+
+async function fetchActivityTypes() {
+    try {
+        const response = await getToApi('/activity/list', null, getCookie('ATD-TOKEN'));
+        const activities = await response.json();
+        activities.forEach(activity => {
+            typeNames[activity.type] = activity.nom_type;  // Stocker le nom du type avec 'type' comme clé
+        });
+
+    } catch (error) {
+        console.error("Failed to fetch activity types:", error);
+    }
+}
 function displayList() {
     getList().then(function(list) {
         const tableBody = document.getElementById('tableDemandes').getElementsByTagName('tbody')[0];
@@ -38,7 +52,8 @@ function displayList() {
         } else {
             list.forEach(function(item) {
                 const row = tableBody.insertRow();
-                row.insertCell().textContent = item.type;
+                const typeName = typeNames[item.type] || "Type inconnu";  // Utiliser la map pour afficher le nom du type
+                row.insertCell().textContent = typeName;
                 row.insertCell().textContent = item.description;
 
                 const actionCell = row.insertCell();
@@ -56,6 +71,8 @@ function displayList() {
         cell.style.textAlign = 'center';
     });
 }
+
+fetchActivityTypes().then(displayList);
 
 function createActionButton(text, id, onClickFunction) {
     const button = document.createElement('button');

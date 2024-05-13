@@ -221,22 +221,34 @@ function addSession() {
 
 
     const dateFinElement = document.getElementById('dateFin');
-    if (dateFinElement && dateFinElement.value && dateDebutValue) {
+
+    const currentDate = new Date();
+    currentDate.setSeconds(0);
+    currentDate.setMilliseconds(0);
+
+    const startDate = new Date(dateDebutValue);
+
+    if (startDate < currentDate) {
+        alert("La date de début doit être égale ou supérieure à l'heure actuelle.");
+        return;
+    }
+
+    if (dateFinElement && dateFinElement.value) {
         const dateFinValue = dateFinElement.value;
-        const startDate = new Date(dateDebutValue);
         const endDate = new Date(dateFinValue);
 
         if (endDate <= startDate) {
-           alert('La date de fin doit être supérieure à la date de début pour continuer.');
+            alert('La date de fin doit être supérieure à la date de début pour continuer.');
             return;
         }
+
         args.append("end", dateFinValue);
     }
 
-    // Proceed with API submission if all conditions are met
     postToApi('/session/create', args, getCookie('ATD-TOKEN')).then((response) => {
         response.json().then((res) => {
             console.log(res);
+
             resetFields();
         }).catch(error => {
             console.error('Error processing the response:', error);
