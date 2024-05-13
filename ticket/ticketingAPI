@@ -1,0 +1,23 @@
+- /login
+	-> email
+	-> password
+
+- /ticket/list
+
+- /ticket/create
+	-> title
+	-> content
+	-> state
+	-> timestamp
+	
+- /ticket/updateState
+	-> ticket
+	-> state
+
+- /ticketResponse/list
+	-> ticket
+
+- /ticketResponse/create
+	-> content
+	-> timestamp
+	-> parent 	/l'id du ticket auquel on fait une réponse  
