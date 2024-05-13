@@ -87,8 +87,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('est_un')->insert([
-            'utilisateur' => 2,
-            'role' => 2
+            'utilisateur' => 4,
+            'role' => 1
         ]);
 
         DB::table('type_activite')->insert([
