@@ -29,13 +29,10 @@
                     <label for="title">Titre:</label>
                     <input type="text" id="title" name="title" required class="form-control">
                 </div>
+
                 <div class="form-group">
                     <label for="content">Contenu:</label>
                     <textarea id="content" name="content" required class="form-control" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="timestamp">Horaire:</label>
-                    <input type="datetime-local" id="timestamp" name="timestamp" required class="form-control">
                 </div>
                 <div>
                     <button type="button" class="btn btn-primary btn-block"  onclick="createDemande()">Envoyer la demande</button>
@@ -44,9 +41,18 @@
         </div>
 
         <script>
+
+
+
             function createDemande() {
                 const formData = new FormData(document.getElementById('ticketForm'));
+                function getFormattedDateTime() {
+                    var now = new Date();
+                    var localDateTime = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString();
+                    return localDateTime.substring(0, 16);
+                }
 
+                formData.append('timestamp', getFormattedDateTime());
                 formData.append('state', 'Non traité');
                 for (let [key, value] of formData.entries()) {
                     console.log(`${key}: ${value}`);
