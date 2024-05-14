@@ -51,16 +51,14 @@
                     getToApi('/session/list', null, getCookie('ATD-TOKEN'))
                         .then(response => response.json())
                         .then(sessions => {
-                            // Filter sessions to include only those involved by the user
                             sessions = sessions.filter(session => sessionIds.includes(session.id));
 
-                            // Fetching activities for name mapping
                             getToApi('/activity/list', null, getCookie('ATD-TOKEN'))
                                 .then(response => response.json())
                                 .then(activities => {
                                     let activityMap = new Map(activities.map(activity => [activity.id, activity.nom]));
 
-                                    // Fetching activity types for name mapping
+
                                     getToApi('/activityType/list', null, getCookie('ATD-TOKEN'))
                                         .then(response => response.json())
                                         .then(types => {
