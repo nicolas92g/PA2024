@@ -122,25 +122,18 @@ class Home(tk.Frame):
         customFont = tkfont.Font(family="Helvetica", size=12, weight="bold")
 
         # Boutons avec un style amélioré
-        self.btn_user_login = tk.Button(self.sub_frame, text="Connexion Utilisateur", command=lambda: show_user_login(self.master),
+        self.btn_user_login = tk.Button(self.sub_frame, text="Connexion", command=lambda: show_user_login(self.master),
                                 font=customFont, bg='#4c68a8', fg='white', padx=10, pady=10)
         self.btn_user_login.pack(pady=10)    # Retiré fill='x', ajouté padx pour contrôle de la largeur
 
-        self.btn_admin_login = tk.Button(self.sub_frame, text="Connexion Administrateur", command=self.open_admin_login,
-                                         font=customFont, bg='#555', fg='white', padx=10, pady=10)
-        self.btn_admin_login.pack(pady=10)
 
     def open_user_login(self):
         # Utilisation de la fonction de connexion utilisateur
         show_user_login(self.master)
 
-    def open_admin_login(self):
-        # Utilisation de la fonction de connexion administrateur
-        show_admin_login(self.master)
-
 def main():
     root = tk.Tk()
-    root.geometry('1500x1200')  # Taille ajustée pour plus de réalisme
+    root.geometry('600x800')  # Taille ajustée pour plus de réalisme
     app = Home(master=root)
     root.mainloop()
 

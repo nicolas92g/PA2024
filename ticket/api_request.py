@@ -13,7 +13,11 @@ def api_request(api_uri, bearer_token, params=None, USE_POST = False):
             response = requests.post(api_url, headers=headers, json=params)
         else:
             response = requests.get(api_url, headers=headers, params=params)
-        print(response)
+        
+        if (response.status_code != 200):
+            print(response.text[:200])
+        response.raise_for_status()
+        
         return response.json()
 
     except requests.exceptions.RequestException as e:
