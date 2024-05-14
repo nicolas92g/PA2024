@@ -17,6 +17,34 @@
         }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXxSYHQDMmQQgroea6lgEcRHX57_S0dqU&callback=initMap"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" integrity="sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function dataURLtoBlob(dataURL) {
+            var arr = dataURL.split(',');
+            var mime = arr[0].match(/:(.*?);/)[1];
+            var bstr = atob(arr[1]);
+            var n = bstr.length;
+            var u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], { type: mime });
+        }
+        function downloadQrcode(id){
+            let qr = qrcode(1, 'M');
+            qr.addData(id.toString());
+            qr.make();
+
+            let imageDataURL = qr.createDataURL();
+            var blob = dataURLtoBlob(imageDataURL);
+            var url = URL.createObjectURL(blob);
+            let downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = 'qrcode' + id + '.png';
+            downloadLink.click();
+        }
+
+    </script>
     <body class="d-flex h-100">
 
         <?=navbar(4, "..")?>
@@ -38,12 +66,14 @@
                         <th scope="col">date limite</th>
                         <th scope="col">fournisseur</th>
                         <th scope="col">stockage</th>
+                        <th scope="col">qrcode</th>
                     </tr>
                     </thead>
                     <tbody id="tableRows">
                     </tbody>
                 </table>
             </div>
+            <div id="qrcode"></div>
             <div class="d-flex p-3">
                 <select class="form-select" id="truckSelection"><option value="0">--Choisissez un Camion--</option></select>
                 <select class="form-select" id="userSelection"><option value="0">--Choisissez un Conducteur--</option></select>
@@ -187,6 +217,7 @@
                             '<td>' + product.fournisseur_nom + '</td>' +
                             '<td>' + (product.entrepot ? product.entrepot_nom : (product.ramassage ? 'ramassage prévu' :
                             '<button class="btn btn-outline-secondary" id="selector' + product.id + '" onclick="select(' + product.id + ')">ajouter au prochain ramassage</button>')) + '</td>' +
+                            '<td><button class="btn btn-outline-secondary" onclick="downloadQrcode(' + product.id + ')">télécharger le qrcode</button>'  + '</td>' +
                         '</tr>';
                 }
             })
@@ -237,6 +268,4 @@
             })
         })
     </script>
-
-
 </html>
