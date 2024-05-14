@@ -12,7 +12,7 @@ class SessionController extends Controller
         return Session::query()
             ->join('activite', 'session.activite', '=', 'activite.id')
             ->join('type_activite', 'activite.type', '=', 'type_activite.id')
-            ->select(['session.*', 'type_activite.nom as typeActivite'])->get();
+            ->select(['session.*', 'type_activite.nom as typeActivite', 'activite.nom as activiteNom'])->get();
     }
     public function create(Request $request){
         return $this->createFunctionTemplate($request, Session::class,
