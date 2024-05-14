@@ -209,10 +209,18 @@
             const input = document.getElementById('userSelection');
             response.json().then((users) => {
                 for (const user of users) {
-                    input.innerHTML += "<option value='" + user.id + "'>" +
-                        user.nom + " " +
-                        user.prenom
-                        "</option>";
+                    const args = new FormData();
+                    args.append('id', user.id);
+                    getToApi('/user/roles', args, getCookie('ATD-TOKEN')).then(response => {
+                        response.json().then(roles => {
+                            if (roles[0].nom === 'benevole'){
+                                input.innerHTML += "<option value='" + user.id + "'>" +
+                                    user.nom + " " +
+                                    user.prenom
+                                "</option>";
+                            }
+                        })
+                    })
                 }
             })
         })
