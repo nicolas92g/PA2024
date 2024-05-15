@@ -18,7 +18,10 @@ class ProduitController extends Controller
 
     function create(Request $request){
         return $this->createFunctionTemplate($request, Produit::class,
-            ["quantity" => "quantite", "dateLimit" => "date_limite", "name" => "nom", "description" => "description", "fournisseur" => "fournisseur", "entrepot" => "entrepot"]
+            ["quantity" => "quantite", "name" => "nom", "description" => "description", "fournisseur" => "fournisseur", "entrepot" => "entrepot"],
+            false,
+            [],
+            ["dateLimit" => "date_limite"]
         );
     }
 
