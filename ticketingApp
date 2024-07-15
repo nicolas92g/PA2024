@@ -1,0 +1,2 @@
+cd ticket
+python3 app.py
