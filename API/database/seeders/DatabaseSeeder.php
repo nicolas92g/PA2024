@@ -327,5 +327,70 @@ class DatabaseSeeder extends Seeder
             'nom' => 'compétence administratives',
             'description' => ''
         ]);
+
+        DB::table('produit')->insert([
+            'id' => 1,
+            'nom' => 'Carottes',
+            'description' => '_',
+            'fournisseur' => 1,
+            'quantite' => '23 kg',
+        ]);
+
+        DB::table('produit')->insert([
+            'id' => 2,
+            'nom' => 'Tomates',
+            'description' => '_',
+            'fournisseur' => 3,
+            'quantite' => '28 kg',
+        ]);
+
+        DB::table('produit')->insert([
+            'id' => 3,
+            'nom' => 'Artichauts',
+            'description' => '_',
+            'fournisseur' => 2,
+            'quantite' => '4 kg',
+        ]);
+
+        DB::table('produit')->insert([
+            'id' => 4,
+            'nom' => 'Artichauts',
+            'description' => '_',
+            'fournisseur' => 2,
+            'quantite' => '4 kg',
+        ]);
+
+        DB::table('produit')->insert([
+            'id' => 5,
+            'nom' => 'Artichauts',
+            'description' => '_',
+            'fournisseur' => 2,
+            'quantite' => '4 kg',
+        ]);
+
+        DB::table('produit')->insert([
+            'id' => 6,
+            'nom' => 'Artichauts',
+            'description' => '_',
+            'fournisseur' => 2,
+            'quantite' => '4 kg',
+        ]);
+
+        DB::table('produit')->insert([
+            'id' => 7,
+            'nom' => 'Artichauts',
+            'description' => '_',
+            'fournisseur' => 2,
+            'quantite' => '4 kg',
+        ]);
+
+        DB::table('camion')->insert([
+            'id' => 1,
+            'marque' => 'Renault',
+            'modele' => 'Kangoo',
+            'annee' => 2004,
+            'immatriculation' => 'GH-456-GH',
+            'annexe' => 1,
+        ]);
     }
 }

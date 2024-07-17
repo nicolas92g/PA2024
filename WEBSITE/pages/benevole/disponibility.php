@@ -6,7 +6,7 @@
     <script src="../../script/checks/checkIsBenevole.js"></script>
     <body class="d-flex h-100">
         <?=navbar(1)?>
-            <div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-start py-5" style="max-height: 100%; overflow-y: auto;">
+            <div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-start py-5 px-3" style="max-height: 100%; overflow-y: auto;">
                     <div class="container py-5">
                         <h2 class="mb-4">Voici les différentes missions à réaliser :</h2>
                     </div>

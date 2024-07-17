@@ -58,6 +58,7 @@ Route::get('/session/list', [\App\Http\Controllers\SessionController::class, "li
 Route::post('/session/create', [\App\Http\Controllers\SessionController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/session/delete', [\App\Http\Controllers\SessionController::class, "delete"])->middleware(['auth:sanctum']);
 Route::get('/session/size', [\App\Http\Controllers\SessionController::class, "size"])->middleware(['auth:sanctum']);
+Route::get('/session/maraudes', [\App\Http\Controllers\SessionController::class, "listMaraudes"])->middleware(['auth:sanctum']);
 
 Route::get('/benefit/list', [\App\Http\Controllers\BeneficieController::class, "list"])->middleware(['auth:sanctum']);
 Route::post('/benefit/create', [\App\Http\Controllers\BeneficieController::class, "create"])->middleware(['auth:sanctum']);
@@ -75,9 +76,9 @@ Route::get('/annexe/list', [\App\Http\Controllers\AnnexeController::class, "list
 Route::post('/annexe/create', [\App\Http\Controllers\AnnexeController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/annexe/delete', [\App\Http\Controllers\AnnexeController::class, "delete"])->middleware(['auth:sanctum']);
 
-Route::get('/entrepot/list', [\App\Http\Controllers\AnnexeController::class, "list"])->middleware(['auth:sanctum']);
-Route::post('/entrepot/create', [\App\Http\Controllers\AnnexeController::class, "create"])->middleware(['auth:sanctum']);
-Route::post('/entrepot/delete', [\App\Http\Controllers\AnnexeController::class, "delete"])->middleware(['auth:sanctum']);
+Route::get('/entrepot/list', [\App\Http\Controllers\EntrepotController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/entrepot/create', [\App\Http\Controllers\EntrepotController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/entrepot/delete', [\App\Http\Controllers\EntrepotController::class, "delete"])->middleware(['auth:sanctum']);
 
 Route::get('/fournisseur/list', [\App\Http\Controllers\FournisseurController::class, "list"])->middleware(['auth:sanctum']);
 Route::post('/fournisseur/create', [\App\Http\Controllers\FournisseurController::class, "create"])->middleware(['auth:sanctum']);
@@ -86,6 +87,7 @@ Route::post('/fournisseur/delete', [\App\Http\Controllers\FournisseurController:
 Route::get('/product/list', [\App\Http\Controllers\ProduitController::class, "list"])->middleware(['auth:sanctum']);
 Route::post('/product/create', [\App\Http\Controllers\ProduitController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/product/delete', [\App\Http\Controllers\ProduitController::class, "delete"])->middleware(['auth:sanctum']);
+Route::post('/product/maraude', [\App\Http\Controllers\ProduitController::class, "setMaraude"])->middleware(['auth:sanctum']);
 
 Route::get('/ticket/list', [\App\Http\Controllers\TicketController::class, "listTickets"])->middleware(['auth:sanctum']);
 Route::post('/ticket/create', [\App\Http\Controllers\TicketController::class, "createTicket"])->middleware(['auth:sanctum']);
@@ -101,3 +103,7 @@ Route::post('/ramassage/delete', [\App\Http\Controllers\RamassageController::cla
 Route::get('/ramasse/list', [\App\Http\Controllers\RamasseController::class, "list"])->middleware(['auth:sanctum']);
 Route::post('/ramasse/create', [\App\Http\Controllers\RamasseController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/ramasse/delete', [\App\Http\Controllers\RamasseController::class, "delete"])->middleware(['auth:sanctum']);
+
+Route::get('/etape/list', [\App\Http\Controllers\EtapeController::class, "list"])->middleware(['auth:sanctum']);
+Route::post('/etape/create', [\App\Http\Controllers\EtapeController::class, "create"])->middleware(['auth:sanctum']);
+Route::post('/etape/delete', [\App\Http\Controllers\EtapeController::class, "delete"])->middleware(['auth:sanctum']);

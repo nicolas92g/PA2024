@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produit;
+use App\Models\Session;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,5 +30,24 @@ class ProduitController extends Controller
     function delete(Request $request)
     {
         return $this->deleteFunctionTemplate($request, Produit::class);
+    }
+
+    function setMaraude(Request $request)
+    {
+        if (!isset($request->id) && !isset($request->maraude)){
+            return self::jsonError("Il manque des valeurs");
+        }
+
+        if ($request->maraude == 'null'){
+            Produit::query()->where('id', $request->id)->update(['maraude' => null]);
+            return self::jsonOk();
+        }
+
+        if (!Session::query()->where("id", "=", $request->maraude)->exists()){
+            return self::jsonError("La marause n'existe pas");
+        }
+
+        Produit::query()->where('id', $request->id)->update(['maraude' => $request->maraude]);
+        return self::jsonOk();
     }
 }

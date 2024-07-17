@@ -6,7 +6,7 @@
 <body class="cointainer-fluid d-flex h-100">
 
 <?=navbar(5, "..")?>
-                    <div class="bg-secondary h-100 col-10 d-flex flex-column" id="parc-automobile">
+                    <div class="bg-secondary h-100 col-10 d-flex flex-column p-3" id="parc-automobile">
                         <h3>Ajouter un véhicule</h3>
 
                         <form id="ajouterVehiculeForm">

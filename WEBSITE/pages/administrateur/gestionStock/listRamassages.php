@@ -20,6 +20,7 @@
                     <th scope="col">Camion</th>
                     <th scope="col">Conducteur</th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody id="ramassageTable">
@@ -46,6 +47,7 @@
                         '<td>' + r.horaire_debut + '</td>' +
                         '<td>' + r.camionId + '</td>' +
                         '<td>' + r.nomUtilisateur + ' ' +  r.prenomUtilisateur + '</td>' +
+                        '<td><button class="btn btn-primary" onclick="del(' + r.id + ')">supprimer</button></td>' +
                         '<td><button class="btn btn-primary" onclick="del(' + r.id + ')">supprimer</button></td>'
                         + '</tr>';
                 }

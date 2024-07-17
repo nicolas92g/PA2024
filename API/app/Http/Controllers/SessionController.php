@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Beneficie;
+use App\Models\Beneficie ;
+use App\Models\Produit;
 use App\Models\Session;
 use Illuminate\Http\Request;
 
@@ -19,11 +20,14 @@ class SessionController extends Controller
             ['name' => 'nom', 'place' => 'emplacement', 'time' => 'horaire', 'description' => 'description', 'activity' => 'activite'],
             false,
             [],
-            ['arrival' => 'emplacement_arrive', 'end' => 'horaire_fin', 'product' => 'produit', 'entrepot' => 'entrepot', 'max' => 'max_participants', 'quantity' => 'quantite', 'truck' => 'camion']
+            ['arrival' => 'emplacement_arrive', 'end' => 'horaire_fin', 'entrepot' => 'entrepot', 'max' => 'max_participants', 'quantity' => 'quantite', 'truck' => 'camion']
         );
     }
 
     public function delete(Request $request){
+
+        Produit::query()->where('maraude', '=', $request->id)->delete();
+
         return $this->deleteFunctionTemplate($request, Session::class);
     }
 
@@ -33,5 +37,9 @@ class SessionController extends Controller
         }
 
         return response()->json(['size' => Beneficie::query()->where('session', $r->session_id)->count()]);
+    }
+
+    public function listMaraudes(Request $request){
+        return Session::query()->where('activite', "=", 1)->get();
     }
 }

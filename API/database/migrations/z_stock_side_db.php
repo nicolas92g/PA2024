@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create("annexe", function (Blueprint $t){
             $t->id();
             $t->string("nom");
-            $t->foreignId("addresse")->references("id")->on("addresse");
+            $t->foreignId("addresse")->references("id")->on("addresse")->onDelete('cascade');
         });
 
         Schema::create("entrepot", function (Blueprint $t){
             $t->id();
             $t->string("nom");
-            $t->foreignId("addresse")->references("id")->on("addresse");
+            $t->foreignId("addresse")->references("id")->on("addresse")->onDelete('cascade');
         });
 
         Schema::create("fournisseur", function (Blueprint $t){
@@ -38,6 +38,21 @@ return new class extends Migration
             $t->foreignId("annexe")->references("id")->on("annexe");
         });
 
+        Schema::create("session", function (Blueprint $t){
+            $t->id();
+            $t->string("nom");
+            $t->text("emplacement");
+            $t->text("emplacement_arrive")->nullable();
+            $t->dateTime("horaire");
+            $t->dateTime("horaire_fin")->nullable();
+            $t->text("description");
+            $t->integer("max_participants")->nullable();
+            $t->integer("quantite")->nullable();
+            $t->foreignId("camion")->nullable()->references("id")->on("camion");
+            $t->foreignId("entrepot")->nullable()->references("id")->on("entrepot");
+            $t->foreignId("activite")->references("id")->on("activite");
+        });
+
         Schema::create("produit", function (Blueprint $t){
             $t->id();
             $t->string("quantite");
@@ -46,6 +61,7 @@ return new class extends Migration
             $t->text("description");
             $t->foreignId("fournisseur")->nullable()->references("id")->on("fournisseur");
             $t->foreignId("entrepot")->nullable()->references("id")->on("entrepot");
+            $t->foreignId("maraude")->nullable()->references("id")->on("session")->onDelete('cascade');
         });
 
         Schema::create("ramassage", function (Blueprint $t){
@@ -62,22 +78,6 @@ return new class extends Migration
             $t->primary(["produit", "ramassage"]);
         });
 
-        Schema::create("session", function (Blueprint $t){
-            $t->id();
-            $t->string("nom");
-            $t->text("emplacement");
-            $t->text("emplacement_arrive")->nullable();
-            $t->dateTime("horaire");
-            $t->dateTime("horaire_fin")->nullable();
-            $t->text("description");
-            $t->integer("max_participants")->nullable();
-            $t->integer("quantite")->nullable();
-            $t->foreignId("produit")->nullable()->references("id")->on("produit");
-            $t->foreignId("camion")->nullable()->references("id")->on("camion");
-            $t->foreignId("entrepot")->nullable()->references("id")->on("entrepot");
-            $t->foreignId("activite")->references("id")->on("activite");
-        });
-
         Schema::create("beneficie", function (Blueprint $t){
             $t->foreignId("beneficiaire")->references("id")->on("utilisateur");
             $t->foreignId("session")->references("id")->on("session");
@@ -89,6 +89,12 @@ return new class extends Migration
             $t->foreignId("session")->references("id")->on("session");
             $t->primary(["intervenant", "session"]);
         });
+
+        Schema::create("etape", function (Blueprint $t){
+            $t->foreignId("addresse")->references("id")->on("addresse")->onDelete('cascade');
+            $t->foreignId("maraude")->references("id")->on("session");
+            $t->primary(["addresse", "maraude"]);
+        });
     }
 
     /**
@@ -96,12 +102,13 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('etape');
         Schema::dropIfExists('intervient');
         Schema::dropIfExists('beneficie');
-        Schema::dropIfExists('session');
         Schema::dropIfExists('ramasse');
         Schema::dropIfExists('ramassage');
         Schema::dropIfExists('produit');
+        Schema::dropIfExists('session');
         Schema::dropIfExists('camion');
         Schema::dropIfExists('fournisseur');
         Schema::dropIfExists('entrepot');

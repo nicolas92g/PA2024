@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Produit
- * 
+ *
  * @property int $id
  * @property string $quantite
  * @property Carbon $date_limite
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $description
  * @property int $fournisseur
  * @property int $entrepot
- * 
+ *
  * @property Collection|Ramasse[] $ramasses
  *
  * @package App\Models
@@ -33,7 +33,8 @@ class Produit extends Model
 	protected $casts = [
 		'date_limite' => 'datetime',
 		'fournisseur' => 'int',
-		'entrepot' => 'int'
+		'entrepot' => 'int',
+		'maraude' => 'int'
 	];
 
 	protected $fillable = [
@@ -54,6 +55,11 @@ class Produit extends Model
 	{
 		return $this->belongsTo(Fournisseur::class, 'fournisseur');
 	}
+
+    public function maraude()
+    {
+        return $this->belongsTo(Fournisseur::class, 'fournisseur');
+    }
 
 	public function ramasses()
 	{
