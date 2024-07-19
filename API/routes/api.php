@@ -88,6 +88,7 @@ Route::get('/product/list', [\App\Http\Controllers\ProduitController::class, "li
 Route::post('/product/create', [\App\Http\Controllers\ProduitController::class, "create"])->middleware(['auth:sanctum']);
 Route::post('/product/delete', [\App\Http\Controllers\ProduitController::class, "delete"])->middleware(['auth:sanctum']);
 Route::post('/product/maraude', [\App\Http\Controllers\ProduitController::class, "setMaraude"])->middleware(['auth:sanctum']);
+Route::post('/product/stock', [\App\Http\Controllers\ProduitController::class, "stock"])->middleware(['auth:sanctum']);
 
 Route::get('/ticket/list', [\App\Http\Controllers\TicketController::class, "listTickets"])->middleware(['auth:sanctum']);
 Route::post('/ticket/create', [\App\Http\Controllers\TicketController::class, "createTicket"])->middleware(['auth:sanctum']);

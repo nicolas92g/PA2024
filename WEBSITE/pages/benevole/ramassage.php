@@ -101,22 +101,27 @@
                 }
             });
         }
-        function getRoute(id){
+         function getRoute(id){
             display(id);
 
-            const blob = new Blob([routeDescription], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'route.txt';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
+            setTimeout(() => {
+                const { jsPDF } = window.jspdf;
+
+                // Create a new jsPDF instance
+                const doc = new jsPDF();
+
+                // Add text to the PDF
+                doc.text('Feuille de route', 10, 10);
+                doc.text((routeDescription), 10, 20);
+
+                // Save the PDF
+                doc.save('feuille_de_route.pdf');
+            }, 1000);
         }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXxSYHQDMmQQgroea6lgEcRHX57_S0dqU&callback=initMap"></script>
     <script src="../../script/checks/checkIsBenevole.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <body class="d-flex h-100 ">
         <?=navbar(4)?>
         <div class="w-100 d-flex flex-column justify-content-between">
@@ -144,7 +149,7 @@
                 ramassages = res;
                 for (const r of res) {
                     table.innerHTML += '<tr><th scope="col">' + r.id + '</th>' +
-                            '<td>' + r.horaire_debut + '</td>' +
+                            '<td>' + new Date(r.horaire_debut).toLocaleString('fr') + '</td>' +
                             '<td>' + r.camionId + '</td>' +
                             '<td><button class="btn btn-primary" onclick="display(' + r.id + ')">afficher</button></td>' +
                             '<td><button class="btn btn-primary" onclick="getRoute(' + r.id + ')">télécharger la feuille de route</button></td>' +

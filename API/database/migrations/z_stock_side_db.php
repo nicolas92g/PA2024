@@ -59,6 +59,7 @@ return new class extends Migration
             $t->date("date_limite")->nullable();
             $t->string("nom");
             $t->text("description");
+            $t->text("etagere")->nullable();
             $t->foreignId("fournisseur")->nullable()->references("id")->on("fournisseur");
             $t->foreignId("entrepot")->nullable()->references("id")->on("entrepot");
             $t->foreignId("maraude")->nullable()->references("id")->on("session")->onDelete('cascade');

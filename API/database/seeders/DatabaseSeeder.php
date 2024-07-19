@@ -333,6 +333,7 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Carottes',
             'description' => '_',
             'fournisseur' => 1,
+            'date_limite' => '2024-12-12',
             'quantite' => '23 kg',
         ]);
 
@@ -341,6 +342,7 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Tomates',
             'description' => '_',
             'fournisseur' => 3,
+            'date_limite' => '2024-12-12',
             'quantite' => '28 kg',
         ]);
 
@@ -349,6 +351,7 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Artichauts',
             'description' => '_',
             'fournisseur' => 2,
+            'date_limite' => '2024-12-12',
             'quantite' => '4 kg',
         ]);
 
@@ -357,6 +360,7 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Artichauts',
             'description' => '_',
             'fournisseur' => 2,
+            'date_limite' => '2024-12-12',
             'quantite' => '4 kg',
         ]);
 
@@ -365,6 +369,7 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Artichauts',
             'description' => '_',
             'fournisseur' => 2,
+            'date_limite' => '2024-12-12',
             'quantite' => '4 kg',
         ]);
 
@@ -373,6 +378,7 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Artichauts',
             'description' => '_',
             'fournisseur' => 2,
+            'date_limite' => '2024-12-12',
             'quantite' => '4 kg',
         ]);
 
@@ -381,6 +387,7 @@ class DatabaseSeeder extends Seeder
             'nom' => 'Artichauts',
             'description' => '_',
             'fournisseur' => 2,
+            'date_limite' => '2024-12-12',
             'quantite' => '4 kg',
         ]);
 

@@ -66,6 +66,7 @@
                         <th scope="col">date limite</th>
                         <th scope="col">fournisseur</th>
                         <th scope="col">stockage</th>
+                        <th scope="col">étagère</th>
                         <th scope="col">qrcode</th>
                     </tr>
                     </thead>
@@ -208,15 +209,17 @@
             const table = document.getElementById('tableRows');
             response.json().then((products) => {
                 stocks = products;
+                console.log(products);
                 for (const product of products) {
                     table.innerHTML += '<tr><th scope="row">' + product.id + '</th>' +
                             '<td>' + product.nom + '</td>' +
                             '<td>' + product.quantite + '</td>' +
                             '<td>' + product.description + '</td>' +
-                            '<td>' + product.date_limite + '</td>' +
+                            '<td>' + (product.date_limite == null ? '_' : product.date_limite) + '</td>' +
                             '<td>' + product.fournisseur_nom + '</td>' +
                             '<td>' + (product.entrepot ? product.entrepot_nom : (product.ramassage ? 'ramassage prévu' :
                             '<button class="btn btn-outline-secondary" id="selector' + product.id + '" onclick="select(' + product.id + ')">ajouter au prochain ramassage</button>')) + '</td>' +
+                            '<td>' + (product.etagere == null ? '_' : product.etagere) + '</td>' +
                             '<td><button class="btn btn-outline-secondary" onclick="downloadQrcode(' + product.id + ')">télécharger le qrcode</button>'  + '</td>' +
                         '</tr>';
                 }

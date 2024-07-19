@@ -23,7 +23,7 @@ class RamassageController extends Controller
         return Ramassage::query()
             ->join('utilisateur','ramassage.utilisateur','=','utilisateur.id')
             ->join('camion','ramassage.camion','=','camion.id')
-            ->select('ramassage.*','utilisateur.nom as nomUtilisateur', 'utilisateur.prenom as prenomUtilisateur', 'camion.immatriculation as camionId')
+            ->select('ramassage.*','utilisateur.nom as nomUtilisateur', 'utilisateur.prenom as prenomUtilisateur', 'camion.immatriculation as camionId', 'camion.id as id_entrepot')
             ->get();
     }
 

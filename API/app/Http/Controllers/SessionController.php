@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Beneficie ;
+use App\Models\Etape;
 use App\Models\Produit;
 use App\Models\Session;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class SessionController extends Controller
     public function delete(Request $request){
 
         Produit::query()->where('maraude', '=', $request->id)->delete();
+        Etape::query()->where('maraude', '=', $request->id)->delete();
 
         return $this->deleteFunctionTemplate($request, Session::class);
     }

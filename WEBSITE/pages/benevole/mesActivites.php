@@ -27,6 +27,7 @@
             <th scope='col'>Date et heure de l'activité</th>
             <th scope='col'>Description</th>
             <th scope='col'>Action</th>
+            <th scope='col'></th>
         </tr>
         </thead>
         <tbody id='userRow' class='table-group-divider'>
@@ -63,7 +64,6 @@
                                         .then(response => response.json())
                                         .then(types => {
                                             let typeMap = new Map(types.map(type => [type.id, type.nom]));
-
 
                                             sessions.forEach((session, index) => {
                                                 const tr = document.createElement('tr');
@@ -106,6 +106,13 @@
                                                 }
                                                 tdAction.appendChild(deleteButton);
                                                 tr.appendChild(tdAction);
+
+                                                if (session.activite == 1){
+
+                                                    const buttonTd = document.createElement('td');
+                                                    buttonTd.innerHTML = "<a class='btn btn-outline-primary' href='maraude.php?id=" + session.id + "' >Voir</a>";
+                                                    tr.appendChild(buttonTd);
+                                                }
 
                                                 tbody.appendChild(tr);
                                             });

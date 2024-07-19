@@ -219,7 +219,7 @@
             response.json().then((productList) => {
                 let table = document.getElementById('notUsedProducts');
 
-                notusedProducts = productList.filter(element => element.maraude == null);
+                notusedProducts = productList.filter(element => (element.maraude == null && element.entrepot!= null));
                 for (const product of notusedProducts) {
                     table.innerHTML += '<tr><th scope="row">' + product.id + '</th>' +
                         '<td>' + product.nom + '</td>' +

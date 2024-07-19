@@ -46,6 +46,7 @@
             <th scope='col'>adresse</th>
             <th scope='col'>ville</th>
             <th scope='col'>mail</th>
+            <th scope='col'></th>
         </tr>
         </thead>
         <tbody id='userRow' class='table-group-divider'>
@@ -65,8 +66,9 @@
                     "<td>" + volunteer.prenom + "</td>" +
                     "<td>" + volunteer.premiere_ligne + "</td>" +
                     "<td>" + volunteer.ville + "</td>" +
-                    "<td>" + volunteer.mail + "</td>"
-                    +"</tr>"
+                    "<td>" + volunteer.mail + "</td>" +
+                    "<td><a class='btn btn-outline-primary' href='user.php?id=" + volunteer.id + "'>Gérer</button></td>" +
+                    "</tr>"
             }
         })
     })

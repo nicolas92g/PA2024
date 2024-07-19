@@ -50,4 +50,16 @@ class ProduitController extends Controller
         Produit::query()->where('id', $request->id)->update(['maraude' => $request->maraude]);
         return self::jsonOk();
     }
+
+    function stock(request $request){
+        if (!isset($request->entrepot) && !isset($request->etagere) && !isset($request->id)){
+            return self::jsonError("Il manque des valeurs");
+        }
+
+        $p = Produit::query()->where('id', '=', $request->id)->first();
+        $p->entrepot = $request->entrepot;
+        $p->etagere = $request->etagere;
+        $p->save();
+        return self::jsonOk();
+    }
 }
