@@ -6,14 +6,14 @@
     <script src="../../script/checks/checkIsBenevole.js"></script>
     <body class="d-flex h-100">
 <?=navbar(4)?>
-<div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-start py-5" style="max-height: 100%; overflow-y: auto;">
+<div class="bg-secondary h-100 col-10 d-flex flex-column justify-content-start py-5 p-3" style="max-height: 100%; overflow-y: auto;">
 
 
     <div >
         <a class="btn btn-outline-primary m-3" href="profilBenevole.php">Retour</a>
 
     </div>
-    <div id="messageContainer" class="message-container"></div>
+
     <div class="text-center mb-4">
 
         <h3>Voici les différentes compétences disponibles</h3>
@@ -23,6 +23,8 @@
 
     </div>
     <button id="submitCompetences" class="btn btn-primary">Envoyer les compétences</button>
+
+    <h5 id="messageContainer" class="message-container text-center text-primary mt-5"></h5>
 </div>
     <script>
 
@@ -136,11 +138,6 @@
         function displayServerMessage(message, isSuccess) {
             const translatedMessage = translateMessage(message);
             const messageContainer = document.getElementById('messageContainer');
-            if (translatedMessage === "Votre demande a été exécutée avec succès.") {
-                messageContainer.style.color = 'green';
-            } else {
-                messageContainer.style.color = isSuccess ? 'green' : 'red';
-            }
 
             messageContainer.textContent = translatedMessage;
         }

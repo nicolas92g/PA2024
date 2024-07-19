@@ -23,7 +23,7 @@ class ProduitController extends Controller
             ["quantity" => "quantite", "name" => "nom", "description" => "description", "fournisseur" => "fournisseur", "entrepot" => "entrepot"],
             false,
             [],
-            ["dateLimit" => "date_limite"]
+            ["dateLimit" => "date_limite", "etagere" => "etagere"]
         );
     }
 

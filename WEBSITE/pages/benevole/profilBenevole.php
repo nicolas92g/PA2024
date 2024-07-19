@@ -41,7 +41,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="account-info">
+                            <div class="tab-pane fade p-3" id="account-info">
                                 <div class="card-body pb-2">
                                     <form id="competence-form">
                                         <label class="form-label">Compétences</label>

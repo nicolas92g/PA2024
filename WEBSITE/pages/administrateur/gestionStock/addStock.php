@@ -10,15 +10,7 @@
             <h2 class="text-center mb-4">Ajouter un produit</h2>
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <div class="form-group">
-                        <label for="categorie">Catégorie :</label>
-                        <select class="form-control" id="categorie" name="categorie" required>
-                            <option value="">Sélectionner une catégorie</option>
-                            <option value="Aliments">Aliments</option>
-                            <option value="Produits de première nécessité">Produits non alimentaires</option>
-                            <!-- Ajoutez d'autres options selon vos besoins -->
-                        </select>
-                    </div>
+
                     <div class="form-group">
                         <label for="nom_produit">Nom du produit :</label>
                         <input type="text" class="form-control" id="nom_produit" name="nom_produit" required>
@@ -28,7 +20,7 @@
                         <input type="text" class="form-control" id="quantite" name="quantite" required>
                     </div>
 
-                    <div class="form-group" id="datePeremptionGroup" style="display: none;">
+                    <div class="form-group" id="datePeremptionGroup">
                         <label for="date_peremption">Date de péremption :</label>
                         <input type="date" class="form-control" id="date_peremption" name="date_peremption">
                     </div>
@@ -48,6 +40,11 @@
                         </select>
                     </div>
 
+                    <div class="form-group mb-4" id="etagereGroup" style="display: none;">
+                        <label for="etagere">Etagère :</label>
+                        <input type="text" class="form-control" id="etagere" name="etagere">
+                    </div>
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block " onclick="addProduct()">Ajouter</button>
                         <a href="listStock.php" class="btn btn-primary btn-block">Voir le stock</a>
@@ -57,16 +54,20 @@
         </div>
         </div>
         <script>
-            document.getElementById('categorie').addEventListener('change', function() {
-                var selectedCategory = this.value;
-                var datePeremptionGroup = document.getElementById('datePeremptionGroup');
+            document.getElementById('entrepot').onchange = (v) => {
 
-                if (selectedCategory === 'Aliments') {
-                    datePeremptionGroup.style.display = 'block';
-                } else {
-                    datePeremptionGroup.style.display = 'none';
+                const etagereGroup = document.getElementById('etagereGroup');
+                const etagere = document.getElementById('etagere');
+
+                if (v.srcElement.value == "none"){
+                    etagereGroup.style.display = "none";
+                    etagere.value = "none";
                 }
-            });
+                else{
+                    etagereGroup.style.display = "block";
+                    etagere.value = "";
+                }
+            }
 
             getToApi('/fournisseur/list', null, getCookie('ATD-TOKEN')).then((response) => {
                 const fournisseurSelect = document.getElementById('fournisseur');
@@ -88,12 +89,19 @@
 
             function addProduct(){
                 const args = new FormData();
+
+                if (new Date(document.getElementById('date_peremption').value) < new Date()){
+                    alert("Cette date est déjà passée");
+                    return;
+                }
+
                 args.append("quantity", document.getElementById('quantite').value);
                 args.append("dateLimit", document.getElementById('date_peremption').value);
                 args.append("name", document.getElementById('nom_produit').value);
                 args.append("description", document.getElementById('description').value);
                 args.append("fournisseur", document.getElementById('fournisseur').value);
                 args.append("entrepot", document.getElementById('entrepot').value);
+                args.append("etagere", document.getElementById('etagere').value);
 
                 postToApi('/product/create', args, getCookie('ATD-TOKEN')).then((response) => {
                     response.json().then((res) => {
